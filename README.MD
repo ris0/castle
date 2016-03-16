@@ -1,7 +1,7 @@
 Fullstack Academy Capstone Project
 
 Team members:
-Chris de Velliers
+Chris de Villiers
 Cindy Li
 John Quiwa
 Richard Song
