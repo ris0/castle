@@ -1,0 +1,60 @@
+{
+  "roomName": "Pink Cabinet",
+  "containerDim": [4, 4],
+  "roomDim": [4, 4],
+  "roomType": "Living",
+  "sqf": 100,
+  "doors": [
+    [-2,  1],
+    [-2,  1],
+    [ 1,  2],
+    [ 1, -2]
+  ],
+  "placementPts": 5,
+  "affectedBy": [],
+  "effectPts": null,
+  "completed": false,
+  "boardPosition": [null, null],
+  "rotation": 0,
+  "imagePath": ""
+}
+
+{
+  "roomName": "Sewing Room",
+  "sqf": 250,
+  "containerDim": [4, 10],
+  "roomDim": [4, 10],
+  "roomType": "Activity",
+  "doors": [
+    [ 3,  2],
+    [ 3, -2],
+    [ 4, -1]
+  ],
+  "placementPts": 5,
+  "affectedBy": ["Corridor", "Downstairs", "Living", "Sleep"],
+  "effectPts": -1,
+  "completed": false,
+  "boardPosition": [null, null],
+  "rotation": 0,
+  "imagePath": ""
+}
+
+{
+  "roomName": "Pumpkin Garden",
+  "sqf": 400,
+  "containerDim": [8, 8],
+  "roomDim": [8, 8],
+  "roomType": "Outdoor",
+  "doors": [
+    [ 4,  3],
+    [-4, -1],
+    [ 3, -4]
+  ],
+  "placementPts": 2,
+  "affectedBy": ["Outdoor"],
+  "effectPts": 1,
+  "completed": false,
+  "boardPosition": [null, null],
+  "rotation": 0,
+  "imagePath": ""
+}
