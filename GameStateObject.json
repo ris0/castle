@@ -1,0 +1,103 @@
+// main game object schema
+
+{
+// player 1
+  "player": [{
+    "userID": "nfa873y2hf78q2gofuy",
+    "userName": "Mad King Ludwig",
+    "publicScore": {
+      "roomPts": 0,
+      "activtyRoomBonusPts": 0,
+      "livingRoomBonusPts": 0,
+      "kingsFavorPts": 0
+    },
+    "privateBonusCardPts": 0,
+    "cashMoney": 15000,
+    "castle": [] // array of room objects
+  },
+// player 2
+  {
+    "userID": "2n3f8123gf1273abcdg",
+    "userName": "Sane King Ludwig",
+    "publicScore": {
+      "roomPts": 0,
+      "activtyRoomBonusPts": 0,
+      "livingRoomBonusPts": 0,
+      "kingsFavorPts": 0
+    },
+    "privateBonusCardPts": 0,
+    "cashMoney": 15000,
+    "castle": [] // array of room objects
+  }, 
+// player 3
+  {
+    "userID": null,
+    "userName": null,
+    "publicScore": {
+      "roomPts": 0,
+      "activtyRoomBonusPts": 0,
+      "livingRoomBonusPts": 0,
+      "kingsFavorPts": 0
+    },
+    "privateBonusCardPts": 0,
+    "cashMoney": 15000,
+    "castle": [] // array of room objects
+  }, 
+// player 4
+  {
+    "userID": null,
+    "userName": null,
+    "publicScore": {
+      "roomPts": 0,
+      "activtyRoomBonusPts": 0,
+      "livingRoomBonusPts": 0,
+      "kingsFavorPts": 0
+    },
+    "privateBonusCardPts": 0,
+    "cashMoney": 15000,
+    "castle": [] // array of room objects
+  }],
+// master builder/turn trackers
+  "masterBuilder": 0,
+  "currentPlayer": 1,
+// card stack trackers
+  "bonusCards": [{
+    "attributeToCheck": "",
+    "threshold": 0,
+    "pts": 0
+  }, {
+    "attributeToCheck": "",
+    "threshold": 0,
+    "pts": 0
+  }],
+  "roomCards": ["roomID", "roomID"],
+// tile pile tracker
+  "roomTiles": [{ "room" }, { "room" }],
+// kings favor info
+  "kingsFavorScoring": [
+    [8, 4, 2, 1][4, 2, 1]
+  ], // 
+  "kingsFavors": [{
+    "attributeToCheck": "",
+  }, {
+    "attributeToCheck": "",
+  }]
+}
+
+// room object schema
+
+{
+  "containerDim": [4, 4],
+  "roomDim": [4, 4],
+  "roomType": "Living",
+  "sqf": 100,
+  "doors": [
+    [-2, -1],
+    [2, 1]
+  ],
+  "placementPts": 1,
+  "affectedBy": ["Outdoor", "Corridor"],
+  "effectPts": 1,
+  "completed": false,
+  "boardPosition": [null, null]
+}
