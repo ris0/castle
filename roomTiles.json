@@ -1,0 +1,68 @@
+// 300
+{
+    "sqf": 300,
+    "containerDim": [8, 8],
+    "roomDim": [ [0,0], [0,8], [-8,8], [-8,-8], [8,-8], [8,0] ],
+    "roomType": "Sleep",
+    "roomName": "Queen's Bedroom",
+    "doors": [ [ -8,8 ], [ 0,8 ] ],
+    "placementPts": 3,
+    "affectedBy": ["Sleeping"],
+    "effectPts": 2,
+    "completed": false,
+    "boardPosition": [null, null],
+    "rotation": 0,
+    "imagePath": ""
+},
+// 150
+{
+    "sqf": 150,
+    "containerDim": [6, 6],
+    "roomDim": {
+        "cx": 0,
+        "cy" :0,
+        "r": 3
+    },
+    "roomType": "Activity",
+    "roomName": "Flute Room",
+    "doors": [ [-3,0], [0,3], [3,0] ],
+    "placementPts": 3,
+    "affectedBy": [ "Living", "Sleep" ],
+    "effectPts": -1,
+    "completed": false,
+    "boardPosition": [null, null],
+    "rotation": 0,
+    "imagePath": ""
+},
+// Stairs
+{
+    "sqf": 75,
+    "containerDim": [2,6],
+    "roomDim": {},
+    "roomType": "Corridor",
+    "roomName": "Stairs",
+    "doors": [ [-3,0], [3,0] ],
+    "placementPts": 0,
+    "affectedBy": [],
+    "effectPts": 0,
+    "completed": false,
+    "boardPosition": [null, null],
+    "rotation": 0,
+    "imagePath": ""
+},
+// Foyer
+{
+    "sqf": 125,
+    "containerDim": [6,6],
+    "roomDim": [ 2, 2, 2, 2, 2, 2, 2, 2 ],
+    "roomType": "Corridor",
+    "roomName": "Foyer",
+    "doors": [ [-2,0], [0,2], [2,0] ],
+    "placementPts": 0,
+    "affectedBy": [],
+    "effectPts": 0,
+    "completed": false,
+    "boardPosition": [null, null],
+    "rotation": 0,
+    "imagePath": ""
+}
