@@ -1,63 +1,80 @@
-
 {
-	"Hallway": {
-		"containerDim": [2,12],
-		"roomDim": [2,12],
-		"roomType": "Corridor",
-		"sqf": 150,
-		"doors": [[-1,1], [-3,1], [-5,1], [-1,-1], [-3,-1], [-5,-1], [1,1], [3,1], [5,1], [1,-1], [3,-1], [5,-1]],
-		"placementPts": 0,
-		"affectedBy": [],
-		"effectPts": 0,
-		"completed": false,
-		"boardPosition": [null, null],
-		"fence": false,
-		"rotation": 0,
-		"img": ""
-	}
+  "roomName": "Hallway",
+  "imagePath": "",
+  "sqf": 150,
+  "roomType": "Corridor",
+  "placementPts": 0,
+  "affectedBy": [],
+  "effectPts": 0,
+  "completed": false,
+  "boardPosition": [null, null],
+  "containerDim": [2, 12],
+  "roomDim": [2, 12],
+  "doors": [
+    [-1, 1],
+    [-3, 1],
+    [-5, 1],
+    [-1, -1],
+    [-3, -1],
+    [-5, -1],
+    [1, 1],
+    [3, 1],
+    [5, 1],
+    [1, -1],
+    [3, -1],
+    [5, -1]
+  ],
+  "fence": null,
+  "rotation": 0
 }
 
 {
-	"500": {
-		"containerDim": [10,10],
-		"roomName": "Venus Grotto",
-		"roomDim": {
-			"cx": 0,
-			"cy": 0,
-			"r": 5
-		},
-		"roomType": "Downstairs",
-		"sqf": 500,
-		"doors": [[0,-5], [0,5]],
-		"placementPts": 1,
-		"affectedBy": ["Corridor"],
-		"effectPts": 1,
-		"completed": false,
-		"fence": false,
-		"boardPosition": [null,null],
-		"rotation": 0, // degrees
-		"img": ""
-	}	
+  "roomName": "Venus Grotto",
+  "imagePath": "",
+  "sqf": 500,
+  "roomType": "Downstairs",
+  "placementPts": 1,
+  "affectedBy": ["Corridor"],
+  "effectPts": 1,
+  "completed": false,
+  "boardPosition": [null, null],
+  "containerDim": [10, 10],
+  "roomDim": {
+    "cx": 0,
+    "cy": 0,
+    "r": 5
+  },
+  "doors": [
+    [0, -5],
+    [0, 5]
+  ],
+  "fence": null,
+  "rotation": 0,
 }
 
 {
-	"450": {
-		"containerDim": [6,12],
-		"roomType": "Outdoor",
-		"roomDim": {
-			"height": 6,
-			"width": 12,
-		},
-		"roomType": "Formal Gardens",
-		"sqf": 450,
-		"doors": [[6,2], [6,-2], [3,-3]],
-		"placementPts": 1,
-		"affectedBy": ["Corridor"],
-		"effectPts": 1,
-		"completed": false,
-		"boardPosition": [null,null],
-		"fence": [[-6,3], [6,3]],
-		"rotation": 0,
-		"img": ""
-	}
+  "roomType": "Formal Gardens",
+  "imagePath": "",
+  "sqf": 450,
+  "roomType": "Outdoor",
+  "placementPts": 1,
+  "affectedBy": ["Corridor"],
+  "effectPts": 1,
+  "completed": false,
+  "boardPosition": [null, null],
+  "containerDim": [6, 12],
+  "roomDim": {
+    "height": 6,
+    "width": 12,
+  },
+  "doors": [
+    [6, 2],
+    [6, -2],
+    [3, -3]
+  ],
+  "fence": [
+    [-6, 3],
+    [6, 3]
+  ],
+  "rotation": 0,
 }
