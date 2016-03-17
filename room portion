@@ -1,0 +1,47 @@
+350, 200, 600
+
+{
+	"sqf":200,
+	"roomDim": [4,8],
+	"imagePath": null,
+	"roomName": "Solar",
+	"containerDim": [4,8],
+	"roomType": "Sleeping",
+	"doors": [[4,-1], [3,-2]],
+	"placementPts": 2,
+	"affectedBy": ["Outdoor"],
+	"effectPts": 2,
+	"completed": false,
+	"boardPosition": [null, null]
+}
+
+{
+	"sqf":350,
+	"roomDim": [4,14],
+	"imagePath": null,
+	"roomName": "Upper Hall",
+	"containerDim": [4,14],
+	"roomType": "Corridor",
+	"doors": [[0,2], [4,2], [7,1], [7,-1], [6,-2], [2,-2], [-2,-2], [-6,-2], [-7,-1], [-7,1], [-4,2]],
+	"placementPts": 1,
+	"affectedBy": ["Food"],
+	"effectPts": 1,
+	"completed": false,
+	"boardPosition": [null, null]
+}
+
+
+{
+	"sqf": 600,
+	"roomDim": ['polygon', [2,0], [12,0], [14,-2], [14,-6], [12,-8,], [2,-8], [0,-6], [0,-4]], // defined by top left corner
+	"imagePath": null,
+	"roomName": "Throne room",
+	"containerDim": [14,8],
+	"roomType": "Living",
+	"doors": [[4,4], [7,-1], [4,-4], [-7,1]],
+	"placementPts": 1,
+	"affectedBy": ["Sleep"],
+	"effectPts": 4,
+	"completed": false,
+	"boardPosition": [null, null]
+}
