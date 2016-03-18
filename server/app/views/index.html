@@ -1,24 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <base href="/" />
-    <title>Fullstack Academy Generated Application</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/style.css" />
-    <link rel="stylesheet" type="text/css" href="/angular-ui-grid/ui.grid.min.css">
-    <script src="/lodash/index.js"></script>
-    <script src="/angular/angular.js"></script>
-    <script src="/angular-animate/angular-animate.js"></script>
-    <script src="/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
-    <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="/angular-ui-grid/ui.grid.min.js"></script>
-    <script src="/socket.io-client/socket.io.js"></script>
-    <script src="/main.js"></script>
-    <script src="/interact.js/interact.js"></script>
+  <base href="/" />
+  <title>Fullstack Academy Generated Application</title>
+  <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <script src="/lodash/index.js"></script>
+  <script src="/angular/angular.js"></script>
+  <script src="/angular-animate/angular-animate.js"></script>
+  <script src="/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
+  <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="/socket.io-client/socket.io.js"></script>
+  <script src="/main.js"></script>
+  <script src="/interact.js/interact.js"></script>
+  <script src="/d3/d3.js"></script>
 </head>
-<body ng-app="FullstackGeneratedApp">
-    <navbar></navbar>
-    <div id="main" ui-view></div>
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.axis line {
+  fill: none;
+  stroke: #aaa;
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}
+</style>
+
+<body>
+  <div id="coolgrid"></div>
+  <script src="//d3js.org/d3.v3.min.js"></script>
+  <script>
+  var width = 10000;
+  var height = 10000;
+  var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
+  var drag = d3.behavior.drag()
+    .origin(function(d) {
+      return d;
+    })
+    .on("dragstart", dragstarted)
+    .on("drag", dragged)
+    .on("dragend", dragended);
+  var svg = d3.select("#coolgrid").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .call(zoom);
+  var rect = svg.append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .style("fill", "none")
+    .style("pointer-events", "all");
+  var container = svg.append("g");
+  container.append("g")
+    .attr("class", "x axis")
+    .selectAll("line")
+    .data(d3.range(0, width, 10))
+    .enter().append("line")
+    .attr("x1", function(d) {
+      return d;
+    })
+    .attr("y1", 0)
+    .attr("x2", function(d) {
+      return d;
+    })
+    .attr("y2", height);
+  container.append("g")
+    .attr("class", "y axis")
+    .selectAll("line")
+    .data(d3.range(0, height, 10))
+    .enter().append("line")
+    .attr("x1", 0)
+    .attr("y1", function(d) {
+      return d;
+    })
+    .attr("x2", width)
+    .attr("y2", function(d) {
+      return d;
+    });
+
+  function zoomed() {
+    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  }
+
+  function dragstarted(d) {
+    d3.event.sourceEvent.stopPropagation();
+    d3.select(this).classed("dragging", true);
+  }
+
+  function dragged(d) {
+    d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+  }
+
+  function dragended(d) {
+    d3.select(this).classed("dragging", false);
+  }
+  </script>
 </body>
+
 </html>

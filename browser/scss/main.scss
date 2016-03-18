@@ -1,22 +1,29 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  background: #fdfdfd;
+    background: #fdfdfd;
 }
 
 @mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 #main {
-  padding-top: 60px;
-  margin: 0 auto;
+    padding-top: 60px;
+    margin: 0 auto;
+}
+
+.axis line {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
 }
 
 @import 'directives/main';
