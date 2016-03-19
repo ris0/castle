@@ -8,21 +8,39 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
+app.controller('LoginCtrl', function ($scope, AuthService, $state, gameFactory) {
 
-    $scope.login = {};
+  $scope.auth = gameFactory.auth();
+
+  $scope.signup = function() {
+    $scope.message = null;
     $scope.error = null;
 
-    $scope.sendLogin = function (loginInfo) {
+    $scope.auth.$createUser({
+      email: $scope.signup.email,
+      password: $scope.signup.password
+    }).then(function(userData) {
+        $state.go('game');
+    }).catch(function(error) {
+      $scope.error = error;
+    });
+  };
 
-        $scope.error = null;
+  $scope.login = function() {
+    $scope.message = null;
+    $scope.error = null;
 
-        AuthService.login(loginInfo).then(function () {
-            $state.go('home');
-        }).catch(function () {
-            $scope.error = 'Invalid login credentials.';
-        });
+    $scope.auth.$authWithPassword({
+      email: $scope.login.email,
+      password: $scope.login.password
+    }).then(function(userData) {
+        $state.go('game');
+    }).catch(function(error) {
+      $scope.error = error;
+    });
+  };
 
-    };
-
+  $scope.logout = function(){
+    $scope.auth.$unauth();
+  };
 });
