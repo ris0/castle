@@ -1,0 +1,11 @@
+<div class = "container">
+	<button ng-click="drawToMarket()">Draw cards to market queue</button>
+	<div ng-repeat="card in data.marketQ">
+		Arrange the {{card.roomName}} in the market
+		<label for="price">
+	</div>
+	<button ng-click="assignPrices()">Assign Prices</button>
+	<div ng-repeat="(price, room) in data.market"
+		 ng-click="buyRoom(room, price)">Buy the {{room.roomName}} for {{price}}
+	</div>
+</div>
