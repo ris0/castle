@@ -26,8 +26,8 @@ app.directive('gridtesting', function($window) {
         .attr("viewBox", "0 0 " + width + " " + height)
         // .attr("width", width)
         // .attr("height", height)
-        .style("fill", "blue")
-        .classed("svg-content-responsive", true);
+        .classed("svg-content-responsive", true)
+        .style("fill", "royalblue");
 
       var boxG = svg.append("g");
 
@@ -39,23 +39,35 @@ app.directive('gridtesting', function($window) {
         .attr("cx", width / 2)
         .attr("cy", height / 2);
 
-      var arr = d3.range(0,  1250);
-      var boxSize = Math.max(width,height) / 50;
+      var arr = d3.range(0, 1250);
+      var boxSize = Math.max(width, height) / 50;
 
       var boxEnter = boxG.selectAll("line")
         .data(arr)
         .enter();
 
-      boxEnter.append("line").attr("x1", function(d) {
-        return d * boxSize;
-      }).attr("x2", function(d) {
-        return d * boxSize;
-      }).attr("y1", -boxSize).attr("y2", height + boxSize).style("stroke", "black");
-      boxEnter.append("line").attr("x1", -boxSize).attr("x2", width + boxSize).attr("y1", function(d) {
-        return d * boxSize;
-      }).attr("y2", function(d) {
-        return d * boxSize;
-      }).style("stroke", "black");
+      boxEnter.append("line")
+        .attr("x1", function(d) {
+          return d * boxSize;
+        })
+        .attr("x2", function(d) {
+          return d * boxSize;
+        })
+        .attr("y1", -boxSize)
+        .attr("y2", height + boxSize)
+        .style("stroke", "black")
+        .style("fill", "royalblue");
+      boxEnter.append("line")
+        .attr("x1", -boxSize)
+        .attr("x2", width + boxSize)
+        .attr("y1", function(d) {
+          return d * boxSize;
+        })
+        .attr("y2", function(d) {
+          return d * boxSize;
+        })
+        .style("stroke", "black")
+        .style("fill", "royalblue");
 
       var zoom = d3.behavior.zoom()
         .scaleExtent([1, 5])
