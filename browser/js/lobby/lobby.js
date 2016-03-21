@@ -38,7 +38,7 @@ app.controller('LobbyCtrl', function ($scope, $state, $firebaseObject, $firebase
   $scope.baseStateRef = gameFactory.ref().child("baseState");
   $scope.gamesRef = gameFactory.ref().child("games");
   $scope.playersRef = gameFactory.ref().child("playersQueue");
-  $scope.usersRef = $firebaseObject(gameFactory.ref().child("users"));
+  $scope.usersRef = gameFactory.ref().child("users");
   $scope.userId = $scope.auth.$getAuth().uid;
   $scope.userEmail = $scope.auth.$getAuth().password.email;
 	
@@ -64,11 +64,24 @@ app.controller('LobbyCtrl', function ($scope, $state, $firebaseObject, $firebase
   			$scope.counter ++;
   		}
   		$scope.playersRef.remove();
-  		$scope.gamesRef.push($scope.baseState);
-  		$scope.users
+  		var newGameRef = $scope.gamesRef.push($scope.baseState);
+  		var gameID = newGameRef.key();
+  		console.log(gameID);
+
+  		$scope.gamesRef.child(gameID).once('value', function(game){
+  			game.val().players.forEach(function(player){
+  				$scope.addGameToUsers(player.userID, gameID);
+  			});
+  		});
   	});
   	console.log('removed');
   }
+
+  	console.log($scope.usersRef);
+
+  $scope.addGameToUsers = function(uid, gameID){
+  	$scope.usersRef.child(uid).child('game').set(gameID);
+  };
 
   $scope.findRandomGame = function(){
 

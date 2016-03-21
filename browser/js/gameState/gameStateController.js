@@ -1,5 +1,10 @@
 app.controller('gameStats', function($scope, $firebaseObject, gameFactory) {
-  var syncObject = $firebaseObject(gameFactory.ref());
+  var userID = gameFactory.auth().$getAuth().uid
+  console.log(userID);
+  var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+  console.log(userGame.child($value));
+  var syncObject = $firebaseObject(gameFactory.ref().child('games'));
+  console.log(syncObject);
   syncObject.$bindTo($scope, "data");
 
 	$scope.drawToMarket = function(){
