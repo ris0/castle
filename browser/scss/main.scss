@@ -14,15 +14,50 @@ body {
     }
 }
 
+#coolgrid {
+    overflow: hidden;
+    border-left: 0.5vh solid black;
+    border-right: 0.5vh solid black;
+    border-bottom: 0.5vh solid black;
+    width: 100%;
+    height: 93vh;
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+}
+
 #main {
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
 }
 
 .axis line {
-  fill: none;
-  stroke: #bbb;
-  shape-rendering: crispEdges;
-  vector-effect: non-scaling-stroke;
+    fill: none;
+    stroke: #bbb;
+    shape-rendering: crispEdges;
+    vector-effect: non-scaling-stroke;
+}
+
+svg {
+    shape-rendering: crispEdges;
+}
+
+#sidebar {
+    padding: 0;
+}
+
+#playerlist {
+    padding: 0;
 }
 
 @import 'directives/main';
