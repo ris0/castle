@@ -40,6 +40,7 @@ app.controller('gameStats', function($scope, $firebaseObject, gameFactory) {
 		// $scope.data.players[0].castle.push(room);
 	};
 
+	console.log(gameFactory.auth());
 	
 
 });
