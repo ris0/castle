@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <base href="/" />
-    <title>Fullstack Academy Generated Application</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/style.css" />
-    <script src="/lodash/index.js"></script>
-    <script src="/angular/angular.js"></script>
-    <script src="/angular-animate/angular-animate.js"></script>
-    <script src="/angular-ui-router/release/angular-ui-router.js"></script>
-    <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/1.1.4/angularfire.min.js"></script>
-    <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
-    <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="/socket.io-client/socket.io.js"></script>
-    <script src="/main.js"></script>
+  <base href="/" />
+  <title>Fullstack Academy Generated Application</title>
+  <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <script src="/lodash/index.js"></script>
+  <script src="/angular/angular.js"></script>
+  <script src="/angular-animate/angular-animate.js"></script>
+  <script src="/angular-ui-router/release/angular-ui-router.js"></script>
+  <!-- Firebase -->
+  <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+  <!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/1.1.4/angularfire.min.js"></script>
+  <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
+  <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="/socket.io-client/socket.io.js"></script>
+  <script src="/main.js"></script>
+  <script src="/interact.js/interact.js"></script>
+  <script src="/d3/d3.js"></script>
 </head>
-<body ng-app="FullstackGeneratedApp">
-    <navbar></navbar>
-    <div id="main" ui-view></div>
+
+<body ng-app="Castles">
+  <navbar></navbar>
+  <div id="sidebar" class="col-sm-3">
+    <div id="playerspanel" class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="text-center">
+              Players
+            </h3>
+      </div>
+      <div id="playerlist" class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item">Player 1</li>
+          <li class="list-group-item">Player 2</li>
+          <li class="list-group-item">Player 3</li>
+          <li class="list-group-item">Player 4</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="main" class="col-sm-9 center-block">
+    <div ui-view></div>
+  </div>
+
 </body>
+
 </html>

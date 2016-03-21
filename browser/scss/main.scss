@@ -1,22 +1,66 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  background: #fdfdfd;
+    background: #fdfdfd;
 }
 
 @mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+#coolgrid {
+    overflow: hidden;
+    border-left: 0.5vh solid black;
+    border-right: 0.5vh solid black;
+    border-bottom: 0.5vh solid black;
+    width: 100%;
+    height: 93vh;
+    background-color: "royalblue";
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: top;
+    overflow: hidden;
+    background-color: "royalblue";
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    background-color: "royalblue";
 }
 
 #main {
-  padding-top: 60px;
-  margin: 0 auto;
+    margin: 0;
+    padding: 0;
+}
+
+.axis line {
+    fill: none;
+    stroke: #bbb;
+    shape-rendering: crispEdges;
+    vector-effect: non-scaling-stroke;
+}
+
+svg {
+    shape-rendering: crispEdges;
+}
+
+#sidebar {
+    padding: 0;
+}
+
+#playerlist {
+    padding: 0;
 }
 
 @import 'directives/main';
