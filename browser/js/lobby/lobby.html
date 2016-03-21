@@ -2,7 +2,7 @@
     <div class = "row">
         <div class = "col-lg-6">
         user: <pre>{{auth.$getAuth()|json}}</pre>
-        <button class="btn btn-lg btn-primary btn-block" ng-click="goToGame()" ng-show="auth.$getAuth()">Game</button>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="goToGame()" ng-show="user.game">Game</button>
         <button class="btn btn-lg btn-primary btn-block" ng-click="findRandomGame()" ng-show="auth.$getAuth()">Random Game</button>
         </div>
 
