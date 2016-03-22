@@ -18,6 +18,7 @@ app.directive('gridtesting', function($window) {
         link: function(scope, el, attr) {
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
+            
             var svg = d3.select("#coolgrid")
                 .append("svg")
                 .attr("preserveAspectRatio", "xMinYMin meet")
