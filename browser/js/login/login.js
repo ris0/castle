@@ -8,9 +8,24 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state, gameFactory) {
+app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
   $scope.auth = gameFactory.auth();
+  $scope.ref = gameFactory.ref();
+  $scope.usersRef = gameFactory.ref().child("users");
+  $scope.ref.onAuth(function(authData){
+      if (authData) {
+        $scope.usersRef.once('value', function(users){
+          console.log(users.val());
+          if(users[authData.uid]) return;
+        })
+       $scope.ref.child("users").child(authData.uid).set({
+        email: authData.password.email
+        });
+      }
+      // save the user's profile into the database so we can list users,
+      // use them in Security and Firebase Rules, and show profiles
+  })
 
   $scope.signup = function() {
     $scope.message = null;
@@ -34,13 +49,13 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state, gameFactory) 
       email: $scope.login.email,
       password: $scope.login.password
     }).then(function(userData) {
-        $state.go('game');
+        $state.go('lobby');
     }).catch(function(error) {
       $scope.error = error;
     });
   };
 
   $scope.logout = function(){
-    $scope.auth.$unauth();
+    $scope.auth.$unauth()
   };
 });
