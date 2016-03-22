@@ -23,7 +23,6 @@ app.controller('LobbyCtrl', function (usersRef, userEmail, userId, gamesRef, pla
       		var players = _.clone(playersObj.val());
       		$scope.counter = 0;
       		for(var key in players){
-      	
       			$scope.baseState.players[$scope.counter].userID = players[key].userId;
       			$scope.baseState.players[$scope.counter].userName = players[key].email;
       			$scope.counter ++;
@@ -39,14 +38,14 @@ app.controller('LobbyCtrl', function (usersRef, userEmail, userId, gamesRef, pla
               for(var j = 0; j < $scope.counter; j++){
                 $scope.addGameToUsers(gamePlayers[j].userID, gameID);
               }
-              for(var i = $scope.counter+1; i < gamePlayers.length; i++){
+              for(var i = $scope.counter; i < gamePlayers.length; i++){
                 gamePlayers.$remove(i);
               }
-          })
+          });
           console.log('Game has been created');
     	});
   
-    }
+    };
 
     $scope.addGameToUsers = function(uid, gameID){
     	usersRef.child(uid).child('game').set(gameID);
