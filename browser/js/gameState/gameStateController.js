@@ -1,18 +1,12 @@
 app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFactory) {
+  var numberPlayers;
+  var currentPlayer;
+  var masterBuilder;
 
   syncObject.$bindTo($scope, "data")
     .then(function() {
-      (function getMyIndex() {
-        var id = gameFactory.auth().$getAuth().uid;
-        return $scope.data.players.reduce(function(prev, curr, index) {
-          if (id === curr.userID) {
-            $scope.userIndex = index;
-            return index;
-          }
-          return prev;
-        }, "");
+      $scope.userIndex = $scope.data.players.reduce(findMyIndex, "");
 
-      })();
       if ($scope.data.turnCount === 0) {
         $scope.data.roomCards = _.shuffle($scope.data.roomCards);
         $scope.data.bonusCards = _.shuffle($scope.data.bonusCards);
@@ -22,51 +16,42 @@ app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFa
         $scope.drawToMarket();
       }
 
+      numberPlayers = $scope.data.players.length;
     });
 
-  //transfer cash from currentplayer to masterbuilder or 'bank'
-  function cashFlow(price, truePrice) {
-    var masterBuilder = $scope.data.players[$scope.data.masterBuilder];
-    $scope.data.players[$scope.data.currentPlayer].cashMoney -= truePrice;
-    if ($scope.data.currentPlayer !== $scope.data.masterBuilder) masterBuilder.cashMoney += +price;
-  }
-
-  //send room from deck to player castle
-  function roomToPlayer(room, price) {
-    room.room = 0;
-    $scope.data.players[$scope.data.currentPlayer].castle.push(room.room);
-    $scope.data.market[price].room = "empty";
-  }
-
-  //transfer money and room to castle
   //add scoring
   $scope.buy = function(room, price) {
     //validate player === currentplayer
-    if ($scope.data.players[$scope.data.currentPlayer].canBuy) {
+    if (getCurrentPlayer().canBuy) {
       var truePrice = +price - (+room.room.discount);
       cashFlow(price, truePrice);
+      scoreRoom(room.room);
       roomToPlayer(room, price);
       //calculate score
-      $scope.data.players[$scope.data.currentPlayer].canBuy = false;
+      getCurrentPlayer().canBuy = false;
       $scope.done();
     } else console.log("It's not your turn");
     //completions
   };
 
+  $scope.completionBonus = function() {
+    if (getCurrentPlayer().completionQueue.length === 0) $scope.done();
+  };
+
   $scope.pass = function() {
     if ($scope.userIndex === $scope.data.currentPlayer) {
-      $scope.data.players[$scope.data.currentPlayer].canBuy = false;
-      $scope.data.players[$scope.data.currentPlayer].cashMoney += 5000;
+      getCurrentPlayer().canBuy = false;
+      getCurrentPlayer().cashMoney += 5000;
       $scope.done();
     } else console.log("It's not your turn");
   };
 
   $scope.done = function() {
     $scope.data.turnCount++;
-    $scope.data.currentPlayer = ($scope.data.turnCount) % $scope.data.players.length; //players.length ** edit when there are null players
-    $scope.data.players[$scope.data.currentPlayer].canBuy = true;
-    if ($scope.data.turnCount % ($scope.data.players.length + 1) === 0) { // players.lenght + 1
-      $scope.data.masterBuilder = ($scope.data.masterBuilder + 1) % $scope.data.players.length; //players.length
+    $scope.data.currentPlayer = ($scope.data.turnCount) % numberPlayers; //players.length ** edit when there are null players
+    if ($scope.data.turnCount % (numberPlayers + 1) !== 0) getCurrentPlayer().canBuy = true;
+    if ($scope.data.turnCount % (numberPlayers + 1) === 0) { // players.lenght + 1
+      $scope.data.masterBuilder = ($scope.data.masterBuilder + 1) % numberPlayers; //players.length
       $scope.drawToMarket();
     }
   };
@@ -84,4 +69,45 @@ app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFa
       }
     }
   };
+
+  function getMasterBuilder(){
+  	return $scope.data.players[$scope.data.masterBuilder];
+  }
+
+
+  function getCurrentPlayer(){
+  	return $scope.data.players[$scope.data.currentPlayer];
+  }
+
+  //transfer cash from currentplayer to masterbuilder or 'bank'
+  function cashFlow(price, truePrice) {
+    getCurrentPlayer().cashMoney -= truePrice;
+    console.log($scope.data.currentPlayer !== $scope.data.masterBuilder);
+    if ($scope.data.currentPlayer !== $scope.data.masterBuilder) {
+    	console.log("trying to pay");
+    	getMasterBuilder().cashMoney += +price;
+    }
+  }
+
+  //send room from deck to player castle
+  function roomToPlayer(room, price) {
+    room.room.discount = 0;
+    getCurrentPlayer().castle.push(room.room);
+    $scope.data.market[price].room = "empty";
+  }
+
+  function scoreRoom(room) {
+    getCurrentPlayer().publicScore.roomPts += room.placementPts;
+    if (room.roomType === "Downstairs") {
+      if (!getCurrentPlayer().globalEffects) getCurrentPlayer().globalEffects = [];
+      getCurrentPlayer().globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
+    }
+  }
+
+  function findMyIndex(prev, curr, index) {
+    if (gameFactory.auth().$getAuth().uid === curr.userID) {
+      return index;
+    }
+    return prev;
+  }
 });
