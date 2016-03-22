@@ -10,10 +10,8 @@ app.config(function($stateProvider){
 				return userGame.$loaded().then(function(data){
 	  				return data.$value;
 	  			}).then(function(game){
-	  				console.log(game)
 	  				return $firebaseObject(gameFactory.ref().child('games').child(game));
 	  			}).then(function(syncObject){
-	  				console.log(syncObject);
 	  				return syncObject;
 	  			});
 			}

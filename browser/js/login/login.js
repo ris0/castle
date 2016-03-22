@@ -27,8 +27,6 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
       // use them in Security and Firebase Rules, and show profiles
   })
 
-  console.log($scope.auth.$getAuth());
-
   $scope.signup = function() {
     $scope.message = null;
     $scope.error = null;
