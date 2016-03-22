@@ -6,6 +6,7 @@ var plumber = require('gulp-plumber');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var less = require('gulp-less');
+var load = require('gulp-load-plugins');
 var livereload = require('gulp-livereload');
 var minifyCSS = require('gulp-minify-css');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -84,14 +85,14 @@ gulp.task('testBrowserJS', function (done) {
 
 gulp.task('buildCSS', function () {
 
-    var sassCompilation = sass();
-    sassCompilation.on('error', console.error.bind(console));
+    var lessCompilation = less();
+    lessCompilation.on('error', console.error.bind(console));
 
-    return gulp.src('./browser/scss/main.scss')
+    return gulp.src('./browser/styles/main.less')
         .pipe(plumber({
-            errorHandler: notify.onError('SASS processing failed! Check your gulp process.')
+            errorHandler: notify.onError('LESS processing failed! Check your gulp process.')
         }))
-        .pipe(sassCompilation)
+        .pipe(lessCompilation)
         .pipe(rename('style.css'))
         .pipe(gulp.dest('./public'));
 });
@@ -100,8 +101,8 @@ gulp.task('buildCSS', function () {
 // --------------------------------------------------------------
 
 gulp.task('buildCSSProduction', function () {
-    return gulp.src('./browser/scss/main.scss')
-        .pipe(sass())
+    return gulp.src('./browser/styles/main.less')
+        .pipe(less())
         .pipe(rename('style.css'))
         .pipe(minifyCSS())
         .pipe(gulp.dest('./public'))
