@@ -1,6 +1,6 @@
 <div class = "container">
 	Turn Count: {{data.turnCount}} // Current Player: {{data.currentPlayer}} // Master Builder: {{data.masterBuilder}} // Am I the current player?: {{userIndex===data.currentPlayer}}<br>
 	<button ng-click="done()">Next Turn</button>
-	<button ng-click="buy()">Buy</button>
+	<button ng-repeat="room in data.market" ng-click="buy(room, room.price)">{{room.room.roomName}}</button>
 	<pre>{{data.players[userIndex]|json}}</pre>
 </div>
