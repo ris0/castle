@@ -6,6 +6,18 @@ body {
     background: #fdfdfd;
 }
 
+.splash{
+    display: block;
+    margin-left: 150px;
+    background-position: center;
+    background-image: url("../js/home/castlesketch1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 750px;
+    width: 100%;
+
+}
+
 @mixin clearfix {
     &:after {
         content: "";
