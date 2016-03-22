@@ -5,7 +5,6 @@ var runSeq = require('run-sequence');
 var plumber = require('gulp-plumber');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
-var sass = require('gulp-sass');
 var less = require('gulp-less');
 var livereload = require('gulp-livereload');
 var minifyCSS = require('gulp-minify-css');
@@ -140,7 +139,7 @@ gulp.task('default', function () {
     });
 
     // Run when anything inside of browser/scss changes.
-    gulp.watch('browser/scss/**', function () {
+    gulp.watch('browser/styles/**', function () {
         runSeq('buildCSS', 'reloadCSS');
     });
 
