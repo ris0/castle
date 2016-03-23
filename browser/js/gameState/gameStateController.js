@@ -54,6 +54,7 @@ app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFa
       $scope.data.masterBuilder = ($scope.data.masterBuilder + 1) % numberPlayers; //players.length
       $scope.drawToMarket();
     }
+    //rank kings favors
   };
 
   $scope.drawToMarket = function() {
