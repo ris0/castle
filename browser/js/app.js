@@ -28,7 +28,30 @@ window.app = angular
             url: '/dashboard',
             parent: 'base',
             templateUrl: 'views/dashboard.html',
-            controller: 'DashboardCtrl'
+            controller: 'DashboardCtrl',
+            resolve: {
+                syncObject: function($firebaseObject, gameFactory){
+                    return $firebaseObject(gameFactory.ref());
+                },
+                baseStateRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("baseState");
+                },
+                gamesRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("games");
+                },
+                playersRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("playersQueue");
+                },
+                usersRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("users")
+                },
+                userId: function($firebaseObject, gameFactory){
+                    return gameFactory.auth().$getAuth().uid;
+                },
+                userEmail: function($firebaseObject, gameFactory){
+                    return gameFactory.auth().$getAuth().password.email;
+                }
+            }
         })
         .state('overview', {
             url: '/overview',
@@ -48,30 +71,11 @@ window.app = angular
         .state('random', {
             url: '/random',
             parent: 'dashboard',
-            controller: "RandomCtrl",
-            templateUrl: 'views/dashboard/random.html',
-            resolve: {
-                syncObject: function($firebaseObject, gameFactory){
-                    return $firebaseObject(gameFactory.ref());
-                },
-                baseStateRef: function($firebaseObject, gameFactory){
-                    return gameFactory.ref().child("baseState");
-                },
-                gamesRef: function($firebaseObject, gameFactory){
-                    return gameFactory.ref().child("games");
-                },
-                playersRef: function($firebaseObject, gameFactory){
-                    return gameFactory.ref().child("playersQueue");
-                },
-                usersRef: function($firebaseObject, gameFactory){
-                    return gameFactory.ref().child("users");
-                },
-                userId: function($firebaseObject, gameFactory){
-                    return gameFactory.auth().$getAuth().uid;
-                },
-                userEmail: function($firebaseObject, gameFactory){
-                    return gameFactory.auth().$getAuth().password.email;
-                }
-            }
+            templateUrl: 'views/dashboard/random.html'
         });
+    })
+    .run(function($rootScope) {
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+        console.log(error);
+    })
 });
