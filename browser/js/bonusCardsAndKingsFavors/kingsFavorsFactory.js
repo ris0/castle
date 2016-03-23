@@ -7,6 +7,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 		kingsFavors.rank = function(){
 			var scoring = [8,4,2,1];
 			var res = [].slice.call(arguments);
+			console.log(res)
 			res = res.map(function(favorPoints){
 				favorPoints = _.sortBy(favorPoints, 'pts');
 				for(var i = 0; i < favorPoints.length-1; i++){
@@ -17,15 +18,26 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 					} else favorPoints[i].pts = scoring[i];
 				}
 			});
+			console.log(res);
 			return res;
 		}
 	// # of circle OR # of square rooms
 
-		kingsFavors.mostShapeRooms = function (game, shape){
+		kingsFavors.mostCircleRooms = function (game){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
 					if(room.shape === "circle") rooms++;
+				});
+				return({player: player, pts: rooms});
+			});
+		}
+
+		kingsFavors.mostCircleRooms = function (game, shape){
+			return game.players.map(function(player){
+				var rooms = 0;
+				player.castle.forEach(function(room){
+					if(room.shape === "square") rooms++;
 				});
 				return({player: player, pts: rooms});
 			});
