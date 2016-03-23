@@ -63,14 +63,6 @@ app.directive('gridtesting', function($window) {
                 { url: "foyer.png", roomPos: [width / 2, height / 2 + 100] }
             ];
 
-            // var foyer = svg.append("g");
-
-            // foyer.append("image")
-            //     .attr("xlink:href", "foyer.png")
-            //     .attr("x", width / 2)
-            //     .attr("y", height / 2)
-            //     .attr("height", 100)
-            //     .attr("width", 100);
 
             var foyer = svg.append("g")
                 .attr("id", "foyer");

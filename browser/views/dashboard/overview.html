@@ -1,0 +1,72 @@
+<div>
+	<snap-drawer>
+		<div class="snap-menu">
+
+			<div class="sidebar-header text-center">
+				<img src="images/logo.png" alt="" class="sidebar-img img-circle">
+			</div>
+
+			<ul class="snap-ul">
+				<li ng-class="{active: $state.includes('overview')}"><a ui-sref="overview">HOME</a></li>
+				<li ng-class="{active: $state.includes('create')}"><a ui-sref="create">CREATE GAME</a></li>
+				<li ng-class="{active: $state.includes('join')}"><a ui-sref="join">JOIN GAME</a></li>
+				<li ng-class="{active: $state.includes('random')}"><a ui-sref="random">RANDOM GAME</a></li>
+				<li><a ui-sref="login">LOGOUT</a></li>
+			</ul>
+
+		</div>
+	</snap-drawer>
+
+	<snap-dragger></snap-dragger>
+
+	<snap-content snap-opt-tap-to-close="false">
+
+		<a href="" snap-toggle="left" ng-click="menuOpen = !menuOpen">
+			<span class="menutoggle">
+				<i ng-hide="menuOpen" class="fa fa-bars fa-2x" ></i>
+				<i ng-show="menuOpen" class="fa fa-times fa-2x" ></i>
+			</span>
+		</a>
+		
+		<div class="fr">
+		<h2> Castles </h2>
+		</div>
+		<div class="jumbotron">
+			<div class="container">
+				<h1>Welcome!</h1>
+				<br /><br />
+				<p>
+					Castles is a digital implementation of the popular board game, Castles of Mad King Ludwig.
+					<br>
+					This game was developed by a team of 4 outstanding developers from Fullstack Academy.
+					<br>
+					We are recent graduates with a genuine passion for building and developing.
+					<!--<a ui-sref="login" class="btn btn-primary btn-lg btn-white">Logout</a>-->
+				</p>
+
+				<br>
+				<div class="col-md-2">
+					Team Members:
+					<uL>
+						<li> Chris de Velliers </li>
+						<li> Cindy Li </li>
+						<li> John Quiwa </li>
+						<li> Richard Song </li>
+					</uL>
+				</div>
+
+				<div class="col-md-2">
+					Core technologies:
+					<uL>
+						<li> Angular </li>
+						<li> Firebase </li>
+						<li> D3 </li>
+					</uL>
+				</div>
+
+				
+			</div>
+		</div>
+	</snap-content>
+
+</div>
