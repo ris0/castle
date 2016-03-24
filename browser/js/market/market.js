@@ -1,4 +1,4 @@
-app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameStateFactory, marketFactory) {
+app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameStateFactory, marketFactory, $uibModal) {
 
   return {
     restrict: 'E',
@@ -47,7 +47,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
             }
           }
         };
-
       });
     }
   };
@@ -74,7 +73,7 @@ app.factory('marketFactory', function() {
       roomToPlayer(game, room, price);
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
-      market.done(game);
+      market.done();
     } else console.log("It's not your turn");
   };
 
@@ -125,8 +124,14 @@ app.factory('marketFactory', function() {
         //********************draw from discard. how to verify?
 
         if (typeof nextCard === 'number') { //if the next card in the pile is a room card
-          if (game.roomTiles[nextCard]) currentPrice.room = game.roomTiles[nextCard].pop();
-        } else currentPrice.room = nextCard; //if the next card in the pile is a tile
+          if (game.roomTiles[nextCard]) {
+            currentPrice.room = game.roomTiles[nextCard].pop();
+            currentPrice.room.discount = 0;
+          }
+        } else {
+          currentPrice.room = nextCard; //if the next card in the pile is a tile
+          currentPrice.room.discount = 0;
+        }
         discardCard(game, nextCard);
       }
     }
@@ -141,11 +146,6 @@ app.factory('marketFactory', function() {
     //determine winner
   }
 
-  //add completion Bonus Factory
-  function completionBonus(game) {
-    if (!getCurrentPlayer(game).completionQueue) market.done(game);
-    //else do all the stuff
-  }
 
   function getMasterBuilder(game) {
     return game.players[game.masterBuilder];
