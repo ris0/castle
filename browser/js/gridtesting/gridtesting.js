@@ -18,11 +18,11 @@ app.directive('gridtesting', function($window) {
         link: function(scope, el, attr) {
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
-            console.log(el);
+
             var dataArray = [
                 { url: "foyer.png", x: width / 2, y: height / 2, sqf: 125, rotation: 0, height: 100, width: 100 },
                 { url: "foyer.png", x: (width / 2) + 100, y: (height / 2), sqf: 125, rotation: 0, height: 100, width: 100 },
-                { url: "foyer.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 100, width: 100 }
+                { url: "foyer.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 100, width: 100, notdraggable: true }
             ];
 
             var drag = d3.behavior.drag()
@@ -46,6 +46,13 @@ app.directive('gridtesting', function($window) {
 
 
             var gameGrid = svg.append("g");
+
+            var castle = svg.append("g")
+                .attr("id", "tile");
+
+            var roomTiles = d3.select("#tile")
+                .selectAll("image")
+                .data(dataArray);
 
             gameGrid.append("g")
                 .selectAll("line")
@@ -77,13 +84,6 @@ app.directive('gridtesting', function($window) {
                 })
                 .style("stroke", "royalblue");
 
-            var castle = svg.append("g")
-                .attr("id", "tile");
-
-            var roomTiles = d3.select("#tile")
-                .selectAll("image")
-                .data(dataArray);
-
             roomTiles.enter()
                 .append("image")
                 .attr("xlink:href", function(d) {
@@ -96,42 +96,56 @@ app.directive('gridtesting', function($window) {
                     return d.width;
                 })
                 .attr("transform", function(d) {
-                    return "rotate(" + d.rotation + " " + (d.x + d.width / 2) + " " + (d.y + d.height / 2) + "),translate(" + [d.x, d.y] + ")";
+                        var movex = Math.round(d.x / 10) * 10;
+                        var movey = Math.round(d.y / 10) * 10;
+                        return "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")";
                 })
+                .classed("roomTiles", true)
                 .call(drag)
-                .on("dblclick", function(d) {
-                    console.log(this);
-                    d3.event.stopPropagation();
-                    d3.select(this)
-                        .attr("transform", function(d) {
-                            console.log(d);
-                            d.rotation = d.rotation + 90;
-                            console.log(d);
-                            return "rotate(" + d.rotation + " " + (d.x + d.width / 2) + " " + (d.y + d.height / 2) + "),translate(" + [d.x, d.y] + ")";
-                        });
-                });
+                .on("dblclick", rotate);
 
-            function dragstarted(d) {
-                d3.event.sourceEvent.stopPropagation();
-                d3.select(this).classed("dragging", true);
+            function rotate(d) {
+                console.log(this);
+                d3.event.stopPropagation();
+                d3.select(this)
+                    .attr("transform", function(d) {
+                        console.log(d);
+                        d.rotation = d.rotation + 90;
+                        console.log(d);
+                        var movex = Math.round(d.x / 10) * 10;
+                        var movey = Math.round(d.y / 10) * 10;
+                        return "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")";
+                    });
             }
 
+            function dragstarted(d) {
+                if (d.notdraggable !== true) {
+                    d3.event.sourceEvent.stopPropagation();
+                    d3.select(this).classed("dragging", true);
+                }
+            }
 
             function dragged(d) {
                 // console.log(this);
-                if (d.sqf === 500 || d.sqf === 150) {
-                    // circle stuff
-                } else {
-                    d.x += d3.event.dx;
-                    d.y += d3.event.dy;
-                    d3.select(this).attr("transform", function(d) {
-                        return "rotate(" + d.rotation + " " + (d.x + d.width / 2) + " " + (d.y + d.height / 2) + "),translate(" + [d.x, d.y] + ")";
-                    })
+                if (d.notdraggable != true) {
+                    if (d.sqf === 500 || d.sqf === 150) {
+                        // circle stuff
+                    } else {
+                        d.x += d3.event.dx;
+                        d.y += d3.event.dy;
+                        var movex = Math.round(d.x / 10) * 10;
+                        var movey = Math.round(d.y / 10) * 10;
+                        d3.select(this).attr("transform", "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")");
+                    }
                 }
             }
 
             function dragended(d) {
-                d3.select(this).classed("dragging", false);
+                if (d.notdraggable != true) {
+                    // d.x = d.px = Math.round(d.x / 100) * 100;
+                    // d.y = d.py = Math.round(d.y / 100) * 100;
+                    d3.select(this).classed("dragging", false);
+                }
             }
 
             function zooming() {
