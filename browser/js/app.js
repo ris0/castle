@@ -43,7 +43,7 @@ window.app = angular
                     return gameFactory.ref().child("playersQueue");
                 },
                 usersRef: function($firebaseObject, gameFactory){
-                    return gameFactory.ref().child("users")
+                    return gameFactory.ref().child("users");
                 },
                 userId: function($firebaseObject, gameFactory){
                     return gameFactory.auth().$getAuth().uid;
@@ -76,6 +76,10 @@ window.app = angular
     })
     .run(function($rootScope) {
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-        if (error) console.log(error);
+        if (error) {
+            console.log('state event', event);
+            console.log('state error', error);
+            console.log('from params', fromParams);
+        }
     })
 });

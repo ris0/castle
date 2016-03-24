@@ -1,6 +1,7 @@
-app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, playersRef, baseStateRef, syncObject, $scope, $state, $firebaseArray, $firebaseObject, gameFactory) {
+app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, playersRef, baseStateRef, syncObject, $scope, $state, $firebaseArray, $firebaseObject, gameFactory, $timeout) {
 
     $scope.auth = gameFactory.auth();
+    $scope.isLoading;
 
     var players;
     var userObj = $firebaseObject(usersRef.child(userId));
@@ -52,9 +53,13 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
                     for (var i = $scope.counter; i < gamePlayers.length; i++) {
                         gamePlayers.$remove(i);
                     }
-                });
-                console.log('Game has been created');
-            });
+                }).then(function(){
+                    $scope.isLoading = false;
+                    $state.go('game');
+                })
+
+
+            })
 
         };
 
@@ -73,8 +78,10 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
                 playersRef.push({ userId: userId, email: userEmail })
 
             } else {
-                playersRef.push({ userId: userId, email: userEmail })
-                setTimeout($scope.createGame, 5000);
+                playersRef.push({ userId: userId, email: userEmail });
+                $scope.isLoading = true;
+                console.log($scope.isLoading);
+                $timeout($scope.createGame, 5000);
                 console.log('Game will be ready in 5 seconds');
             }
 

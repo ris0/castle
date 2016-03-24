@@ -77,21 +77,8 @@ app.directive('gridtesting', function($window) {
                 })
                 .style("stroke", "royalblue");
 
-<<<<<<< HEAD
-            var zoom = d3.behavior.zoom()
-                .scaleExtent([1, 5])
-                .on("zoom", zoomed);
-
-            var dataArray = [
-                { url: "foyer.png", roomPos: [width / 2, height / 2] },
-                { url: "foyer.png", roomPos: [width / 2 + 100, height / 2] },
-                { url: "foyer.png", roomPos: [width / 2, height / 2 + 100] }
-            ];
-
-=======
             var castle = svg.append("g")
                 .attr("id", "tile");
->>>>>>> master
 
             var roomTiles = d3.select("#tile")
                 .selectAll("image")
