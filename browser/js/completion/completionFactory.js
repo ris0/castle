@@ -1,5 +1,5 @@
 app.factory('completionFactory', function(){
-	var completion;
+	var completion = {};
 
 	completion.Activity = function(player){
 		player.publicScore.roomPts += 5;

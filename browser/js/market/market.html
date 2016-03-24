@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-header">
         </div>
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-right">
             <li class = "market-room" ng-repeat="(price,room) in data.market">
                 <center><div>{{room.room.roomName || "empty"}}</div>
                 <img src = "images/100-pantry.png" class = "img-responsive" ng-click="swapTwo(room)">

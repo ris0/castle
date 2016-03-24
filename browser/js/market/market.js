@@ -35,7 +35,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 
         if (scope.data.turnCount === 0 && scope.data.market[1000].room === "empty") scope.drawToMarket();
 
-        var firstChoice;
+        var firstChoice = null;
 
         scope.swapTwo = function(price) {
           if(!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex){
@@ -82,7 +82,6 @@ app.factory('marketFactory', function() {
     if (getCurrentPlayer(game).canBuy) {
       getCurrentPlayer(game).canBuy = false;
       getCurrentPlayer(game).cashMoney += 5000;
-      market.done(game);
     } else console.log("It's not your turn");
   };
 
