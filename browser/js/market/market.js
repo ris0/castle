@@ -14,6 +14,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       }).then(function(syncObject) {
         return syncObject.$bindTo(scope, 'data');
       }).then(function(game) {
+        console.log(scope.data);
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function(room, price) {
@@ -54,7 +55,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 
 
 //add scoring factory
-app.factory('marketFactory', function() {
+app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
   var market = {};
 
   market.swapMarket = function(price1, price2) {
@@ -71,6 +72,7 @@ app.factory('marketFactory', function() {
       cashFlow(game, price, truePrice);
       scoreRoom(game, room);
       roomToPlayer(game, room, price);
+      bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
       market.done();
@@ -107,7 +109,7 @@ app.factory('marketFactory', function() {
         market.drawToMarket(game);
       }
     }
-
+    kingsFavorsFactory.getRankings(game);
   };
 
   market.drawToMarket = function(game) {
@@ -184,7 +186,7 @@ app.factory('marketFactory', function() {
     //adding global effects to player
     if (room.roomType === "Downstairs") {
       if (!getCurrentPlayer(game).globalEffects) getCurrentPlayer(game).globalEffects = [{ roomType: room.affectedBy[0], effectPts: room.effectPts }];
-      else getCurrentPlayer(game).globalEffects.$add({ roomType: room.affectedBy[0], effectPts: room.effectPts });
+      else getCurrentPlayer(game).globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
       getCurrentPlayer(game).castle.forEach(function(castleRoom) {
         room.affectedBy.forEach(function(type) {
           if (type === castleRoom.roomType) getCurrentPlayer(game).publicScore.roomPts += room.effectPts;
