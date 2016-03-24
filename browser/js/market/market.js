@@ -1,4 +1,4 @@
-app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameStateFactory, marketFactory, $uibModal) {
+app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameStateFactory, marketFactory) {
 
   return {
     restrict: 'E',
@@ -48,6 +48,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
             }
           }
         };
+
       });
     }
   };
@@ -75,7 +76,7 @@ app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
       bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
-      market.done();
+      market.done(game);
     } else console.log("It's not your turn");
   };
 
@@ -126,14 +127,8 @@ app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
         //********************draw from discard. how to verify?
 
         if (typeof nextCard === 'number') { //if the next card in the pile is a room card
-          if (game.roomTiles[nextCard]) {
-            currentPrice.room = game.roomTiles[nextCard].pop();
-            currentPrice.room.discount = 0;
-          }
-        } else {
-          currentPrice.room = nextCard; //if the next card in the pile is a tile
-          currentPrice.room.discount = 0;
-        }
+          if (game.roomTiles[nextCard]) currentPrice.room = game.roomTiles[nextCard].pop();
+        } else currentPrice.room = nextCard; //if the next card in the pile is a tile
         discardCard(game, nextCard);
       }
     }
@@ -148,6 +143,11 @@ app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
     //determine winner
   }
 
+  //add completion Bonus Factory
+  function completionBonus(game) {
+    if (!getCurrentPlayer(game).completionQueue) market.done(game);
+    //else do all the stuff
+  }
 
   function getMasterBuilder(game) {
     return game.players[game.masterBuilder];

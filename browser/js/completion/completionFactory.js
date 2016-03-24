@@ -1,8 +1,8 @@
-app.factory('completionFactory', function(marketFactory) {
+app.factory('completionFactory', function(BonusModalFactory) {
   var completion = {};
 
   completion.assessCompletion = function(player) {
-    if (!player.completionQueue) marketFactory.done(game);
+    // if (!player.completionQueue) marketFactory.done(game);
 
   };
 
@@ -18,28 +18,33 @@ app.factory('completionFactory', function(marketFactory) {
     player.canBuy = true;
   };
 
-  completion.Utility = function(player) {
+  completion.Utility = function(player, game) {
     //draw bonus cards;
+    var bonuses = [];
+    for (var i = 0; i < 2; i++) {
+      bonuses.push(game.bonusCards.pop());
+    }
+
+    BonusModalFactory.open(bonuses, player);
   };
 
   completion.Corridor = function(player) {
     player.canBuyCorridors = true;
-    //can buy hallways or stairs;
   };
 
   completion.Living = function(player, room) {
     player.publicScore.livingRoomBonusPts += room.points;
   };
 
-  completion.Sleep = function(player) {
+  completion.Sleep = function(game, tile, num) {
     //input type of tile and # to draw
+    for (var i = 0; i < num; i++) {
+      game.roomCards.push(game.roomTiles[tile].pop());
+    }
   };
 
-  completion.Downstairs = function(player) {
-    var numDownCompleted;
-    if (numDownCompleted % 2 === 0) {
-      //choose one of the other seven rewards.
-    }
+  completion.Downstairs = function(player, type) {
+    player.completionBonus.push(type);
   };
 
   return completion;
