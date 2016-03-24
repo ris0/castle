@@ -49,6 +49,11 @@ rect {
     padding: 0;
 }
 
+.market-room {
+    width: 8vw;
+    margin: 5px;
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';

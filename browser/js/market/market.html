@@ -3,11 +3,31 @@
         <div class="navbar-header">
         </div>
         <ul class="nav navbar-nav">
-            <button ng-show="data.players[userIndex].canBuy" ng-click="pass()">Pass</button>
-            <li ng-show="data.currentPlayer === userIndex" ng-repeat="(price,room) in data.market">
-                <div ng-disabled="data.players[userIndex].canBuy" ng-click="swapTwo(room)">{{room.room.roomName || "empty"}}</div><br>
-                <button ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">{{price}}</button><br>
-                <span>discount: {{room.room.discount}}</span>
+            <li class = "market-room" ng-repeat="(price,room) in data.market">
+                <center><div>{{room.room.roomName || "empty"}}</div>
+                <img src = "100-pantry.png" class = "img-responsive" ng-click="swapTwo(room)">
+                <button ng-hide="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">Buy</button>
+                <br> ${{price}} - {{room.room.discount}}
+                </center>
+            </li>
+            <li class = "market-room">
+                <center>
+                    Hallway<br>
+                    <img src = "150-hallway.png" class = "img-responsive">
+                    $3000<br>
+                    <button ng-hide="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount" ng-click="buy('Hallway', 3000)">Buy</button>
+                    <br>
+                    Stairs<br>
+                    <img src = "75-stairs.png" class="img-responsive">
+                    $3000<br>
+                    <button ng-hide="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount" ng-click="buy('Stairs', 3000)">Buy</button>
+                </center>
+            </li>
+            <li>
+                <center><button ng-show="data.players[userIndex].canBuy" ng-click="pass()">Pass</button></center>
+            </li>
+            <li>
+                <button ng-show="data.masterBuilder === userIndex && !data.players[userIndex].canBuy && data.currentPlayer === userIndex" ng-click="done()">MB done</button>
             </li>
         </ul>
     </div>

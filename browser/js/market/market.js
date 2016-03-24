@@ -24,6 +24,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
           marketFactory.pass(scope.data);
         };
 
+        //availability on scope? only for masterbuilder market turn
         scope.done = function() {
           marketFactory.done(scope.data);
         };
@@ -37,11 +38,13 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         var firstChoice;
 
         scope.swapTwo = function(price) {
-          if (firstChoice) {
-            marketFactory.swapMarket(firstChoice, price);
-            firstChoice = null;
-          } else {
-            firstChoice = price;
+          if(!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex){
+            if (firstChoice) {
+              marketFactory.swapMarket(firstChoice, price);
+              firstChoice = null;
+            } else {
+              firstChoice = price;
+            }
           }
         };
 
@@ -51,6 +54,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 });
 
 
+//add scoring factory
 app.factory('marketFactory', function() {
   var market = {};
 
@@ -138,6 +142,7 @@ app.factory('marketFactory', function() {
     //determine winner
   }
 
+  //add completion Bonus Factory
   function completionBonus(game) {
     if (!getCurrentPlayer(game).completionQueue) market.done(game);
     //else do all the stuff
@@ -168,7 +173,6 @@ app.factory('marketFactory', function() {
   }
 
   //scoring factory
-
   function scoreRoom(game, room) { //adjacent rooms, connectedRooms
     getCurrentPlayer(game).publicScore.roomPts += room.placementPts;
 
@@ -190,13 +194,6 @@ app.factory('marketFactory', function() {
     }
 
     //keep track of room points on roomTile object
-  }
-
-  function findMyIndex(prev, curr, index) {
-    if (gameFactory.auth().$getAuth().uid === curr.userID) {
-      return index;
-    }
-    return prev;
   }
 
   function discardCard(game, nextCard) {

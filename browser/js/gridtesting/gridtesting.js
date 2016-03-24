@@ -22,7 +22,7 @@ app.directive('gridtesting', function($window) {
             var dataArray = [
                 { url: "300-sauna.png", x: width / 2, y: height / 2, sqf: 125, rotation: 0, height: 100, width: 125 },
                 { url: "75-stairs.png", x: (width / 2) + 100, y: (height / 2), sqf: 125, rotation: 0, height: 25, width: 75 },
-                { url: "250-shed.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 50, width: 100 }
+                { url: "250-shed.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 100, width: 100 }
             ];
 
             var drag = d3.behavior.drag()
