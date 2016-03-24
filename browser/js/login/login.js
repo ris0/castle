@@ -40,7 +40,6 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
   $scope.signup = function() {
     $scope.message = null;
     $scope.error = null;
-
     $scope.auth.$createUser({
         email: $scope.signup.email,
         password: $scope.signup.password

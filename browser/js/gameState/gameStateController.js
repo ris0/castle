@@ -1,4 +1,4 @@
-app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFactory, gameStateFactory) {
+app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $firebaseObject, gameFactory, gameStateFactory) {
   var numberPlayers;
   var currentPlayer;
   var masterBuilder;
