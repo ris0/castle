@@ -1,51 +1,81 @@
 'use strict';
-window.app = angular.module('Castles', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'ngAnimate', 'firebase']);
+window.app = angular
+    .module('Castles', [
+        'ui.router',
+        'ui.bootstrap',
+        'ngAnimate',
+        'firebase',
+        'snap'
+    ])
+    .config(function ($urlRouterProvider, $locationProvider, $stateProvider) {
+        $locationProvider.html5Mode(true);
+        $urlRouterProvider.when('/dashboard', '/dashboard/overview');
+        $urlRouterProvider.otherwise('/login');
 
-app.config(function ($urlRouterProvider, $locationProvider) {
-    // This turns off hashbang urls (/#about) and changes it to something normal (/about)
-    $locationProvider.html5Mode(true);
-    // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
-    $urlRouterProvider.otherwise('/');
+        $stateProvider
+        .state('base', {
+            abstract: true,
+            url: '',
+            templateUrl: 'views/base.html'
+        })
+        .state('login', {
+            url: '/login',
+            parent: 'base',
+            templateUrl: 'views/login.html',
+            controller: 'LoginCtrl'
+        })
+        .state('dashboard', {
+            url: '/dashboard',
+            parent: 'base',
+            templateUrl: 'views/dashboard.html',
+            controller: 'DashboardCtrl',
+            resolve: {
+                syncObject: function($firebaseObject, gameFactory){
+                    return $firebaseObject(gameFactory.ref());
+                },
+                baseStateRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("baseState");
+                },
+                gamesRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("games");
+                },
+                playersRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("playersQueue");
+                },
+                usersRef: function($firebaseObject, gameFactory){
+                    return gameFactory.ref().child("users")
+                },
+                userId: function($firebaseObject, gameFactory){
+                    return gameFactory.auth().$getAuth().uid;
+                },
+                userEmail: function($firebaseObject, gameFactory){
+                    return gameFactory.auth().$getAuth().password.email;
+                }
+            }
+        })
+        .state('overview', {
+            url: '/overview',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/overview.html'
+        })
+        .state('create', {
+            url: '/create',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/create.html'
+        })
+        .state('join', {
+            url: '/join',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/join.html'
+        })
+        .state('random', {
+            url: '/random',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/random.html'
+        });
+    })
+    .run(function($rootScope) {
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+        if (error) console.log(error);
+    })
 });
-
-// This app.run is for controlling access to specific states.
-// app.run(function ($rootScope, AuthService, $state) {
-
-//     // The given state requires an authenticated user.
-//     var destinationStateRequiresAuth = function (state) {
-//         return state.data && state.data.authenticate;
-//     };
-
-//     // $stateChangeStart is an event fired
-//     // whenever the process of changing a state begins.
-//     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
-//         if (!destinationStateRequiresAuth(toState)) {
-//             // The destination state does not require authentication
-//             // Short circuit with return.
-//             return;
-//         }
-
-//         if (AuthService.isAuthenticated()) {
-//             // The user is authenticated.
-//             // Short circuit with return.
-//             return;
-//         }
-
-//         // Cancel navigating to new state.
-//         event.preventDefault();
-
-//         AuthService.getLoggedInUser().then(function (user) {
-//             // If a user is retrieved, then renavigate to the destination
-//             // (the second time, AuthService.isAuthenticated() will work)
-//             // otherwise, if no user is logged in, go to "login" state.
-//             if (user) {
-//                 $state.go(toState.name, toParams);
-//             } else {
-//                 $state.go('login');
-//             }
-//         });
-
-//     });
-
-// });
