@@ -1,41 +1,51 @@
-app.factory('completionFactory', function(){
-	var completion;
+app.factory('completionFactory', function(BonusModalFactory) {
+  var completion = {};
 
-	completion.Activity = function(player){
-		player.publicScore.roomPts += 5;
-	};
+  completion.assessCompletion = function(player) {
+    // if (!player.completionQueue) marketFactory.done(game);
 
-	completion.Outdoor = function(player){
-		player.cashMoney += 10000;
-	};
+  };
 
-	completion.Food = function(player){
-		player.canBuy = true;
-	};
+  completion.Activity = function(player) {
+    player.publicScore.roomPts += 5;
+  };
 
-	completion.Utility = function(player){
-		//draw bonus cards;
-	};
+  completion.Outdoor = function(player) {
+    player.cashMoney += 10000;
+  };
 
-	completion.Corridor = function(player){
-		player.canBuyCorridors = true;
-		//can buy hallways or stairs;
-	};
+  completion.Food = function(player) {
+    player.canBuy = true;
+  };
 
-	completion.Living = function(player, room){
-		player.publicScore.livingRoomBonusPts += room.points;
-	};
+  completion.Utility = function(player, game) {
+    //draw bonus cards;
+    var bonuses = [];
+    for (var i = 0; i < 2; i++) {
+      bonuses.push(game.bonusCards.pop());
+    }
 
-	completion.Sleep = function(player){
-		//input type of tile and # to draw
-	};
+    BonusModalFactory.open(bonuses, player);
+  };
 
-	completion.Downstairs = function(player){
-		var numDownCompleted;
-		if(numDownCompleted%2 === 0){
-			//choose one of the other seven rewards.
-		}
-	};
+  completion.Corridor = function(player) {
+    player.canBuyCorridors = true;
+  };
 
-	return completion;
+  completion.Living = function(player, room) {
+    player.publicScore.livingRoomBonusPts += room.points;
+  };
+
+  completion.Sleep = function(game, tile, num) {
+    //input type of tile and # to draw
+    for (var i = 0; i < num; i++) {
+      game.roomCards.push(game.roomTiles[tile].pop());
+    }
+  };
+
+  completion.Downstairs = function(player, type) {
+    player.completionBonus.push(type);
+  };
+
+  return completion;
 });

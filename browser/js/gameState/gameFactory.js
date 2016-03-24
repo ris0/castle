@@ -5,17 +5,9 @@ app.factory('gameFactory', function($firebaseAuth){
     	return ref;
     };
 
-    gameState.setup = function(){
-    	//get base state from firebase and then setup?
-    	//firebase sets up?
-    };
-
     gameState.auth = function(){
     	return $firebaseAuth(ref);
     };
-
-    //currentplayer = turn%players.length
-    //masterplayer = turn%players.length^2
 
 	return gameState;
     
