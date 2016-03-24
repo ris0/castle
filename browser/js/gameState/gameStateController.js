@@ -24,8 +24,7 @@ app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFa
 
       $scope.userIndex = gameStateFactory.getUserIndex($scope.data);
 
-      var curriedSwap = _.curry(swapMarket);
-      var curriedStuff;
+      var firstChoice;
 
       function swapMarket(price1, price2){
       	var temp = price1.room;
@@ -35,11 +34,11 @@ app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFa
       }
 
       $scope.swapTwo = function(price){
-      	if(!curriedStuff){
-      		curriedStuff = curriedSwap(price);
+      	if(firstChoice){
+      		swapMarket(firstChoice, price);
+      		firstChoice = null;
       	}else{
-      		curriedStuff(price);
-      		curriedStuff = null;
+      		firstChoice = price;
       	}
       };
 
