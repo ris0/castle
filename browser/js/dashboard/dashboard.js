@@ -9,9 +9,6 @@ app.controller('DashboardCtrl', function($scope, $state, gameFactory, usersRef, 
     $scope.baseStateRef = baseStateRef;
     $scope.syncObject = syncObject;
 
-
-
-
     $scope.logout = function(){
         $scope.auth.$unauth();
         console.log("Signing out");

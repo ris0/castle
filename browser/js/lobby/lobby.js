@@ -1,18 +1,18 @@
 app.controller('LobbyCtrl', function (usersRef, userEmail, userId, gamesRef, playersRef, baseStateRef, syncObject, $scope, $state, $firebaseArray, $firebaseObject, gameFactory) {
 
   $scope.auth = gameFactory.auth();
-
   var userObj = $firebaseObject(usersRef.child(userId));
-  userObj.$loaded().then(function(user){
-    $scope.user = user;
-  });
+
+  userObj.$loaded()
+      .then(function(user){
+          $scope.user = user;
+      });
   
-  syncObject.$bindTo($scope, "data").then(function(){
-
-
-    baseStateRef.once('value', function(baseState){
-    	$scope.baseState = _.clone(baseState.val());
-    });	
+  syncObject.$bindTo($scope, "data")
+      .then(function(){
+          baseStateRef.once('value', function(baseState){
+              $scope.baseState = _.clone(baseState.val());
+          });
 
     $scope.goToGame = function(){
     	$state.go('game');
