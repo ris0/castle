@@ -19,12 +19,51 @@ app.directive('gridtesting', function($window) {
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
 
-            var dataArray = [
-                { url: "foyer.png", x: width / 2, y: height / 2, sqf: 125, rotation: 0, height: 100, width: 100 },
-                { url: "foyer.png", x: (width / 2) + 100, y: (height / 2), sqf: 125, rotation: 0, height: 100, width: 100 },
-                { url: "foyer.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 100, width: 100, notdraggable: true }
+            // var dataArray = [
+            //     { url: "foyer.png", x: width / 2, y: height / 2, sqf: 125, rotation: 0, height: 100, width: 100 },
+            //     { url: "100-pantry.png", x: (width / 2) + 100, y: (height / 2), sqf: 125, rotation: 90, height: 100, width: 100 },
+            //     { url: "350-upper-hall.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 100, width: 100, notdraggable: true }
 
-            ];
+            // ];
+
+            var dataArray = [{
+                "roomName": "YellowFoyer",
+                "imagePath": "image/foyer.png",
+                "sqf": 125,
+                "roomType": "Corridor",
+                "placementPts": 0,
+                "affectedBy": [],
+                "effectPts": 0,
+                "completed": false,
+                "boardPosition": [0, 0],
+                "containerDim": [6, 6],
+                "roomDim": [2, 2, 2, 2, 2, 2, 2, 2],
+                "doors": [
+                    [-2, 0],
+                    [0, 2],
+                    [2, 0]
+                ],
+                "fence": null,
+                "rotation": 0
+            }, {
+                "roomName": "Solar",
+                "imagePath": "image/200-solar.png",
+                "sqf": 200,
+                "roomType": "Sleeping",
+                "placementPts": 2,
+                "affectedBy": ["Outdoor"],
+                "effectPts": 2,
+                "completed": false,
+                "boardPosition": [null, null],
+                "containerDim": [4, 8],
+                "roomDim": [4, 8],
+                "doors": [
+                    [4, -1],
+                    [3, -2]
+                ],
+                "fence": null,
+                "rotation": 0
+            }];
 
             var drag = d3.behavior.drag()
                 .origin(function(d) {
@@ -88,18 +127,19 @@ app.directive('gridtesting', function($window) {
             roomTiles.enter()
                 .append("image")
                 .attr("xlink:href", function(d) {
-                    return d.url;
+                    return d.imagePath;
                 })
                 .attr("height", function(d) {
-                    return d.height;
+                    return d.containerDim[1] * 10;
                 })
                 .attr("width", function(d) {
-                    return d.width;
+                    return d.containerDim[0] * 10;
                 })
                 .attr("transform", function(d) {
-                    var movex = Math.round(d.x / 10) * 10;
-                    var movey = Math.round(d.y / 10) * 10;
-                    return "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")";
+                    console.log(d);
+                    var snapX = Math.round(d.boardPosition[0] / 10) * 10;
+                    var snapY = Math.round(d.boardPosition[1] / 10) * 10;
+                    return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")";
                 })
                 .classed("roomTiles", true)
                 .call(drag)
@@ -113,9 +153,9 @@ app.directive('gridtesting', function($window) {
                         console.log(d);
                         d.rotation = d.rotation + 90;
                         console.log(d);
-                        var movex = Math.round(d.x / 10) * 10;
-                        var movey = Math.round(d.y / 10) * 10;
-                        return "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")";
+                        var snapX = Math.round(d.boardPosition[0] / 10) * 10;
+                        var snapY = Math.round(d.boardPosition[1] / 10) * 10;
+                        return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")";
                     });
             }
 
@@ -127,24 +167,23 @@ app.directive('gridtesting', function($window) {
             }
 
             function dragged(d) {
-                // console.log(this);
                 if (d.notdraggable != true) {
                     if (d.sqf === 500 || d.sqf === 150) {
                         // circle stuff
                     } else {
-                        d.x += d3.event.dx;
-                        d.y += d3.event.dy;
-                        var movex = Math.round(d.x / 10) * 10;
-                        var movey = Math.round(d.y / 10) * 10;
-                        d3.select(this).attr("transform", "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")");
+                        d.boardPosition[0] += d3.event.dx;
+                        d.boardPosition[1] += d3.event.dy;
+                        var snapX = Math.round(d.boardPosition[0] / 10) * 10;
+                        var snapY = Math.round(d.boardPosition[1] / 10) * 10;
+                        d3.select(this).attr("transform", "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")");
                     }
                 }
             }
 
             function dragended(d) {
                 if (d.notdraggable != true) {
-                    // d.x = d.px = Math.round(d.x / 100) * 100;
-                    // d.y = d.py = Math.round(d.y / 100) * 100;
+                    // d.boardPosition[0] = d.px = Math.round(d.boardPosition[0] / 100) * 100;
+                    // d.boardPosition[1] = d.py = Math.round(d.boardPosition[1] / 100) * 100;
                     d3.select(this).classed("dragging", false);
                 }
             }
