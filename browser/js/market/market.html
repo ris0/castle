@@ -1,0 +1,14 @@
+<nav class="navbar navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+        </div>
+        <ul class="nav navbar-nav">
+            <button ng-show="data.players[userIndex].canBuy" ng-click="pass()">Pass</button>
+            <li ng-show="data.currentPlayer === userIndex" ng-repeat="(price,room) in data.market">
+                <div ng-disabled="data.players[userIndex].canBuy" ng-click="swapTwo(room)">{{room.room.roomName || "empty"}}</div><br>
+                <button ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">{{price}}</button><br>
+                <span>discount: {{room.room.discount}}</span>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,11 +1,12 @@
+<market></market>
 <div class = "container">
-	<button ng-click="drawToMarket()">Draw cards to market queue</button>
-	<div ng-repeat="card in data.marketQ">
-		Arrange the {{card.roomName}} in the market
-		<label for="price">
+	Turn Count: {{data.turnCount}} // Current Player: {{data.currentPlayer}} // Master Builder: {{data.masterBuilder}} // Am I the current player?: {{userIndex===data.currentPlayer}}<br>
+	<button ng-show="data.players[userIndex].canBuy" ng-click="pass()">Pass</button>
+	<div ng-show="data.currentPlayer === userIndex" ng-repeat="(price,room) in data.market">
+		<button ng-disabled="data.players[userIndex].canBuy" ng-click="swapTwo(room)">{{room.room.roomName || "empty"}}</button>
+		<button ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">{{price}}</button>
+		<span>discount: {{room.room.discount}}</span>
 	</div>
-	<button ng-click="assignPrices()">Assign Prices</button>
-	<div ng-repeat="(price, room) in data.market"
-		 ng-click="buyRoom(room, price)">Buy the {{room.roomName}} for {{price}}
-	</div>
+	<button ng-show="data.masterBuilder === userIndex && !data.players[userIndex].canBuy && data.currentPlayer === userIndex" ng-click="done()">MB done</button>
+	<pre>{{data.players[userIndex]|json}}</pre>
 </div>

@@ -23,6 +23,7 @@ app.directive('gridtesting', function($window) {
                 { url: "foyer.png", x: width / 2, y: height / 2, sqf: 125, rotation: 0, height: 100, width: 100 },
                 { url: "foyer.png", x: (width / 2) + 100, y: (height / 2), sqf: 125, rotation: 0, height: 100, width: 100 },
                 { url: "foyer.png", x: width / 2, y: (height / 2) + 100, sqf: 125, rotation: 0, height: 100, width: 100, notdraggable: true }
+
             ];
 
             var drag = d3.behavior.drag()
@@ -96,9 +97,9 @@ app.directive('gridtesting', function($window) {
                     return d.width;
                 })
                 .attr("transform", function(d) {
-                        var movex = Math.round(d.x / 10) * 10;
-                        var movey = Math.round(d.y / 10) * 10;
-                        return "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")";
+                    var movex = Math.round(d.x / 10) * 10;
+                    var movey = Math.round(d.y / 10) * 10;
+                    return "rotate(" + d.rotation + " " + (movex + d.width / 2) + " " + (movey + d.height / 2) + "),translate(" + movex + "," + movey + ")";
                 })
                 .classed("roomTiles", true)
                 .call(drag)
