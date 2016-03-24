@@ -128,7 +128,7 @@
 // 	return gameState;
 // });
 // =======
-app.factory('gameStateFactory', function(gameFactory, $rootScope) {
+app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFactory) {
   var gameState = {};
   var currentPlayer;
   var masterBuilder;
@@ -182,6 +182,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
 	  }
     }
 
+    kingsFavorsFactory.getRankings(game);
   };
 
   gameState.drawToMarket = function(game) {
