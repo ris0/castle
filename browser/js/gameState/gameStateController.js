@@ -5,6 +5,7 @@ app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $fi
 
   syncObject.$bindTo($scope, "data")
     .then(function() {
+      console.log($scope.data);
       $scope.buy = function(room, price){
       	gameStateFactory.buy($scope.data, room, price);
       };

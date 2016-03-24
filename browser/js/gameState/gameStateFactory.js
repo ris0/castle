@@ -1,4 +1,4 @@
-app.factory('gameStateFactory', function(gameFactory, kingsFavorsFactory, $rootScope){
+app.factory('gameStateFactory', function(gameFactory, bonusCardsFactory, kingsFavorsFactory, $rootScope){
 	var gameState = {};
 	var currentPlayer;
 	var masterBuilder;
@@ -20,6 +20,7 @@ app.factory('gameStateFactory', function(gameFactory, kingsFavorsFactory, $rootS
 	    cashFlow(game, price, truePrice);
 	    scoreRoom(game, room);
 	    roomToPlayer(game, room, price);
+	    // bonusCardsFactory.reward(getCurrentPlayer(game));
 	    getCurrentPlayer(game).canBuy = false;
 	    //completion bonus instead of done
 	    gameState.done(game);
@@ -109,10 +110,6 @@ app.factory('gameStateFactory', function(gameFactory, kingsFavorsFactory, $rootS
 	    });
 	  }
 	  //keep track of room points on roomTile object
-	}
-
-	function kingsFavorsScore(game){
-		
 	}
 
 	function findMyIndex(prev, curr, index) {

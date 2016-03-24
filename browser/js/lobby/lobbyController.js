@@ -23,14 +23,17 @@ app.controller('LobbyCtrl', function(usersRef, userEmail, userId, gamesRef, play
       playersRef.once('value', function(playersObj) {
         players = _.clone(playersObj.val());
         $scope.counter = 0;
+
+        shuffleDecks();
+
         for (var key in players) {
           $scope.baseState.players[$scope.counter].userID = players[key].userId;
           $scope.baseState.players[$scope.counter].userName = players[key].email;
+          $scope.baseState.players[$scope.counter].bonusCards = $scope.baseState.bonusCards.splice(0,2);
           $scope.counter++;
         }
         playersRef.remove();
 
-        shuffleDecks();
 
         console.log($scope.baseState);
 
@@ -96,4 +99,5 @@ app.controller('LobbyCtrl', function(usersRef, userEmail, userId, gamesRef, play
       $scope.baseState.roomTiles[roomSize] = _.shuffle($scope.baseState.roomTiles[roomSize]).slice(0, toRemove);
     }
   }
+
 });
