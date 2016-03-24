@@ -1,13 +1,67 @@
-app.factory('gameStateFactory', function(gameFactory, $rootScope) {
-  var gameState = {};
-  var currentPlayer;
-  var masterBuilder;
+app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameStateFactory, marketFactory) {
 
-  gameState.getUserIndex = function(game) {
-    return game.players.reduce(findMyIndex, "");
+  return {
+    restrict: 'E',
+    scope: {},
+    templateUrl: 'js/market/market.html',
+    link: function(scope) {
+      var userID = gameFactory.auth().$getAuth().uid;
+      var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+      return userGame.$loaded().then(function(data) {
+        return data.$value;
+      }).then(function(game) {
+        return $firebaseObject(gameFactory.ref().child('games').child(game));
+      }).then(function(syncObject) {
+        return syncObject.$bindTo(scope, 'data');
+      }).then(function(game) {
+        scope.userIndex = gameStateFactory.getUserIndex(scope.data);
+
+        scope.buy = function(room, price) {
+          marketFactory.buy(scope.data, room, price);
+        };
+
+        scope.pass = function() {
+          marketFactory.pass(scope.data);
+        };
+
+        scope.done = function() {
+          marketFactory.done(scope.data);
+        };
+
+        scope.drawToMarket = function() {
+          marketFactory.drawToMarket(scope.data);
+        };
+
+        if (scope.data.turnCount === 0 && scope.data.market[1000].room === "empty") scope.drawToMarket();
+
+        var firstChoice;
+
+        scope.swapTwo = function(price) {
+          if (firstChoice) {
+            marketFactory.swapMarket(firstChoice, price);
+            firstChoice = null;
+          } else {
+            firstChoice = price;
+          }
+        };
+
+      });
+    }
+  };
+});
+
+
+app.factory('marketFactory', function() {
+  var market = {};
+
+  market.swapMarket = function(price1, price2) {
+    var temp = price1.room;
+    price1.room = price2.room;
+    price2.room = temp;
+    return true;
   };
 
-  gameState.buy = function(game, room, price) {
+  market.buy = function(game, room, price) {
     if (getCurrentPlayer(game).canBuy) {
       var truePrice = +price - (+room.discount);
 
@@ -16,19 +70,19 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
       roomToPlayer(game, room, price);
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
-      gameState.done(game);
+      market.done(game);
     } else console.log("It's not your turn");
   };
 
-  gameState.pass = function(game) {
+  market.pass = function(game) {
     if (getCurrentPlayer(game).canBuy) {
       getCurrentPlayer(game).canBuy = false;
       getCurrentPlayer(game).cashMoney += 5000;
-      gameState.done(game);
+      market.done(game);
     } else console.log("It's not your turn");
   };
 
-  gameState.done = function(game) {
+  market.done = function(game) {
     var numberPlayers;
     numberPlayers = game.players.length;
     game.turnCount++;
@@ -47,14 +101,14 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
     if (game.turnCount % (numberPlayers + 1) === 0) {
       if (game.lastTurn) endGame(game);
       else {
-	      game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
-	      gameState.drawToMarket(game);
-	  }
+        game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
+        market.drawToMarket(game);
+      }
     }
 
   };
 
-  gameState.drawToMarket = function(game) {
+  market.drawToMarket = function(game) {
     for (var price in game.market) {
       var currentPrice = game.market[price];
       if (currentPrice.room !== 'empty') currentPrice.room.discount += 1000;
@@ -75,17 +129,17 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
     }
   };
 
-  function assessCompletions(game){
-  	if(!getCurrentPlayer(game).completionBonus) done();
+  function assessCompletions(game) {
+    if (!getCurrentPlayer(game).completionBonus) done();
   }
 
   function endGame(game) {
-  	//final scoring
-  	//determine winner
+    //final scoring
+    //determine winner
   }
 
   function completionBonus(game) {
-    if (!getCurrentPlayer(game).completionQueue) gameState.done(game);
+    if (!getCurrentPlayer(game).completionQueue) market.done(game);
     //else do all the stuff
   }
 
@@ -149,6 +203,5 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
     if (!game.discardRooms) game.discardRooms = [nextCard];
     else game.discardRooms.push(nextCard);
   }
-
-  return gameState;
+  return market;
 });

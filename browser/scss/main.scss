@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #fdfdfd;
+}
+
+@mixin clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+#gameboard {
+    overflow: hidden;
+    border-left: 0.5vh solid black;
+    border-right: 0.5vh solid black;
+    border-bottom: 0.5vh solid black;
+    width: 100%;
+    height: 93vh;
+}
+
+#main {
+    margin: 0;
+    padding: 0;
+}
+
+svg {
+  font: 10px sans-serif;
+}
+
+rect {
+  fill: #ddd;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #fff;
+}
+
+#sidebar {
+    padding: 0;
+}
+
+#playerlist {
+    padding: 0;
+}
+
+@import 'directives/main';
+@import 'home/main';
+@import 'about/main';
+@import 'tutorial/main';
+@import 'login/main';
