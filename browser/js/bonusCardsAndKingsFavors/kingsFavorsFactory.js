@@ -6,12 +6,12 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 
 	kingsFavors.getRankings = function(game){
 		var kingsFavorsArr = game.kingsFavors
+		console.log(kingsFavorsArr);
 		var favorsToRank = [];
 		kingsFavorsArr.forEach(function(favor){
 			if(favor.sqf) favorsToRank.push(mostRoomTypeBySqFt(game, favor.type));
 			if(favor.type && !favor.sqf) favorsToRank.push(mostTypeRooms(game, favor.type));
-			if(favor.shape === 'circle') favorsToRank.push(mostCircleRooms(game))
-			if(favor.shape === 'square') favorsToRank.push(mostSquareRooms(game))
+			if(favor.shape) favorsToRank.push(mostShapeRooms(game, favor.shape))
 			if(favor.size === 'large') favorsToRank.push(mostLargeRooms(game))
 			if(favor.size === 'small') favorsToRank.push(mostLargeRooms(game))
 			if(favor.cashMoney) favorsToRank.push(mostMoney(game))
@@ -36,41 +36,30 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 					favorPoints = _.orderBy(favorPoints, 'pts','desc');
 					ptsOrSqf = 'pts';
 				for(var i = 0; i < favorPoints.length; i++){
-	
 					if(i < favorPoints.length - 1 && favorPoints[i][ptsOrSqf] === favorPoints[i+1][ptsOrSqf]){
-						// favorPoints[i].pts = scoring[i];
+						favorPoints[i].pts = scoring[i];
 						favorPoints[i].player.publicScore.kingsFavorPts += scoring[i];
-						// favorPoints[i+1].pts = scoring[i];
+						favorPoints[i+1].pts = scoring[i];
 						favorPoints[i+1].player.publicScore.kingsFavorPts += scoring[i];
 						i++;
 					} else {
-						// favorPoints[i].pts = scoring[i];
+						favorPoints[i].pts = scoring[i];
 						favorPoints[i].player.publicScore.kingsFavorPts += scoring[i];
 					}
 				}
 				return favorPoints;
 			});
+			console.log(res);
 			return res;
 		}
 	// # of circle OR # of square rooms
 
-		function mostSquareRooms (game){
+		function mostShapeRooms (game, shape){
 			return game.players.map(function(player){
-				var shapeSqf;
 				var rooms = 0;
 				player.castle.forEach(function(room){
-					if(room.sqf === 100 || room.sqf === 400 ) rooms++;
-				});
-				return({player: player, pts: rooms});
-			});
-		}
-
-		function mostCircleRooms (game){
-			return game.players.map(function(player){
-				var shapeSqf;
-				var rooms = 0;
-				player.castle.forEach(function(room){
-					if(room.sqf === 150 || room.sqf === 500) rooms++;
+					if(shape === 'circle' && room.sqf === 100 || room.sqf === 400 ) rooms++;
+					else if(shape === 'square' && room.sqf === 150 || room.sqf === 500 ) rooms++;
 				});
 				return({player: player, pts: rooms});
 			});
