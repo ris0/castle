@@ -1,6 +1,21 @@
 app.factory('scoringFactory', function() {
   var scoring = {};
 
+  scoring.finalScoring = function(game){
+    var playerPoints = [];
+
+    game.players.forEach(function(player){
+      var score = 0;
+      for(var key in player.publicScore){
+        score += player.publicScore[key];
+      }
+      score += player.privateBonusCardPts;
+      playerPoints.push({player: player, score: score});
+    });
+
+    return playerPoints;
+  };
+
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
     var conArray = findConnectedRooms(player.castle, room);
     player.publicScore.roomPts += room.placementPts;

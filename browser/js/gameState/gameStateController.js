@@ -24,6 +24,25 @@ app.controller('gameStats', function(syncObject, $scope, $firebaseObject, gameFa
 
       $scope.userIndex = gameStateFactory.getUserIndex($scope.data);
 
+      var curriedSwap = _.curry(swapMarket);
+      var curriedStuff;
+
+      function swapMarket(price1, price2){
+      	var temp = price1.room;
+      	price1.room = price2.room;
+      	price2.room = temp;
+      	return true;
+      }
+
+      $scope.swapTwo = function(price){
+      	if(!curriedStuff){
+      		curriedStuff = curriedSwap(price);
+      	}else{
+      		curriedStuff(price);
+      		curriedStuff = null;
+      	}
+      };
+
       if ($scope.data.turnCount === 0 && $scope.data.market[1000].room === "empty") $scope.drawToMarket();
     });
 });

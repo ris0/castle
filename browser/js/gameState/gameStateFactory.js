@@ -20,7 +20,6 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
     } else console.log("It's not your turn");
   };
 
-
   gameState.pass = function(game) {
     if (getCurrentPlayer(game).canBuy) {
       getCurrentPlayer(game).canBuy = false;
@@ -76,6 +75,10 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
     }
   };
 
+  function assessCompletions(game){
+  	if(!getCurrentPlayer(game).completionBonus) done();
+  }
+
   function endGame(game) {
   	//final scoring
   	//determine winner
@@ -115,18 +118,19 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope) {
   function scoreRoom(game, room) { //adjacent rooms, connectedRooms
     getCurrentPlayer(game).publicScore.roomPts += room.placementPts;
 
+    if (getCurrentPlayer(game).globalEffects) {
+      getCurrentPlayer(game).globalEffects.forEach(function(effect) {
+        if (room.roomType === effect.roomType) getCurrentPlayer(game).publicScore.roomPts += +effect.effectPts;
+      });
+    }
+
     //adding global effects to player
     if (room.roomType === "Downstairs") {
       if (!getCurrentPlayer(game).globalEffects) getCurrentPlayer(game).globalEffects = [{ roomType: room.affectedBy[0], effectPts: room.effectPts }];
       else getCurrentPlayer(game).globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
-    }
-
-    //scoring global effects
-    if (getCurrentPlayer(game).globalEffects) {
-      getCurrentPlayer(game).globalEffects.forEach(function(effect) {
-        //iterate through castle and apply points;
-        getCurrentPlayer(game).castle.forEach(function(room) {
-          if (room.roomType === effect.roomType) getCurrentPlayer(game).publicScore.roomPts += +effect.effectPts;
+      getCurrentPlayer(game).castle.forEach(function(castleRoom) {
+        room.affectedBy.forEach(function(type) {
+          if (type === castleRoom.roomType) getCurrentPlayer(game).publicScore.roomPts += room.effectPts;
         });
       });
     }
