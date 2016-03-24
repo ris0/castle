@@ -6,36 +6,26 @@ var smallRooms;
 var squareRooms = [100,400];
 var roundRooms = [150,500];
 
-bonusCards.getRankings = function(game){
-	var bonusCardsArr = game.bonusCards
-	console.log(bonusCardsArr);
+bonusCards.getBonusPoints = function(player){
+	var bonusCardsArr = player.bonusCards
 	var bonusesToReward = [];
+	var bonusPoints = 0;
 	bonusCardsArr.forEach(function(bonus){
-		if(favor.sqf) bonusesToReward.push(mostRoomTypeBySqFt(game, favor.type));
-		if(favor.type && !favor.sqf) bonusesToReward.push(mostTypeRooms(game, favor.type));
-		if(favor.shape) bonusesToReward.push(mostShapeRooms(game, favor.shape));
-		if(favor.size === 'large') bonusesToReward.push(mostLargeRooms(game));
-		if(favor.size === 'small') bonusesToReward.push(mostLargeRooms(game));
-		if(favor.cashMoney) bonusesToReward.push(mostMoney(game));
+		if(bonus.shape) bonusPoints += pointForEachShapeRoom(player, bonus.shape);
+		if(bonus.twoCompletedRooms) bonusPoints += pointForTwoCompletedRooms(player);
+		if(bonus.twoExternalEntrances) bonusPoints += pointForTwoExternalEntrances(player);
+		if(bonus.size) bonusPoints += pointsForRoomSize(player, bonus.size, bonus.pts);
+		if(bonus.type) bonusPoints += pointsForRoomType(player, bonus.type, bonus.pts);
 	});
-	resetbonusCardsPoints(game);
-	rewardBonuses.apply(null, bonusesToReward);
+	player.privateBonusCardPts = bonusPoints;
+	// resetbonusCardsPoints(player);
 }
 
-	function resetbonusCardsPoints (game){
-		return game.players.forEach(function(player){
-			return player.publicScore['kingsFavorPts'] = 0;
-		});
-	}
-
-	function rewardBonuses (){
-		var res = [].slice.call(arguments);
-		res = res.map(function(bonus){ //favorPoints === {player, pts}
-				
-		});
-		console.log(res);
-		return res;
-	}
+	// function resetbonusCardsPoints (player){
+	// 	return player.players.forEach(function(player){
+	// 		return player.publicScore['kingsFavorPts'] = 0;
+	// 	});
+	// }
 
 	// bonus cards
 		// sevenPointsForAllTypes
@@ -74,13 +64,17 @@ bonusCards.getRankings = function(game){
 	}
 
 	// onePointForEachSquareRoom
-	function pointForEachSquareRoom (player){
+	function pointForEachShapeRoom (player, shape){
 		var res = 0;
+		var shapeRoom;
+		if(shape === "round") shapeRoom = roundRooms;
+		else shapeRoom = squareRooms;
 		player.castle.forEach(function(room){
-			squareRooms.forEach(function(size){
+			shapeRoom.forEach(function(size){
 				if(room.sqf === size) res += 1;
 			})
 		});
+		console.log(res);
 		return res;
 	}
 	// onePointForEachRoundRoom
