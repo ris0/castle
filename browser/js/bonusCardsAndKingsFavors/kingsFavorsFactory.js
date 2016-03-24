@@ -1,43 +1,76 @@
+//need end of game kingsFavor rank score calculation
+
 app.factory('kingsFavorsFactory', function(gameFactory){
 	var kingsFavors = {};
 	var ref = gameFactory.ref();
 
+	kingsFavors.getRankings = function(game){
+		var kingsFavorsArr = game.kingsFavors
+		var favorsToRank = [];
+		kingsFavorsArr.forEach(function(favor){
+			if(favor.sqf) favorsToRank.push(mostRoomTypeBySqFt(game, favor.type));
+			if(favor.type && !favor.sqf) favorsToRank.push(mostTypeRooms(game, favor.type));
+			if(favor.shape === 'circle') favorsToRank.push(mostCircleRooms(game))
+			if(favor.shape === 'square') favorsToRank.push(mostSquareRooms(game))
+			if(favor.size === 'large') favorsToRank.push(mostLargeRooms(game))
+			if(favor.size === 'small') favorsToRank.push(mostLargeRooms(game))
+			if(favor.cashMoney) favorsToRank.push(mostMoney(game))
+		});
+		resetKingsFavorsPoints(game);
+		rank.apply(null, favorsToRank);
+	}
+
+		function resetKingsFavorsPoints (game){
+			return game.players.forEach(function(player){
+				return player.publicScore['kingsFavorPts'] = 0;
+			});
+		}
+
 	//takes as many favors
 		//game would be $scope.data in gameStateController
-		kingsFavors.rank = function(){
+		function rank (){
 			var scoring = [8,4,2,1];
 			var res = [].slice.call(arguments);
-			console.log(res)
-			res = res.map(function(favorPoints){
-				favorPoints = _.sortBy(favorPoints, 'pts');
-				for(var i = 0; i < favorPoints.length-1; i++){
-					if(favorPoints[i].pts === favorPoints[i+1].pts){
-						favorPoints[i] = scoring[i];
-						favorPoints[i+1] = scoring[i];
+			var ptsOrSqf;
+			res = res.map(function(favorPoints){ //favorPoints === {player, pts}
+					favorPoints = _.orderBy(favorPoints, 'pts','desc');
+					ptsOrSqf = 'pts';
+				for(var i = 0; i < favorPoints.length; i++){
+	
+					if(i < favorPoints.length - 1 && favorPoints[i][ptsOrSqf] === favorPoints[i+1][ptsOrSqf]){
+						// favorPoints[i].pts = scoring[i];
+						favorPoints[i].player.publicScore.kingsFavorPts += scoring[i];
+						// favorPoints[i+1].pts = scoring[i];
+						favorPoints[i+1].player.publicScore.kingsFavorPts += scoring[i];
 						i++;
-					} else favorPoints[i].pts = scoring[i];
+					} else {
+						// favorPoints[i].pts = scoring[i];
+						favorPoints[i].player.publicScore.kingsFavorPts += scoring[i];
+					}
 				}
+				return favorPoints;
 			});
-			console.log(res);
 			return res;
 		}
 	// # of circle OR # of square rooms
 
-		kingsFavors.mostCircleRooms = function (game){
+		function mostSquareRooms (game){
 			return game.players.map(function(player){
+				var shapeSqf;
 				var rooms = 0;
 				player.castle.forEach(function(room){
-					if(room.shape === "circle") rooms++;
+					if(room.sqf === 100 || room.sqf === 400 ) rooms++;
 				});
 				return({player: player, pts: rooms});
 			});
 		}
 
-		kingsFavors.mostCircleRooms = function (game, shape){
+		function mostCircleRooms (game){
 			return game.players.map(function(player){
+				var shapeSqf;
 				var rooms = 0;
 				player.castle.forEach(function(room){
-					if(room.shape === "square") rooms++;
+					if(room.sqf === 150 || room.sqf === 500) rooms++;
 				});
 				return({player: player, pts: rooms});
 			});
@@ -45,7 +78,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 
 	// # of rooms of a certain type
 
-		kingsFavors.mostTypeRooms = function (game, roomType){
+		function mostTypeRooms (game, roomType){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
@@ -58,7 +91,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 	// total sqf of rooms of a certain type
 		//check type === favorType
 		//
-		kingsFavors.mostRoomTypeBySqFt = function (game, roomType){
+		function mostRoomTypeBySqFt (game, roomType){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
@@ -70,7 +103,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 
 	// # of large rooms (350, 400, 450, 500, 600)
 		//count large rooms in "players/castle"
-		kingsFavors.mostLargeRooms = function (game){
+		function mostLargeRooms (game){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
@@ -82,11 +115,11 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 
 	// # of small rooms (100, 150, 200, 250, 300)
 		//count small rooms in "players/castle"
-		kingsFavors.mostSmallRooms = function (game){
+		function mostSmallRooms (game){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
-					if(room.sqf < 350) rooms++;
+					if(room.sqf < 350 && room.roomType !== "Corridor") rooms++;
 				});
 				return({player: player, pts: rooms});
 			});
@@ -96,7 +129,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 		//check "roomTiles" for "completed" property === false
 		//check if coordinates are connected elsewhere in player castle
 
-		kingsFavors.mostExternalDoors = function (game){
+		function mostExternalDoors (game){
 			//keep track of doors?
 			//ignores corridors
 			return game.players.map(function(player){
@@ -114,7 +147,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 	// # of completed rooms
 		//check "roomTiles" for "completed" property === true
 
-		kingsFavors.mostCompletedRooms = function (game){
+		function mostCompletedRooms (game){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
@@ -127,7 +160,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 	// number of uncompleted rooms
 		//check "roomTiles" for "completed" property === false
 
-		kingsFavors.mostIncompleteRooms = function (game){
+		function mostIncompleteRooms (game){
 			return game.players.map(function(player){
 				var rooms = 0;
 				player.castle.forEach(function(room){
@@ -139,7 +172,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 
 	// amount of money at the end of the game
 
-		kingsFavors.mostMoney = function (game){
+		function mostMoney (game){
 			return game.players.map(function(player){
 				return({player: player, pts: player.cashMoney});
 			});

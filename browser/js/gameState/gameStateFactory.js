@@ -1,58 +1,61 @@
-app.factory('gameStateFactory', function(gameFactory, $rootScope){
+app.factory('gameStateFactory', function(gameFactory, kingsFavorsFactory, $rootScope){
 	var gameState = {};
-	var numberPlayers;
 	var currentPlayer;
 	var masterBuilder;
-	var game;
+	// var game;
 
-	gameState.setGame = function(theGame){
-	    game = theGame;
-	    gameState.userIndex = game.players.reduce(findMyIndex, "");
-	    numberPlayers = game.players.length;
+	// gameState.setGame = function(theGame){
+	//     game = theGame;
+	//     numberPlayers = game.players.length;
+	// };
+
+	gameState.getUserIndex = function(game){
+		return game.players.reduce(findMyIndex, "");
 	};
 
-	gameState.buy = function(room, price) {
-	  //validate player === currentplayer
-	  console.log('player', getCurrentPlayer());
-	  if (getCurrentPlayer().canBuy) {
+	gameState.buy = function(game, room, price) {
+	  if (getCurrentPlayer(game).canBuy) {
 	    var truePrice = +price - (+room.discount);
 
-	    cashFlow(price, truePrice);
-	    scoreRoom(room);
-	    roomToPlayer(room, price);
-	    getCurrentPlayer().canBuy = false;
+	    cashFlow(game, price, truePrice);
+	    scoreRoom(game, room);
+	    roomToPlayer(game, room, price);
+	    getCurrentPlayer(game).canBuy = false;
 	    //completion bonus instead of done
-	    gameState.done();
+	    gameState.done(game);
 	  } else console.log("It's not your turn");
 	  //completions
 	};
 
-	function completionBonus() {
-	  if (!getCurrentPlayer().completionQueue) gameState.done();
+	function completionBonus(game) {
+	  if (!getCurrentPlayer(game).completionQueue) gameState.done();
 	  //else do all the stuff
 	}
 
-	gameState.pass = function() {
+	gameState.pass = function(game) {
 	  if (gameState.userIndex === game.currentPlayer) {
-	    getCurrentPlayer().canBuy = false;
-	    getCurrentPlayer().cashMoney += 5000;
-	    gameState.done();
+	    getCurrentPlayer(game).canBuy = false;
+	    getCurrentPlayer(game).cashMoney += 5000;
+	    gameState.done(game);
 	  } else console.log("It's not your turn");
 	};
 
-	gameState.done = function() {
+	gameState.done = function(game) {
 	  //check if roomCards is empty
+	  var numberPlayers;
+	  numberPlayers = game.players.length;
 	  game.turnCount++;
+	  getCurrentPlayer(game);
 	  game.currentPlayer = (game.turnCount) % numberPlayers; //players.length ** edit when there are null players
-	  if (game.turnCount % (numberPlayers + 1) !== 0) getCurrentPlayer().canBuy = true;
+	  if (game.turnCount % (numberPlayers + 1) !== 0) getCurrentPlayer(game).canBuy = true;
 	  if (game.turnCount % (numberPlayers + 1) === 0) { // players.lenght + 1
 	    game.masterBuilder = (game.masterBuilder + 1) % numberPlayers; //players.length
-	    gameState.drawToMarket();
+	    gameState.drawToMarket(game);
 	  }
-
+	  kingsFavorsFactory.getRankings(game);
 	};
 
-	gameState.drawToMarket = function() {
+	gameState.drawToMarket = function(game) {
 	  for (var price in game.market) {
 	    var currentPrice = game.market[price];
 	    if (currentPrice.room !== 'empty') currentPrice.room.discount += 1000;
@@ -64,49 +67,52 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope){
 	      if (typeof nextCard === 'number') { //if the next card in the pile is a room card
 	        if (game.roomTiles[nextCard]) currentPrice.room = game.roomTiles[nextCard].pop();
 	      } else currentPrice.room = nextCard; //if the next card in the pile is a tile
-	      discardCard(nextCard);
+	      discardCard(game, nextCard);
 	    }
 	  }
 	};
 
-	function getMasterBuilder() {
+	function getMasterBuilder(game) {
 	  return game.players[game.masterBuilder];
 	}
 
 
-	function getCurrentPlayer() {
-	  console.log(game.currentPlayer);
+	function getCurrentPlayer(game) {
 	  return game.players[game.currentPlayer];
 	}
 
 	//transfer cash from currentplayer to masterbuilder or 'bank'
-	function cashFlow(price, truePrice) {
-	  getCurrentPlayer().cashMoney -= truePrice;
+	function cashFlow(game, price, truePrice) {
+	  getCurrentPlayer(game).cashMoney -= truePrice;
 	  if (game.currentPlayer !== game.masterBuilder) {
-	    getMasterBuilder().cashMoney += +price;
+	    getMasterBuilder(game).cashMoney += +price;
 	  }
 	}
 
 	//send room from deck to player castle
-	function roomToPlayer(room, price) {
+	function roomToPlayer(game, room, price) {
 	  room.discount = 0;
-	  getCurrentPlayer().castle.push(room);
+	  getCurrentPlayer(game).castle.push(room);
 	  game.market[price].room = "empty";
 	}
 
-	function scoreRoom(room) {
-	  getCurrentPlayer().publicScore.roomPts += room.placementPts;
+	function scoreRoom(game, room) {
+	  getCurrentPlayer(game).publicScore.roomPts += room.placementPts;
 	  if (room.roomType === "Downstairs") {
-	    if (!getCurrentPlayer().globalEffects) getCurrentPlayer().globalEffects = [{ roomType: room.affectedBy[0], effectPts: room.effectPts }];
-	    else getCurrentPlayer().globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
+	    if (!getCurrentPlayer(game).globalEffects) getCurrentPlayer(game).globalEffects = [{ roomType: room.affectedBy[0], effectPts: room.effectPts }];
+	    else getCurrentPlayer(game).globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
 	  }
 	  //scoring global effects
-	  if (getCurrentPlayer().globalEffects) {
-	    getCurrentPlayer().globalEffects.forEach(function() {
+	  if (getCurrentPlayer(game).globalEffects) {
+	    getCurrentPlayer(game).globalEffects.forEach(function() {
 	        //iterate through castle and apply points;
 	    });
 	  }
 	  //keep track of room points on roomTile object
+	}
+
+	function kingsFavorsScore(game){
+		
 	}
 
 	function findMyIndex(prev, curr, index) {
@@ -116,7 +122,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope){
 	  return prev;
 	}
 
-	function discardCard(nextCard) {
+	function discardCard(game, nextCard) {
 	  if (!game.discardRooms) game.discardRooms = [nextCard];
 	  else game.discardRooms.push(nextCard);
 	}

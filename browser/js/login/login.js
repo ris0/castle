@@ -49,6 +49,7 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
       email: $scope.login.email,
       password: $scope.login.password
     }).then(function(userData) {
+      console.log(userData);
         $state.go('lobby');
     }).catch(function(error) {
       $scope.error = error;
