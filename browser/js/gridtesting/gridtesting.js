@@ -1,14 +1,3 @@
-app.config(function($stateProvider) {
-
-    // Register our *about* state.
-    $stateProvider.state('gridtesting', {
-        url: '/gridtesting',
-        controller: 'GridTestingCtrl',
-        templateUrl: 'js/gridtesting/gridtesting.html'
-    });
-
-});
-
 app.controller('GridTestingCtrl', function($scope) {});
 
 app.directive('gridtesting', function($window) {
@@ -28,7 +17,7 @@ app.directive('gridtesting', function($window) {
 
             var dataArray = [{
                 "roomName": "YellowFoyer",
-                "imagePath": "image/foyer.png",
+                "imagePath": "/images/foyer.png",
                 "sqf": 125,
                 "roomType": "Corridor",
                 "placementPts": 0,
@@ -47,14 +36,14 @@ app.directive('gridtesting', function($window) {
                 "rotation": 0
             }, {
                 "roomName": "Solar",
-                "imagePath": "image/200-solar.png",
+                "imagePath": "/images/200-solar.png",
                 "sqf": 200,
                 "roomType": "Sleeping",
                 "placementPts": 2,
                 "affectedBy": ["Outdoor"],
                 "effectPts": 2,
                 "completed": false,
-                "boardPosition": [null, null],
+                "boardPosition": [0, 0],
                 "containerDim": [4, 8],
                 "roomDim": [4, 8],
                 "doors": [
