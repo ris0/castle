@@ -6,7 +6,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 
 	kingsFavors.getRankings = function(game){
 		var kingsFavorsArr = game.kingsFavors
-		console.log(kingsFavorsArr);
+		console.log('KingsFavors', kingsFavorsArr);
 		var favorsToRank = [];
 		kingsFavorsArr.forEach(function(favor){
 			if(favor.sqf) favorsToRank.push(mostRoomTypeBySqFt(game, favor.type));
@@ -49,7 +49,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 				}
 				return favorPoints;
 			});
-			console.log(res);
+			console.log('KingsFavors Rankings', res);
 			return res;
 		}
 	// # of circle OR # of square rooms

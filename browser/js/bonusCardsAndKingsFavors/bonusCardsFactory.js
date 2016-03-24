@@ -1,7 +1,5 @@
 app.factory('bonusCardsFactory', function(gameFactory){
 var bonusCards = {};
-var largeRooms;
-var smallRooms;
 //shape by sqf
 var squareRooms = [100,400];
 var roundRooms = [150,500];
@@ -14,21 +12,16 @@ bonusCards.getBonusPoints = function(player){
 		if(bonus.shape) bonusPoints += pointForEachShapeRoom(player, bonus.shape);
 		if(bonus.twoCompletedRooms) bonusPoints += pointForTwoCompletedRooms(player);
 		if(bonus.twoExternalEntrances) bonusPoints += pointForTwoExternalEntrances(player);
-		if(bonus.size) bonusPoints += pointsForRoomSize(player, bonus.size, bonus.pts);
-		if(bonus.type) bonusPoints += pointsForRoomType(player, bonus.type, bonus.pts);
+		if(bonus.size) bonusPoints += pointsForRoomSize(player, bonus.sqf, bonus.ptsPerThreshold);
+		if(bonus.type) bonusPoints += pointsForRoomType(player, bonus.type, bonus.ptsPerThreshold);
+		if(bonus.allRoomTypes) bonusPoints += sevenForAllTypes(player);
+		if(bonus.allRoomSizes) bonusPoints += eightForAllSizes(player);
+		if(bonus.fiveThousandMarks) bonusPoints += onePointForMarks(player);
 	});
+	console.log('BonusPoints:', bonusPoints);
 	player.privateBonusCardPts = bonusPoints;
-	// resetbonusCardsPoints(player);
 }
 
-	// function resetbonusCardsPoints (player){
-	// 	return player.players.forEach(function(player){
-	// 		return player.publicScore['kingsFavorPts'] = 0;
-	// 	});
-	// }
-
-	// bonus cards
-		// sevenPointsForAllTypes
 	function sevenForAllTypes (player){
 		var res = {};
 		player.castle.forEach(function(room){
@@ -37,7 +30,7 @@ bonusCards.getBonusPoints = function(player){
 
 		return (Object.keys(res).length === 8) ? 7 : 0;
 	}
-	// eightPointsForAllSizes
+
 	function eightForAllSizes (player){
 		var res = {};
 		player.castle.forEach(function(room){
@@ -46,7 +39,7 @@ bonusCards.getBonusPoints = function(player){
 
 		return (Object.keys(res).length === 10) ? 8 : 0;
 	}
-	// onePointForEveryTwoCompletedRooms
+
 	function pointForTwoCompletedRooms (player){
 		var res = 0;
 		player.castle.forEach(function(room){
@@ -54,16 +47,17 @@ bonusCards.getBonusPoints = function(player){
 		});
 		return Math.floor(res);
 	}
-	// onePointForEachExternalEntrance // excluding corridors
+
 	function pointForTwoExternalEntrances (player){
 		var res = 0;
 		player.castle.forEach(function(room){
 			if(room.roomType != "Corridor") res += room.externalDoors/2;
+			else res += 0;
 		});
 		return Math.floor(res);
 	}
 
-	// onePointForEachSquareRoom
+
 	function pointForEachShapeRoom (player, shape){
 		var res = 0;
 		var shapeRoom;
@@ -74,10 +68,9 @@ bonusCards.getBonusPoints = function(player){
 				if(room.sqf === size) res += 1;
 			})
 		});
-		console.log(res);
 		return res;
 	}
-	// onePointForEachRoundRoom
+
 	function pointForEachRoundRoom (player){
 		var res = 0;
 		player.castle.forEach(function(room){
@@ -88,38 +81,24 @@ bonusCards.getBonusPoints = function(player){
 		return res;
 	}
 
-	// onePointForEachHallway
-	// onePointForEachCorridor
-	// twoPointsPerUtility
-	// twoPointsPerStairs
-	// twoPointsPerOutdoor
-	// twoPointsPerActivity
-	// twoPointsForEachDownstairsRoom
-	// twoPointsForEachLivingRoom
-	// threePointsForEachFoodRoom
-	// threePointsForEachSleepRoom
-
+	//also used for Stairs/Hallways bonus cards
 	function pointsForRoomType(player, type, points){
+		var roomTypeOrName; 
+		if(type === 'Hallway' || type === 'Stairs'){
+			roomTypeOrName = "roomName";
+		}
+		else roomTypeOrName = "roomType";
 		var res = 0;
 		player.castle.forEach(function(room){
-			if(room.roomType === type) res += points;
+			if(room[roomTypeOrName] == type) res += points;
 		});
 		return res;
 	}
-	// twoPointsForEach100Room
-	// twoPointsForEach150Room
-	// twoPointsForEach200Room
-	// twoPointsForEach250Room
-	// twoPointsForEach300Room
-	// threePointsForEach350Room
-	// threePointsForEach400Room
-	// threePointsForEach450Room
-	// threePointsForEach500Room
-	// threePointsForEach600Room
+
 	function pointsForRoomSize(player, size, points){
 		var res = 0;
 		player.castle.forEach(function(room){
-			if(room.sqf === size) res += points;
+			if(room.sqf == size) res += points;
 		});
 		return res;
 	}
