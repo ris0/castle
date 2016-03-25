@@ -8,8 +8,10 @@ app.config(function($stateProvider){
 				var userID = gameFactory.auth().$getAuth().uid;
 				var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
 				return userGame.$loaded().then(function(data){
+					console.log(data);
 	  				return data.$value;
 	  			}).then(function(game){
+	  				console.log(game);
 	  				return $firebaseObject(gameFactory.ref().child('games').child(game));
 	  			}).then(function(syncObject){
 	  				return syncObject;
