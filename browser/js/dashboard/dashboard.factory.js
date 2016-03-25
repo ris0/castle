@@ -1,74 +1,74 @@
-app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject) {
+app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
 
     var dashboard = {};
     var isLoading = false;
     var players;
-    var ref = $firebaseObject(gameFactory.ref());
+    var playersRef = gameFactory.ref().child("playersQueue");
+    var UsersRef = gameFactory.ref().child("users");
+    var ref = gameFactory.ref().child("games");
 
-    ref.$loaded().then(function(){
 
     dashboard.createGame = function(game) {
 
             var playersObj = game.playersQueue;
 
             players = _.clone(playersObj);
+            var baseState = _.clone(game.baseState);
+            console.log(players);
             var counter = 0;
 
             shuffleDecks(game);
 
             for (var key in players) {
-                game.baseState.players[counter].userID = players[key].userId;
-                game.baseState.players[counter].userName = players[key].email;
-                game.baseState.players[counter].bonusCards = game.baseState.bonusCards.splice(0, 2);
+                baseState.players[counter].userID = players[key].userId;
+                baseState.players[counter].userName = players[key].email;
+                baseState.players[counter].bonusCards = game.baseState.bonusCards.splice(0, 2);
                 counter++;
             }
-            game.playersQueue = null;
+            playersRef.remove();
 
-            game.games = game.baseState;
+            var newGameRef = ref.push(baseState);
+            var gameID = newGameRef.key();
+            console.log(gameID);
+            console.log(game);
 
-            var gameID;
-            ref.games = [game.baseState];
-
-            ref.$save().then(function(resolve){
-                gameID = resolve.key();
-                console.log(resolve.key());
-            });
-
-
-
-            var gamePlayersArr = game.games[gameID].players;
+            var gamePlayersArr = $firebaseArray(ref.child(gameID).child("players"));
             console.log(gamePlayersArr);
             //$firebaseArray(gamesRef.child(gameID).child("players"));
-
-            for (var j = 0; j < counter; j++) {
-                dashboard.addGameToUsers(gamePlayersArr[j].userID, gameID);
-            }
-            for (var i = counter; i < gamePlayersArr.length; i++) {
-                gamePlayersArr.$remove(i);
-            }
-
-            isLoading = false;
-            $state.go('game');
+            gamePlayersArr.$loaded().then(function(gamePlayers) {
+                for (var j = 0; j < counter; j++) {
+                    dashboard.addGameToUsers(gamePlayersArr[j].userID, gameID);
+                }
+                for (var i = counter; i < gamePlayersArr.length; i++) {
+                    gamePlayersArr.$remove(i);
+                }
+                return gamePlayersArr;
+            }).then(function(){
+                isLoading = false;
+                $state.go('game');
+            });
     };
 
     dashboard.addGameToUsers = function(uid, gameID) {
-        game.users[uid].game = gameID;
+        UsersRef.child(uid).child('game').set(gameID);
     };
 
     dashboard.findRandomGame = function(game, user) {
+        console.log(user);
         if (game.playersQueue) {
 
             for (var key in game.playersQueue) {
-                if (game.playersQueue[key] === user.uid) return;
+                if (game.playersQueue[key] === user.$id) return;
             }
 
-            game.playersQueue.push({ userId: user.uid, email: user.email })
+            game.playersQueue.push({ userId: user.$id, email: user.email })
 
         } else {
-            game.playersQueue = [{ userId: user.uid, email: user.email }];
+            game.playersQueue = [{ userId: user.$id, email: user.email }];
             isLoading = true;
-            console.log(isLoading);
-            setTimeout(dashboard.createGame(game), 5000);
+            setTimeout(function(){
+                return dashboard.createGame(game);
+            }, 5000);
             console.log('Game will be ready in 5 seconds');
         }
 
@@ -76,7 +76,8 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject) {
 
     //shuffles decks and removes card based on # players
     function shuffleDecks(game){
-        var numberPlayers = Object.keys(players).length;
+        console.log(game);
+        var numberPlayers = Object.keys(game.playersQueue).length;
         var numRoomCards = numberPlayers * 11;
         var numFavors = Math.max(numberPlayers, 3);
         var numTileMult = (numberPlayers - 4);
@@ -93,7 +94,6 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject) {
             game.roomTiles[roomSize] = _.shuffle(game.roomTiles[roomSize]).slice(0, toRemove);
         }
     }
-    });
     return dashboard;
 });
 
