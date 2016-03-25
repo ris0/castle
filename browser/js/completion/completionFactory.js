@@ -1,8 +1,8 @@
-app.factory('completionFactory', function(BonusModalFactory) {
+app.factory('completionFactory', function(BonusModalFactory, gameStateFactory) {
   var completion = {};
 
   completion.assessCompletion = function(player) {
-    // if (!player.completionQueue) marketFactory.done(game);
+    if (!player.completionBonus) gameStateFactory.done(game);
 
   };
 
@@ -33,7 +33,7 @@ app.factory('completionFactory', function(BonusModalFactory) {
   };
 
   completion.Living = function(player, room) {
-    player.publicScore.livingRoomBonusPts += room.points;
+    player.publicScore.livingRoomBonusPts += room.scoredPoints;
   };
 
   completion.Sleep = function(game, tile, num) {
@@ -44,6 +44,7 @@ app.factory('completionFactory', function(BonusModalFactory) {
   };
 
   completion.Downstairs = function(player, type) {
+    //how to check for every two?
     player.completionBonus.push(type);
   };
 

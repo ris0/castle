@@ -1,51 +1,40 @@
-app.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
+app.factory('CompletionModalFactory', function($uibModal) {
+  var completionModal = {};
 
-  $scope.items = ['item1', 'item2', 'item3'];
-
-  $scope.animationsEnabled = true;
-
-  $scope.open = function (size) {
+  completionModal.open = function(completions, player) {
 
     var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'myModalContent.html',
-      controller: 'ModalInstanceCtrl',
-      size: size,
+      animation: true,
+      templateUrl: 'js/completion/competions.modal.html',
+      controller: 'CompletionModalCtrl',
+      size: 'lg',
       resolve: {
-        items: function () {
-          return $scope.items;
+        completions:function(){
+          return completions;
+        },
+        player: function() {
+          return player;
         }
       }
     });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
   };
 
-  $scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-  };
-
+  return completionModal;
 });
 
-// Please note that $uibModalInstance represents a modal window (instance) dependency.
-// It is not the same as the $uibModal service used above.
+app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, completions, player, completionFactory) {
 
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+  $scope.completions = completions;
 
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
+  $scope.getBonus = function(type){
+    completionFactory[type]();
+    var ind = player.completionBonus.indexOf(type);
+    player.completionBonus.splice(ind, 1);
+    completionFactory.assessCompletion(player);
   };
 
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
-  };
-
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
+  var counter = 0;
+  $scope.ok = function() {
+    $uibModalInstance.close();
   };
 });

@@ -7,17 +7,6 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
     return game.players.reduce(findMyIndex, "");
   };
 
-  function findMyIndex(prev, curr, index) {
-    if (gameFactory.auth().$getAuth().uid === curr.userID) {
-      return index;
-    }
-    return prev;
-  }
-
-  function getCurrentPlayer(game){
-    return  game.players[game.currentPlayer];
-  }
-
   gameState.done = function(game) {
     var numberPlayers;
     numberPlayers = game.players.length;
@@ -63,6 +52,17 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
       }
     }
   };
+
+  function findMyIndex(prev, curr, index) {
+    if (gameFactory.auth().$getAuth().uid === curr.userID) {
+      return index;
+    }
+    return prev;
+  }
+
+  function getCurrentPlayer(game){
+    return  game.players[game.currentPlayer];
+  }
 
   function endGame(game) {
     console.log("the game is over");
