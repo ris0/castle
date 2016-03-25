@@ -6,10 +6,12 @@ app.factory('scoringFactory', function() {
 
     game.players.forEach(function(player){
       var score = 0;
+      //depleted rooms
       for(var key in player.publicScore){
         score += player.publicScore[key];
       }
       score += player.privateBonusCardPts;
+      score += Math.floor(player.cashMoney/10000);
       playerPoints.push({player: player, score: score});
     });
 
@@ -17,23 +19,35 @@ app.factory('scoringFactory', function() {
   };
 
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
-    var conArray = findConnectedRooms(player.castle, room);
+    var conArray = findConnectedRooms(player, room);
+    console.log("connected", conArray);
     player.publicScore.roomPts += room.placementPts;
+    room.scoredPoints = room.placementPts;
 
     //checking synergy points of current room to connected rooms and vice versa
     conArray.forEach(function(conRoom) {
-      room.affectedBy.forEach(function(type) {
-        //add score to room?
-        if (type === conRoom.roomType) player.publicScore.roomPts += rooom.effectPts;
-      });
-      conRoom.affectedBy.forEach(function(type) {
-        //add score to room?
-        if (type === room.roomType) player.publicScore.roomPts += conRoom.effectPts;
-      });
+      if(room.affectedBy){
+        room.affectedBy.forEach(function(type) {
+          //add score to room?
+          if (type === conRoom.roomType) {
+            player.publicScore.roomPts += room.effectPts;
+            conRoom.scoredPoints  += room.effectPts;
+          }
+        });
+      }
+      if(conRoom.affectedBy){
+        conRoom.affectedBy.forEach(function(type) {
+          //add score to room?
+          if (type === room.roomType) {
+            player.publicScore.roomPts += conRoom.effectPts;
+            room.scoredPoints += conRoom.effectPts;
+          }
+        });
+      }
     });
 
     //checking detriment points of current room to adjacent rooms and vice versa
-    adjArray.forEach(function(adjRoom) {
+    /*adjArray.forEach(function(adjRoom) {
       if (room.roomType === "Activity") {
         room.affectedBy.forEach(function(type) {
           if (adjRoom.roomType === type) player.publicScore.roomPts += room.effectPts;
@@ -45,12 +59,15 @@ app.factory('scoringFactory', function() {
           if (type === room.roomType) player.publicScore.roomPts += adjRoom.effectPts;
         });
       }
-    });
+    });*/
 
     //scoring global effects
     if (player.globalEffects) {
       player.globalEffects.forEach(function(effect) {
-        if (room.roomType === effect.roomType) player.publicScore.roomPts += +effect.effectPts;
+        if (room.roomType === effect.roomType) {
+          player.publicScore.roomPts += +effect.effectPts;
+          room.scoredPoints += +effect.effectPts;
+        }
       });
     }
 
@@ -60,16 +77,19 @@ app.factory('scoringFactory', function() {
       else player.globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
       player.castle.forEach(function(castleRoom) {
         room.affectedBy.forEach(function(type) {
-          if (type === castleRoom.roomType) player.publicScore.roomPts += room.effectPts;
+          if (type === castleRoom.roomType) {
+            player.publicScore.roomPts += room.effectPts;
+            castleRoom.scoredPoints += room.effectPts;
+          }
         });
       });
     }
   };
 
-  function findConnectedRooms(castle, room) {
+  function findConnectedRooms(player, room) {
     var conRooms = [];
     //for each room in the castle
-    castle.forEach(function(castleRoom) {
+    player.castle.forEach(function(castleRoom) {
     	//for each door in each room
       castleRoom.doors.forEach(function(castleDoor) {
       	//for each door on the room

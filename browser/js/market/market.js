@@ -14,7 +14,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       }).then(function(syncObject) {
         return syncObject.$bindTo(scope, 'data');
       }).then(function(game) {
-        console.log(scope.data);
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function(room, price) {
@@ -25,13 +24,12 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
           marketFactory.pass(scope.data);
         };
 
-        //availability on scope? only for masterbuilder market turn
         scope.done = function() {
-          marketFactory.done(scope.data);
+          gameStateFactory.done(scope.data);
         };
 
         scope.drawToMarket = function() {
-          marketFactory.drawToMarket(scope.data);
+          gameStateFactory.drawToMarket(scope.data);
         };
 
         if (scope.data.turnCount === 0 && scope.data.market[1000].room === "empty") scope.drawToMarket();
@@ -56,7 +54,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 
 
 //add scoring factory
-app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
+app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scoringFactory) {
   var market = {};
 
   market.swapMarket = function(price1, price2) {
@@ -71,12 +69,13 @@ app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
       var truePrice = +price - (+room.discount);
 
       cashFlow(game, price, truePrice);
-      scoreRoom(game, room);
+      scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
+      // scoreRoom(game, room);
       roomToPlayer(game, room, price);
       bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
-      market.done(game);
+      gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 
@@ -84,70 +83,9 @@ app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
     if (getCurrentPlayer(game).canBuy) {
       getCurrentPlayer(game).canBuy = false;
       getCurrentPlayer(game).cashMoney += 5000;
+      gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
-
-  market.done = function(game) {
-    var numberPlayers;
-    numberPlayers = game.players.length;
-    game.turnCount++;
-    getCurrentPlayer(game);
-    game.currentPlayer = (game.turnCount) % numberPlayers;
-
-    //master builder buying turn
-    if (game.turnCount % (numberPlayers + 1) !== 0) {
-      getCurrentPlayer(game).canBuy = true;
-      if (game.roomCards.length <= game.players.length) {
-        game.lastTurn = true;
-      }
-    }
-
-    //master builder market turn
-    if (game.turnCount % (numberPlayers + 1) === 0) {
-      if (game.lastTurn) endGame(game);
-      else {
-        game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
-        market.drawToMarket(game);
-      }
-    }
-    kingsFavorsFactory.getRankings(game);
-  };
-
-  market.drawToMarket = function(game) {
-    for (var price in game.market) {
-      var currentPrice = game.market[price];
-      if (currentPrice.room !== 'empty') currentPrice.room.discount += 1000;
-      while (currentPrice.room === 'empty') {
-        var nextCard;
-        if (game.roomCards) nextCard = game.roomCards.pop();
-        else {
-          game.discardRooms = _.shuffle(game.discardRooms);
-          nextCard = game.discardRoom.pop();
-        }
-        //********************draw from discard. how to verify?
-
-        if (typeof nextCard === 'number') { //if the next card in the pile is a room card
-          if (game.roomTiles[nextCard]) currentPrice.room = game.roomTiles[nextCard].pop();
-        } else currentPrice.room = nextCard; //if the next card in the pile is a tile
-        discardCard(game, nextCard);
-      }
-    }
-  };
-
-  function assessCompletions(game) {
-    if (!getCurrentPlayer(game).completionBonus) done();
-  }
-
-  function endGame(game) {
-    //final scoring
-    //determine winner
-  }
-
-  //add completion Bonus Factory
-  function completionBonus(game) {
-    if (!getCurrentPlayer(game).completionQueue) market.done(game);
-    //else do all the stuff
-  }
 
   function getMasterBuilder(game) {
     return game.players[game.masterBuilder];
@@ -173,33 +111,5 @@ app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
     game.market[price].room = "empty";
   }
 
-  //scoring factory
-  function scoreRoom(game, room) { //adjacent rooms, connectedRooms
-    getCurrentPlayer(game).publicScore.roomPts += room.placementPts;
-
-    if (getCurrentPlayer(game).globalEffects) {
-      getCurrentPlayer(game).globalEffects.forEach(function(effect) {
-        if (room.roomType === effect.roomType) getCurrentPlayer(game).publicScore.roomPts += +effect.effectPts;
-      });
-    }
-
-    //adding global effects to player
-    if (room.roomType === "Downstairs") {
-      if (!getCurrentPlayer(game).globalEffects) getCurrentPlayer(game).globalEffects = [{ roomType: room.affectedBy[0], effectPts: room.effectPts }];
-      else getCurrentPlayer(game).globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
-      getCurrentPlayer(game).castle.forEach(function(castleRoom) {
-        room.affectedBy.forEach(function(type) {
-          if (type === castleRoom.roomType) getCurrentPlayer(game).publicScore.roomPts += room.effectPts;
-        });
-      });
-    }
-
-    //keep track of room points on roomTile object
-  }
-
-  function discardCard(game, nextCard) {
-    if (!game.discardRooms) game.discardRooms = [nextCard];
-    else game.discardRooms.push(nextCard);
-  }
   return market;
 });
