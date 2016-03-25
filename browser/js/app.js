@@ -50,7 +50,8 @@ window.app = angular
             .state('create', {
                 url: '/create',
                 parent: 'overview',
-                templateUrl: 'views/dashboard/create.html'
+                templateUrl: 'views/dashboard/createLobby.html',
+                controller: 'createLobbyCtrl'
             })
             .state('join', {
                 url: '/join',

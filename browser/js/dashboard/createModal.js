@@ -13,10 +13,10 @@ app.factory('CreateModalFactory', function($uibModal) {
     return createModal;
 });
 
-app.controller('createModalCtrl', function($scope, $uibModalInstance) {
+app.controller('createModalCtrl', function($scope, $uibModalInstance, $state) {
     $scope.lobby = {};
-    $scope.ok = function() { $uibModalInstance.close() };
-    $scope.cancel = function () { $uibModalInstance.dismiss('cancel') };
+    $scope.ok = function() { $uibModalInstance.close(); $state.go('create'); };
+    $scope.cancel = function () { $uibModalInstance.dismiss('cancel'); };
 });
 
 /*
