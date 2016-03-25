@@ -9,31 +9,28 @@
 		<div class="form-content">
 
 			<form role="form" class="bottom-75">
+				<div class="table-form">
+					<div class="form-groups">
 
-			<div class="table-form">
-				<div class="form-groups">
+						<div class="form-group">
+							<input type="text" class="form-control input-lg" id="" placeholder="EMAIL" ng-model="signup.email">
+						</div>
 
-					<div class="form-group">
-						<input type="text" class="form-control input-lg" id="" placeholder="EMAIL" ng-model="signup.email">
+						<div class="form-group">
+							<input type="password" class="form-control input-lg" id="" placeholder="PASSWORD" ng-model="signup.password">
+						</div>
+
+
 					</div>
+					<a class="btn" type="submit" id="btn1" ng-click="signup()">
+					<i class="fa fa-pencil-square-o fa-3x"></i> <span id="signup1">SIGN UP</span>
+					</a>
+					<br>
+					<a class="btn" type="submit" ng-click="login()" id="btn2">
+					<i class="fa fa-play fa-3x"></i> <span id="login1">LOGIN</span>
+					</a>
 
-					<div class="form-group">
-						<input type="password" class="form-control input-lg" id="" placeholder="PASSWORD" ng-model="signup.password">
-					</div>
-					
-						
 				</div>
-				<a class="btn" type="submit" id="btn1" ng-click="signup()">
-				<i class="fa fa-pencil-square-o fa-3x"></i> <span id="signup1">SIGN UP</span>
-				</a>
-				<br>
-				<a class="btn" type="submit" ng-click="login()" id="btn2">
-				<i class="fa fa-play fa-3x"></i> <span id="login1">LOGIN</span>
-				</a>
-
-			</div>
-
-
 			</form>
 
 		</div>

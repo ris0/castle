@@ -1,9 +1,11 @@
-app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, playersRef, baseStateRef, syncObject, $scope, $state, $firebaseArray, $firebaseObject, gameFactory, $timeout) {
+app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, playersRef, baseStateRef, syncObject, $scope, $state, $firebaseArray, $firebaseObject, gameFactory, $timeout, CreateModalFactory) {
 
     $scope.auth = gameFactory.auth();
+    $scope.open = CreateModalFactory.open;
     $scope.isLoading;
 
     var players;
+
     var userObj = $firebaseObject(usersRef.child(userId));
     userObj.$loaded().then(function(user) {
         $scope.user = user;
@@ -11,7 +13,6 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
 
     $scope.logout = function(){
         $scope.auth.$unauth();
-        console.log("Signing out");
         $state.go('login');
     };
 
@@ -27,7 +28,7 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
         };
 
         //put this in its own factory
-        $scope.createGame = function() {
+        $scope.createGame = function() { // $scope.createGame = dashboardFactory.createGame($scope.data);
             playersRef.once('value', function(playersObj) {
                 players = _.clone(playersObj.val());
                 $scope.counter = 0;
@@ -71,7 +72,7 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
         };
 
         $scope.findRandomGame = function() {
-
+            console.log($scope.test);
             if ($scope.data.playersQueue) {
 
                 for (var key in $scope.data.playersQueue) {
@@ -112,3 +113,4 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
         }
     }
 });
+
