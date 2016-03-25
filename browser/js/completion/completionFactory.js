@@ -1,9 +1,9 @@
-app.factory('completionFactory', function(BonusModalFactory, gameStateFactory) {
+app.factory('completionFactory', function(BonusModalFactory, gameStateFactory, CompletionModalFactory) {
   var completion = {};
 
-  completion.assessCompletion = function(player) {
+  completion.assessCompletion = function(player, currentPlayerIndex, game) {
     if (!player.completionBonus) gameStateFactory.done(game);
-
+    else CompletionModalFactory.open(currentPlayerIndex);
   };
 
   completion.Activity = function(player) {

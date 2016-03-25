@@ -1,17 +1,14 @@
 app.factory('CompletionModalFactory', function($uibModal) {
   var completionModal = {};
 
-  completionModal.open = function(completions, player) {
+  completionModal.open = function(player) {
 
     var modalInstance = $uibModal.open({
       animation: true,
-      templateUrl: 'js/completion/competions.modal.html',
+      templateUrl: 'js/completion/completions.modal.html',
       controller: 'CompletionModalCtrl',
       size: 'lg',
       resolve: {
-        completions:function(){
-          return completions;
-        },
         playerIndex: function(){
           return player;
         },
@@ -33,13 +30,11 @@ app.factory('CompletionModalFactory', function($uibModal) {
   return completionModal;
 });
 
-app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, completions, playerIndex, players, completionFactory) {
-
-  $scope.completions = completions;
+app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, playerIndex, players, completionFactory) {
 
   players.$bindTo($scope, "players");
 
-  $scope.getBonus = function(type){
+  $scope.assessCompletion = function(type){
     completionFactory[type]();
     var ind = $scope.players[playerIndex].completionBonus.indexOf(type);
     $scope.players[playerIndex].completionBonus.splice(ind, 1);

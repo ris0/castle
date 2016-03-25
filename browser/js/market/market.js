@@ -54,7 +54,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 
 
 //add scoring factory
-app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scoringFactory) {
+app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scoringFactory, completionFactory) {
   var market = {};
 
   market.swapMarket = function(price1, price2) {
@@ -75,6 +75,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
+      // completionFactory.assessCompletion(getCurrentPlayer(game), game.currentPlayer, game);
       gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };

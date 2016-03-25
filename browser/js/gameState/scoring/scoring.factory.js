@@ -30,8 +30,8 @@ app.factory('scoringFactory', function() {
         room.affectedBy.forEach(function(type) {
           //add score to room?
           if (type === conRoom.roomType) {
-            player.publicScore.roomPts += room.effectPts;
-            conRoom.scoredPoints  += room.effectPts;
+            player.publicScore.roomPts += +room.effectPts;
+            conRoom.scoredPoints  += +room.effectPts;
           }
         });
       }
@@ -39,8 +39,8 @@ app.factory('scoringFactory', function() {
         conRoom.affectedBy.forEach(function(type) {
           //add score to room?
           if (type === room.roomType) {
-            player.publicScore.roomPts += conRoom.effectPts;
-            room.scoredPoints += conRoom.effectPts;
+            player.publicScore.roomPts += +conRoom.effectPts;
+            room.scoredPoints += +conRoom.effectPts;
           }
         });
       }
@@ -78,8 +78,8 @@ app.factory('scoringFactory', function() {
       player.castle.forEach(function(castleRoom) {
         room.affectedBy.forEach(function(type) {
           if (type === castleRoom.roomType) {
-            player.publicScore.roomPts += room.effectPts;
-            castleRoom.scoredPoints += room.effectPts;
+            player.publicScore.roomPts += +room.effectPts;
+            castleRoom.scoredPoints += +room.effectPts;
           }
         });
       });

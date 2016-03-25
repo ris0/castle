@@ -23,7 +23,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
 
     //master builder gameState turn
     if (game.turnCount % (numberPlayers + 1) === 0) {
-      if (game.lastTurn) endGame(game);
+      if (game.lastTurn && !game.roomCards) endGame(game);
       else {
         game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
         gameState.drawToMarket(game);
