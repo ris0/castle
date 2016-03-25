@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, playersRef, baseStateRef, syncObject, $scope, $state, $firebaseArray, $firebaseObject, gameFactory, DashboardFactory, $timeout, CreateModalFactory) {
+app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $state, $firebaseObject, gameFactory, DashboardFactory) {
 
     $scope.auth = gameFactory.auth();
 

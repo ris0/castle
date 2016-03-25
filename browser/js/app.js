@@ -34,25 +34,12 @@ window.app = angular
                     syncObject: function($firebaseObject, gameFactory) {
                         return $firebaseObject(gameFactory.ref());
                     },
-                    baseStateRef: function($firebaseObject, gameFactory) {
-                        return gameFactory.ref().child("baseState");
-                    },
-                    gamesRef: function($firebaseObject, gameFactory) {
-                        return gameFactory.ref().child("games");
-                    },
-                    playersRef: function($firebaseObject, gameFactory) {
-                        return gameFactory.ref().child("playersQueue");
-                    },
                     usersRef: function($firebaseObject, gameFactory) {
                         return gameFactory.ref().child("users");
                     },
                     userId: function($firebaseObject, gameFactory) {
                         return gameFactory.auth().$getAuth().uid;
-                    },
-                    userEmail: function($firebaseObject, gameFactory) {
-                        return gameFactory.auth().$getAuth().password.email;
                     }
-
                 }
             })
             .state('overview', {
