@@ -7,8 +7,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
     var UsersRef = gameFactory.ref().child("users");
     var ref = gameFactory.ref().child("games");
 
-
-    dashboard.createGame = function(game) {
+    dashboard.createRandomGame = function(game) {
 
             var playersObj = game.playersQueue;
 
@@ -67,7 +66,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
             game.playersQueue = [{ userId: user.$id, email: user.email }];
             isLoading = true;
             setTimeout(function(){
-                return dashboard.createGame(game);
+                return dashboard.createRandomGame(game);
             }, 5000);
             console.log('Game will be ready in 5 seconds');
         }
