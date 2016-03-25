@@ -1,5 +1,4 @@
 app.controller('GridTestingCtrl', function($scope) {});
-
 app.directive('gridtesting', function($window) {
     return {
         restrict: "EA",
@@ -28,7 +27,7 @@ app.directive('gridtesting', function($window) {
                 ],
                 "fence": null,
                 "rotation": 180,
-                "notdraggable": false, //temp
+                "notdraggable": false //temp
             }, {
                 "roomName": "Solar",
                 "imagePath": "images/200-solar.png",
@@ -50,8 +49,8 @@ app.directive('gridtesting', function($window) {
                 "rotation": 0,
                 "notdraggable": false, //temp
             }, {
-                "roomName": "Flute-Room",
-                "imagePath": "images/150-fake-room-money-money.png",
+                "roomName": "Flute Room",
+                "imagePath": "/images/150-fake-room-money-money.png",
                 "sqf": 150,
                 "roomType": "Activity",
                 "placementPts": 3,
@@ -74,8 +73,8 @@ app.directive('gridtesting', function($window) {
                 "fence": null,
                 "rotation": 0,
                 "notdraggable": false, //temp
-            }];
 
+            }];
             var drag = d3.behavior.drag()
                 .origin(function(d) {
                     return d;
@@ -83,7 +82,6 @@ app.directive('gridtesting', function($window) {
                 .on("dragstart", dragstarted)
                 .on("drag", dragged)
                 .on("dragend", dragended);
-
             var zoom = d3.behavior.zoom()
                 .scaleExtent([.01, 5])
                 .on("zoom", zooming);
@@ -113,7 +111,6 @@ app.directive('gridtesting', function($window) {
                 .attr("y1", -10)
                 .attr("y2", height + 10)
                 .style("stroke", "royalblue");
-
             gameGrid.append("g")
                 .selectAll("line")
                 .data(d3.range(0, 2500))
@@ -153,6 +150,8 @@ app.directive('gridtesting', function($window) {
                 .on("dblclick", rotate);
 
             var roomImages = roomTiles.append("image")
+            roomTiles.enter()
+                .append("image")
                 .attr("xlink:href", function(d) {
                     return d.imagePath;
                 })
@@ -164,11 +163,12 @@ app.directive('gridtesting', function($window) {
                 });
 
             var roomPaths = roomTiles.append("path")
+                .classed("roomTiles", true)
                 .attr("d", function(d) {
                     return d.svgPath;
                 })
-                .style("stroke", "green")
-                .style("stroke-width", "0")
+                .style("stroke", "black")
+                .style("stroke-width", "0.5")
                 .classed("normal", true);
 
             // -------------------------------------------------------------------------------------------
@@ -178,8 +178,6 @@ app.directive('gridtesting', function($window) {
             // -------------------------------------------------------------------------------------------
 
             // functions
-
-
 
             function rotate(d) {
                 d3.event.stopPropagation();
@@ -191,14 +189,12 @@ app.directive('gridtesting', function($window) {
                         return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")";
                     });
             }
-
             function dragstarted(d) {
                 if (d.notdraggable !== true) {
                     d3.event.sourceEvent.stopPropagation();
                     d3.select(this).classed("dragging", true);
                 }
             }
-
             function dragged(d) {
                 if (d.notdraggable !== true) {
                     d.boardPosition[0] += d3.event.dx;
@@ -207,26 +203,27 @@ app.directive('gridtesting', function($window) {
                     var snapY = Math.round(d.boardPosition[1] / 10) * 10;
                     d3.select(this)
                         .attr("transform", "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")")
-                        .classed("normal", checkPositioning(this, d))
-                        .classed("legit", checkPositioning(this, d))
-                        .classed("adjacent", checkPositioning(this, d))
-                        .classed("overlapping", checkPositioning(this, d));
+                        .classed("normal", checkPositioning(d))
+                        .classed("legit", checkPositioning(d))
+                        .classed("adjacent", checkPositioning(d))
+                        .classed("overlapping", checkPositioning(d));
                 }
             }
 
-            function checkPositioning(unplacedRoom, d) {
-                console.dir(unplacedRoom);
-                console.dir(d);
-                console.dir(roomPaths.data()); // objects of each room
-                console.log("roomPaths", roomPaths); // objects of each room
+            function checkPositioning(d) {
+                
+                console.dir(d); // unplaced room
+                console.dir(roomPaths.data()); // array of all room objects in players room array
+                console.log("roomPaths", roomPaths); // array of all room svg paths in players room array
             }
+
+
 
             function dragended(d) {
                 if (d.notdraggable != true) {
                     d3.select(this).classed("dragging", false);
                 }
             }
-
             function zooming() {
                 if (!d3.event.sourceEvent) return;
                 gameGrid.attr("transform", "translate(" + d3.event.translate[0] % (10 * d3.event.scale) + "," + d3.event.translate[1] % (10 * d3.event.scale) + ")scale(" + d3.event.scale + ")");

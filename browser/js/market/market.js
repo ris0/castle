@@ -14,6 +14,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       }).then(function(syncObject) {
         return syncObject.$bindTo(scope, 'data');
       }).then(function(game) {
+        console.log(scope.data);
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function(room, price) {
@@ -24,6 +25,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
           marketFactory.pass(scope.data);
         };
 
+        //availability on scope? only for masterbuilder market turn
         scope.done = function() {
           marketFactory.done(scope.data);
         };
@@ -34,14 +36,16 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 
         if (scope.data.turnCount === 0 && scope.data.market[1000].room === "empty") scope.drawToMarket();
 
-        var firstChoice;
+        var firstChoice = null;
 
         scope.swapTwo = function(price) {
-          if (firstChoice) {
-            marketFactory.swapMarket(firstChoice, price);
-            firstChoice = null;
-          } else {
-            firstChoice = price;
+          if(!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex){
+            if (firstChoice) {
+              marketFactory.swapMarket(firstChoice, price);
+              firstChoice = null;
+            } else {
+              firstChoice = price;
+            }
           }
         };
 
@@ -51,7 +55,8 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 });
 
 
-app.factory('marketFactory', function() {
+//add scoring factory
+app.factory('marketFactory', function(kingsFavorsFactory, bonusCardsFactory) {
   var market = {};
 
   market.swapMarket = function(price1, price2) {
@@ -68,6 +73,7 @@ app.factory('marketFactory', function() {
       cashFlow(game, price, truePrice);
       scoreRoom(game, room);
       roomToPlayer(game, room, price);
+      bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
       market.done(game);
@@ -78,7 +84,6 @@ app.factory('marketFactory', function() {
     if (getCurrentPlayer(game).canBuy) {
       getCurrentPlayer(game).canBuy = false;
       getCurrentPlayer(game).cashMoney += 5000;
-      market.done(game);
     } else console.log("It's not your turn");
   };
 
@@ -105,7 +110,7 @@ app.factory('marketFactory', function() {
         market.drawToMarket(game);
       }
     }
-
+    kingsFavorsFactory.getRankings(game);
   };
 
   market.drawToMarket = function(game) {
@@ -138,6 +143,7 @@ app.factory('marketFactory', function() {
     //determine winner
   }
 
+  //add completion Bonus Factory
   function completionBonus(game) {
     if (!getCurrentPlayer(game).completionQueue) market.done(game);
     //else do all the stuff
@@ -168,7 +174,6 @@ app.factory('marketFactory', function() {
   }
 
   //scoring factory
-
   function scoreRoom(game, room) { //adjacent rooms, connectedRooms
     getCurrentPlayer(game).publicScore.roomPts += room.placementPts;
 
@@ -181,7 +186,7 @@ app.factory('marketFactory', function() {
     //adding global effects to player
     if (room.roomType === "Downstairs") {
       if (!getCurrentPlayer(game).globalEffects) getCurrentPlayer(game).globalEffects = [{ roomType: room.affectedBy[0], effectPts: room.effectPts }];
-      else getCurrentPlayer(game).globalEffects.$add({ roomType: room.affectedBy[0], effectPts: room.effectPts });
+      else getCurrentPlayer(game).globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
       getCurrentPlayer(game).castle.forEach(function(castleRoom) {
         room.affectedBy.forEach(function(type) {
           if (type === castleRoom.roomType) getCurrentPlayer(game).publicScore.roomPts += room.effectPts;
@@ -190,13 +195,6 @@ app.factory('marketFactory', function() {
     }
 
     //keep track of room points on roomTile object
-  }
-
-  function findMyIndex(prev, curr, index) {
-    if (gameFactory.auth().$getAuth().uid === curr.userID) {
-      return index;
-    }
-    return prev;
   }
 
   function discardCard(game, nextCard) {

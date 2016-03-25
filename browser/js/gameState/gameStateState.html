@@ -1,12 +1,5 @@
 <market></market>
 <div class = "container">
 	Turn Count: {{data.turnCount}} // Current Player: {{data.currentPlayer}} // Master Builder: {{data.masterBuilder}} // Am I the current player?: {{userIndex===data.currentPlayer}}<br>
-	<button ng-show="data.players[userIndex].canBuy" ng-click="pass()">Pass</button>
-	<div ng-show="data.currentPlayer === userIndex" ng-repeat="(price,room) in data.market">
-		<button ng-disabled="data.players[userIndex].canBuy" ng-click="swapTwo(room)">{{room.room.roomName || "empty"}}</button>
-		<button ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">{{price}}</button>
-		<span>discount: {{room.room.discount}}</span>
-	</div>
-	<button ng-show="data.masterBuilder === userIndex && !data.players[userIndex].canBuy && data.currentPlayer === userIndex" ng-click="done()">MB done</button>
-	<pre>{{data.players[userIndex]|json}}</pre>
+	<div><pre>{{data.players[userIndex]|json}}</pre></div>
 </div>
