@@ -18,6 +18,7 @@ app.factory('scoringFactory', function() {
 
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
     var conArray = findConnectedRooms(player.castle, room);
+    console.log("connected", conArray);
     player.publicScore.roomPts += room.placementPts;
 
     //checking synergy points of current room to connected rooms and vice versa
@@ -33,7 +34,7 @@ app.factory('scoringFactory', function() {
     });
 
     //checking detriment points of current room to adjacent rooms and vice versa
-    adjArray.forEach(function(adjRoom) {
+    /*adjArray.forEach(function(adjRoom) {
       if (room.roomType === "Activity") {
         room.affectedBy.forEach(function(type) {
           if (adjRoom.roomType === type) player.publicScore.roomPts += room.effectPts;
@@ -45,7 +46,7 @@ app.factory('scoringFactory', function() {
           if (type === room.roomType) player.publicScore.roomPts += adjRoom.effectPts;
         });
       }
-    });
+    });*/
 
     //scoring global effects
     if (player.globalEffects) {
