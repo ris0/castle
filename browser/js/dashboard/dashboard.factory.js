@@ -21,7 +21,6 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
             for (var key in players) {
                 baseState.players[counter].userID = players[key].userId;
                 baseState.players[counter].userName = players[key].email;
-                baseState.players[counter].bonusCards = game.baseState.bonusCards.splice(0, 2);
                 counter++;
             }
             playersRef.remove();
