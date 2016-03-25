@@ -12,8 +12,19 @@ app.factory('CompletionModalFactory', function($uibModal) {
         completions:function(){
           return completions;
         },
-        player: function() {
+        playerIndex: function(){
           return player;
+        },
+        players: function(gameFactory, $firebaseObject) {
+          var userID = gameFactory.auth().$getAuth().uid;
+          var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+          return userGame.$loaded().then(function(data){
+            return data.$value;
+          }).then(function(game){
+            return $firebaseObject(gameFactory.ref().child('games').child(game).child('players'));
+          }).then(function(syncObject){
+            return syncObject;
+          });
         }
       }
     });
@@ -22,15 +33,17 @@ app.factory('CompletionModalFactory', function($uibModal) {
   return completionModal;
 });
 
-app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, completions, player, completionFactory) {
+app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, completions, playerIndex, players, completionFactory) {
 
   $scope.completions = completions;
 
+  players.$bindTo($scope, "players");
+
   $scope.getBonus = function(type){
     completionFactory[type]();
-    var ind = player.completionBonus.indexOf(type);
-    player.completionBonus.splice(ind, 1);
-    completionFactory.assessCompletion(player);
+    var ind = $scope.players[playerIndex].completionBonus.indexOf(type);
+    $scope.players[playerIndex].completionBonus.splice(ind, 1);
+    completionFactory.assessCompletion($scope.players[playerIndex]);
   };
 
   var counter = 0;

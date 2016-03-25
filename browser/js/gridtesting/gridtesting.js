@@ -213,9 +213,9 @@ app.directive('gridtesting', function($window) {
             }
 
             function checkPositioning(d) {
-                console.dir(d); // unplaced room
-                console.dir(roomPaths.data()); // array of room objects of each room
-                console.log(roomPaths); // array of DOM elements/svg paths for each room
+                // console.dir(d); // unplaced room
+                // console.dir(roomPaths.data()); // array of room objects of each room
+                // console.log(roomPaths); // array of DOM elements/svg paths for each room
             }
 
             function dragended(d) {

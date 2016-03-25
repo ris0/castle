@@ -4,10 +4,10 @@
     <div class="modal-body">
         <ul>
             <li ng-repeat="bonus in bonuses">
-                <div ng-click="$event.preventDefault(); selected.bonus = bonus">{{ bonus.attributeToCheck }}</div>
+                <div ng-click="$event.preventDefault(); selected.bonus = bonus">{{ bonus.description }}</div>
             </li>
         </ul>
-        Selected: <b>{{ selected.bonus.attributeToCheck }}</b>
+        Selected: <b>{{ selected.bonus.description }}</b>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>

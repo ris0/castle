@@ -83,6 +83,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
     if (getCurrentPlayer(game).canBuy) {
       getCurrentPlayer(game).canBuy = false;
       getCurrentPlayer(game).cashMoney += 5000;
+      gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 
