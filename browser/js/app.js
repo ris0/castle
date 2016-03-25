@@ -62,12 +62,12 @@ window.app = angular
             })
             .state('create', {
                 url: '/create',
-                parent: 'dashboard',
+                parent: 'overview',
                 templateUrl: 'views/dashboard/create.html'
             })
             .state('join', {
                 url: '/join',
-                parent: 'dashboard',
+                parent: 'overview',
                 templateUrl: 'views/dashboard/join.html'
             })
             .state('random', {

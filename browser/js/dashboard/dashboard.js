@@ -23,11 +23,6 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
             $scope.baseState = _.clone(baseState.val());
         });
 
-        $scope.goToGame = function() {
-            $state.go('game');
-        };
-
-        //put this in its own factory
         $scope.createGame = function() { // $scope.createGame = dashboardFactory.createGame($scope.data);
             playersRef.once('value', function(playersObj) {
                 players = _.clone(playersObj.val());
