@@ -6,5 +6,6 @@ app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $fi
   syncObject.$bindTo($scope, "data")
     .then(function() {
       $scope.userIndex = gameStateFactory.getUserIndex($scope.data);
+      $scope.userObj = gameStateFactory.getUserObj($scope.data);
     });
 });

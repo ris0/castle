@@ -1,4 +1,6 @@
 <market></market>
+<kings-favors favors="data.kingsFavors"></kings-favors>
+<bonus-cards cards="userObj.bonusCards"></bonus-cards>
 <div class = "container">
 	Turn Count: {{data.turnCount}} // Current Player: {{data.currentPlayer}} // Master Builder: {{data.masterBuilder}} // Am I the current player?: {{userIndex===data.currentPlayer}}<br>
 	<div><pre>{{data.players[userIndex]|json}}</pre></div>
