@@ -6,10 +6,12 @@ app.factory('scoringFactory', function() {
 
     game.players.forEach(function(player){
       var score = 0;
+      //depleted rooms
       for(var key in player.publicScore){
         score += player.publicScore[key];
       }
       score += player.privateBonusCardPts;
+      score += Math.floor(player.cashMoney/10000);
       playerPoints.push({player: player, score: score});
     });
 
@@ -17,7 +19,7 @@ app.factory('scoringFactory', function() {
   };
 
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
-    var conArray = findConnectedRooms(player.castle, room);
+    var conArray = findConnectedRooms(player, room);
     console.log("connected", conArray);
     player.publicScore.roomPts += room.placementPts;
 
@@ -67,10 +69,10 @@ app.factory('scoringFactory', function() {
     }
   };
 
-  function findConnectedRooms(castle, room) {
+  function findConnectedRooms(player, room) {
     var conRooms = [];
     //for each room in the castle
-    castle.forEach(function(castleRoom) {
+    player.castle.forEach(function(castleRoom) {
     	//for each door in each room
       castleRoom.doors.forEach(function(castleDoor) {
       	//for each door on the room

@@ -14,7 +14,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       }).then(function(syncObject) {
         return syncObject.$bindTo(scope, 'data');
       }).then(function(game) {
-        console.log(scope.data);
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function(room, price) {
