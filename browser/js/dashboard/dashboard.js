@@ -36,7 +36,6 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
                 for (var key in players) {
                     $scope.baseState.players[$scope.counter].userID = players[key].userId;
                     $scope.baseState.players[$scope.counter].userName = players[key].email;
-                    $scope.baseState.players[$scope.counter].bonusCards = $scope.baseState.bonusCards.splice(0,2);
                     $scope.counter++;
                 }
                 playersRef.remove();
@@ -73,10 +72,10 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
                     if ($scope.data.playersQueue[key] === userId) return;
                 }
 
-                playersRef.push({ userId: userId, email: userEmail })
+                playersRef.push({ userId: userId, email: userEmail });
 
             } else {
-                playersRef.push({ userId: userId, email: userEmail })
+                playersRef.push({ userId: userId, email: userEmail });
                 setTimeout($scope.createGame, 5000);
                 console.log('Game will be ready in 5 seconds');
             }
@@ -99,8 +98,10 @@ app.controller('DashboardCtrl', function(usersRef, userEmail, userId, gamesRef, 
         //removing from piles depending on #players
         for (var roomSize in $scope.baseState.roomTiles) {
             var toRemove = $scope.baseState.roomTiles[roomSize].length;
+
             //removing 0, 1, or 2 from large rooms piles, 0, 2, or 4 from small room piles
             if (roomSize.length < 4 && numTileMult < 0) toRemove = (+roomSize > 350) ? 1 * numTileMult : 2 * numTileMult;
+            console.log(toRemove);
             $scope.baseState.roomTiles[roomSize] = _.shuffle($scope.baseState.roomTiles[roomSize]).slice(0, toRemove);
         }
     }
