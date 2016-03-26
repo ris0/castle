@@ -105,9 +105,9 @@ app.directive('gridtesting', function($window) {
                     [-10, 10],
                     [-30, 10],
                     [-50, 10],
-                    [-10, -10],
-                    [-30, -10],
-                    [-50, -10],
+                    [-10, ],
+                    [-30, ],
+                    [-50, ],
                     [10, 10],
                     [30, 10],
                     [50, 10],
@@ -311,6 +311,7 @@ app.directive('gridtesting', function($window) {
             function checkIntersects(d) {
 
                 console.dir(d); // unplaced room
+
             }
 
             function dragended(d) {
