@@ -8,7 +8,7 @@ app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $fi
       $scope.userIndex = gameStateFactory.getUserIndex($scope.data);
       return $scope.userIndex;
     }).then(function(index){
-      if($scope.data.turnCount === 0 && $scope.data.players[index].bonusCards.length === 0) {
+      if($scope.data.turnCount === index && !$scope.data.players[index].bonusCards) {
       	var bonusCards = [];
       	for(var i = 0; i < 3; i++){
       		bonusCards.push($scope.data.bonusCards.pop());

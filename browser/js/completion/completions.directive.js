@@ -1,27 +1,24 @@
 app.factory('CompletionModalFactory', function($uibModal) {
   var completionModal = {};
 
-  completionModal.open = function(completions, player) {
+  completionModal.open = function(player) {
 
     var modalInstance = $uibModal.open({
       animation: true,
-      templateUrl: 'js/completion/competions.modal.html',
+      templateUrl: 'js/completion/completions.modal.html',
       controller: 'CompletionModalCtrl',
       size: 'lg',
       resolve: {
-        completions:function(){
-          return completions;
-        },
         playerIndex: function(){
           return player;
         },
-        players: function(gameFactory, $firebaseObject) {
+        game: function(gameFactory, $firebaseObject) {
           var userID = gameFactory.auth().$getAuth().uid;
           var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
           return userGame.$loaded().then(function(data){
             return data.$value;
           }).then(function(game){
-            return $firebaseObject(gameFactory.ref().child('games').child(game).child('players'));
+            return $firebaseObject(gameFactory.ref().child('games').child(game));
           }).then(function(syncObject){
             return syncObject;
           });
@@ -33,21 +30,24 @@ app.factory('CompletionModalFactory', function($uibModal) {
   return completionModal;
 });
 
-app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, completions, playerIndex, players, completionFactory) {
+app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, playerIndex, game, completionFactory, gameStateFactory) {
 
-  $scope.completions = completions;
+  game.$bindTo($scope, "game");
 
-  players.$bindTo($scope, "players");
+  $scope.completions = game.players[game.currentPlayer].completionBonus;
 
-  $scope.getBonus = function(type){
-    completionFactory[type]();
-    var ind = $scope.players[playerIndex].completionBonus.indexOf(type);
-    $scope.players[playerIndex].completionBonus.splice(ind, 1);
-    completionFactory.assessCompletion($scope.players[playerIndex]);
+  $scope.assessCompletion = function(type, game){
+    completionFactory[type](game.currentPlayer, game);
+    var ind = $scope.game.players[playerIndex].completionBonus.indexOf(type);
+    $scope.game.players[playerIndex].completionBonus.splice(ind, 1);
+    completionFactory.assessCompletion($scope.game);
+    $uibModalInstance.close();
   };
 
+
   var counter = 0;
-  $scope.ok = function() {
+  $scope.done = function() {
+    gameStateFactory.done($scope.game);
     $uibModalInstance.close();
   };
 });
