@@ -298,7 +298,6 @@ app.directive('gridtesting', function($window) {
 
                 console.dir(polyRooms.data()); // array of polygonal room objects of each room
                 console.log(polyRooms); // array of polygonal DOM elements for each room
-
             }
 
             function dragended(d) {

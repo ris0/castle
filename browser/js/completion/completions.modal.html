@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h3 class="modal-title">Choose one card to discard</h3>
+</div>
+<div class="modal-body">
+    <ul>
+        <li ng-repeat="type in completions">
+            <div ng-click="$event.preventDefault(); getBonus(type)">{{ type }}</div>
+        </li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+</div>

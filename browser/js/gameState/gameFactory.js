@@ -1,6 +1,6 @@
 app.factory('gameFactory', function($firebaseAuth){
 	var gameState = {};
-	var ref = new Firebase("https://castle-john.firebaseio.com/");
+	var ref = new Firebase("https://cindy-castle.firebaseio.com/");
     gameState.ref = ()=>{
     	return ref;
     };
@@ -8,9 +8,6 @@ app.factory('gameFactory', function($firebaseAuth){
     gameState.auth = function(){
     	return $firebaseAuth(ref);
     };
-
-    //currentplayer = turn%players.length
-    //masterplayer = turn%players.length^2
 
 	return gameState;
     
