@@ -4,7 +4,7 @@ app.directive('bonusCards', function(bonusCardsFactory) {
     scope: {
       cards: "="
     },
-    template: '<div><pre>{{cards}}</pre></div>',
+    templateUrl: './js/bonusCardsAndKingsFavors/bonusCards.html',
     link: function(scope) {
       
     }

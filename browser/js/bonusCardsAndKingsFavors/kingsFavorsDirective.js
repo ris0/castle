@@ -7,6 +7,7 @@ app.directive('kingsFavors', function(kingsFavorsFactory) {
     },
     templateUrl: './js/bonusCardsAndKingsFavors/kingsFavorsRanking.html',
     link: function(scope) {
+    	console.log(scope.game)
     }
   };
 });

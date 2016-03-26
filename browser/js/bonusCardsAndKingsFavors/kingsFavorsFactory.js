@@ -3,10 +3,10 @@
 app.factory('kingsFavorsFactory', function(gameFactory){
 	var kingsFavors = {};
 	var ref = gameFactory.ref();
+	var rankings;
 
 	kingsFavors.getRankings = function(game){
 		var kingsFavorsArr = game.kingsFavors
-		console.log('KingsFavors', kingsFavorsArr);
 		var favorsToRank = [];
 		kingsFavorsArr.forEach(function(favor){
 			if(favor.sqf) favorsToRank.push(mostRoomTypeBySqFt(game, favor.type));
@@ -17,7 +17,12 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 			if(favor.cashMoney) favorsToRank.push(mostMoney(game))
 		});
 		resetKingsFavorsPoints(game);
-		rank.apply(null, favorsToRank);
+		rankings = rank.apply(null, favorsToRank);
+		for(var i = 0; i < kingsFavorsArr.length; i++){
+			kingsFavorsArr[i].rankings = rankings[i];
+		}
+		console.log('game-kings', game.kingsFavors);
+		game.kingsFavors = kingsFavorsArr;
 	}
 
 		function resetKingsFavorsPoints (game){
@@ -47,6 +52,7 @@ app.factory('kingsFavorsFactory', function(gameFactory){
 						favorPoints[i].player.publicScore.kingsFavorPts += scoring[i];
 					}
 				}
+				console.log('favors', favorPoints)
 				return favorPoints;
 			});
 			console.log('KingsFavors Rankings', res);
