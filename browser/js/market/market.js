@@ -114,3 +114,4 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
 
   return market;
 });
+
