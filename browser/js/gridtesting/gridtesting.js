@@ -18,24 +18,24 @@ app.directive('gridtesting', function($window) {
                 "effectPts": 0,
                 "completed": false,
                 "boardPosition": [0, 0],
-                "containerDim": [6, 6],
-                "geometry": [
-                    { "x": 15, "y": 0 },
-                    { "x": 45, "y": 0 },
-                    { "x": 60, "y": 15 },
-                    { "x": 60, "y": 45 },
-                    { "x": 45, "y": 60 },
-                    { "x": 15, "y": 60 },
-                    { "x": 0, "y": 45 },
-                    { "x": 0, "y": 15 }
+                "containerDim": [60, 60],
+                "points": [
+                    [15, 0],
+                    [45, 0],
+                    [60, 15],
+                    [60, 45],
+                    [45, 60],
+                    [15, 60],
+                    [0, 45],
+                    [0, 15]
                 ],
                 "doors": [
-                    [-2, 0],
-                    [0, 2],
-                    [2, 0]
+                    [30, 0],
+                    [60, 30],
+                    [0, 30]
                 ],
                 "fence": null,
-                "rotation": 180,
+                "rotation": 0,
                 "final": true
             }, {
                 "roomName": "Solar",
@@ -47,19 +47,19 @@ app.directive('gridtesting', function($window) {
                 "effectPts": 2,
                 "completed": false,
                 "boardPosition": [60, 20],
-                "containerDim": [8, 4],
-                "geometry": [
-                    { "x": 0, "y": 0 },
-                    { "x": 80, "y": 0 },
-                    { "x": 80, "y": 40 },
-                    { "x": 0, "y": 40 }
+                "containerDim": [80, 40],
+                "points": [
+                    [0, 0],
+                    [80, 0],
+                    [80, 40],
+                    [0, 40]
                 ],
                 "doors": [
-                    [4, -1],
-                    [3, -2]
+                    [80, 30],
+                    [70, 40]
                 ],
                 "fence": null,
-                "rotation": 180,
+                "rotation": 0,
                 "final": true
             }, {
                 "roomName": "Flute-Room",
@@ -71,16 +71,15 @@ app.directive('gridtesting', function($window) {
                 "effectPts": -1,
                 "completed": false,
                 "boardPosition": [-60, 0],
-                "containerDim": [6, 6],
-                "geometry": {
-                    "cx": 30,
-                    "cy": 30,
-                    "r": 30
-                },
+                "containerDim": [60, 60],
+                "points": [
+                    [30, 30]
+                ],
+                "radius": 30,
                 "doors": [
-                    [-3, 0],
-                    [0, 3],
-                    [3, 0]
+                    [30, 0],
+                    [0, 30],
+                    [60, 30]
                 ],
                 "fence": null,
                 "rotation": 0,
@@ -94,27 +93,27 @@ app.directive('gridtesting', function($window) {
                 "affectedBy": [],
                 "effectPts": 0,
                 "completed": false,
-                "boardPosition": [60, 0],
-                "containerDim": [12, 2],
-                "geometry": [
-                    { "x": 0, "y": 0 },
-                    { "x": 120, "y": 0 },
-                    { "x": 120, "y": 20 },
-                    { "x": 0, "y": 20 }
+                "boardPosition": [100, 100],
+                "containerDim": [120, 20],
+                "points": [
+                    [0, 0],
+                    [120, 0],
+                    [120, 20],
+                    [0, 20]
                 ],
                 "doors": [
-                    [-1, 1],
-                    [-3, 1],
-                    [-5, 1],
-                    [-1, -1],
-                    [-3, -1],
-                    [-5, -1],
-                    [1, 1],
-                    [3, 1],
-                    [5, 1],
-                    [1, -1],
-                    [3, -1],
-                    [5, -1]
+                    [-10, 10],
+                    [-30, 10],
+                    [-50, 10],
+                    [-10, -10],
+                    [-30, -10],
+                    [-50, -10],
+                    [10, 10],
+                    [30, 10],
+                    [50, 10],
+                    [10, -10],
+                    [30, -10],
+                    [50, -10]
                 ],
                 "fence": null,
                 "rotation": 0,
@@ -193,7 +192,7 @@ app.directive('gridtesting', function($window) {
                 .attr("transform", function(d) {
                     var snapX = Math.round(d.boardPosition[0] / 10) * 10;
                     var snapY = Math.round(d.boardPosition[1] / 10) * 10;
-                    return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")";
+                    return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")";
                 })
                 .call(drag)
                 .on("dblclick", rotate);
@@ -203,19 +202,20 @@ app.directive('gridtesting', function($window) {
                     return d.imagePath;
                 })
                 .attr("height", function(d) {
-                    return d.containerDim[1] * 10;
+                    return d.containerDim[1];
                 })
                 .attr("width", function(d) {
-                    return d.containerDim[0] * 10;
+                    return d.containerDim[0];
                 });
 
             var polyRooms = roomTiles.append("polygon")
                 .filter(function(d) {
-                    return Array.isArray(d.geometry);
+                    return !d.radius;
                 })
                 .attr("points", function(d) {
-                    return d.geometry.map(function(d) {
-                        return [d.x, d.y].join(",");
+                    return d.points.map(function(v) {
+                        console.log(v);
+                        return v.join(",");
                     }).join(" ");
                 })
                 .style("stroke", "black")
@@ -225,17 +225,17 @@ app.directive('gridtesting', function($window) {
 
             var circleRooms = roomTiles.append("circle")
                 .filter(function(d) {
-                    return !Array.isArray(d.geometry);
+                    return d.radius;
                 })
                 .attr("cx", function(d) {
                     console.log(d);
-                    return d.geometry.cx;
+                    return d.points[0][0];
                 })
                 .attr("cy", function(d) {
-                    return d.geometry.cy;
+                    return d.points[0][1];
                 })
                 .attr("r", function(d) {
-                    return d.geometry.r;
+                    return d.radius;
                 })
                 .style("stroke", "black")
                 .style("stroke-width", "0")
@@ -251,6 +251,7 @@ app.directive('gridtesting', function($window) {
             // functions
 
             function rotate(d) {
+                var temp;
                 d3.event.stopPropagation();
                 if (d.final !== true) {
                     d3.select(this)
@@ -261,8 +262,19 @@ app.directive('gridtesting', function($window) {
                             d.rotation = d.rotation + 90;
                             var snapX = Math.round(d.boardPosition[0] / 10) * 10;
                             var snapY = Math.round(d.boardPosition[1] / 10) * 10;
-                            return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")";
+                            return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")";
                         });
+                    for (var i = 0; i < d.points.length; i++) {
+                        temp = -d.points[i][0];
+                        d.points[i][0] = d.points[i][1];
+                        d.points[i][1] = temp;
+                    }
+
+                    for (var j = 0; j < d.doors.length; j++) {
+                        temp = -d.doors[j][0];
+                        d.doors[j][0] = d.doors[j][1];
+                        d.doors[j][1] = temp;
+                    }
                 }
             }
 
@@ -273,31 +285,32 @@ app.directive('gridtesting', function($window) {
                 }
             }
 
-            function dragged(d, i) {
+            function dragged(d) {
                 if (d.final !== true) {
                     d.boardPosition[0] += d3.event.dx;
                     d.boardPosition[1] += d3.event.dy;
                     var snapX = Math.round(d.boardPosition[0] / 10) * 10;
                     var snapY = Math.round(d.boardPosition[1] / 10) * 10;
                     d3.select(this)
-                        .attr("transform", "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] * 10 / 2) + " " + (snapY + d.containerDim[1] * 10 / 2) + "),translate(" + snapX + "," + snapY + ")")
-                        .classed("normal", checkPositioning(d, i))
-                        .classed("legit", checkPositioning(d, i))
-                        .classed("adjacent", checkPositioning(d, i))
-                        .classed("overlapping", checkPositioning(d, i));
+                        .attr("transform", "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")")
+                        .classed("normal", checkIntersects(d))
+                        .classed("legit", checkIntersects(d))
+                        .classed("adjacent", checkIntersects(d))
+                        .classed("overlapping", checkIntersects(d));
+                    for (var i = 0; i < d.points.length; i++) {
+                        d.points[i][0] += d3.event.dx;
+                        d.points[i][1] += d3.event.dy;
+                    }
+                    for (var j = 0; j < d.doors.length; j++) {
+                        d.doors[j][0] += d3.event.dx;
+                        d.doors[j][1] += d3.event.dy;
+                    }
                 }
             }
 
-            function checkPositioning(d, i) {
+            function checkIntersects(d) {
 
-                console.log(i);
                 console.dir(d); // unplaced room
-
-                console.dir(circleRooms.data()); // array of circular room objects of each room
-                console.log(circleRooms); // array of circular DOM elements for each room
-
-                console.dir(polyRooms.data()); // array of polygonal room objects of each room
-                console.log(polyRooms); // array of polygonal DOM elements for each room
             }
 
             function dragended(d) {
