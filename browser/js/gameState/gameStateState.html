@@ -1,12 +1,16 @@
 <market></market>
+
 <div class='container'>
-	<div class="row">
+	<div class="col-md-4" id="slides_control">
 		<uib-carousel data="data" userObj='userObj'>
-			<uib-slide>
+			<uib-slide class="item">
 	        <kings-favors favors="data.kingsFavors" game="data"></kings-favors>
 			</uib-slide>
-	        <uib-slide>
-	        <bonus-cards cards="userObj.bonusCards"></bonus-cards>
+	        <uib-slide class="item">
+	        	<bonus-cards cards="userObj.bonusCards"></bonus-cards>
+			</uib-slide>
+			<uib-slide class="item">
+	        	<img src="/images/roomCompletion.png">
 			</uib-slide>
 		</uib-carousel>
 	</div>

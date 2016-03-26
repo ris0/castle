@@ -1,23 +1,17 @@
-<!-- <div class="container">
-  <table class="table" ng-repeat="favor in favors">
-    <thead>
-      <tr>
-        <th>{{favor.attributeToCheck}}</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="ranking in favor.rankings">
-          <td>{{ranking.player.userName}}</td>
-        </tr>
-    </tbody>
-  </table>
-</div> -->
-
-<div class="container" id="kingsFavors">
-  <div class="row">
-    <div class="col-sm-2" ng-repeat="favor in favors">
-      <div class="title"><span>{{favor.attributeToCheck}}</span></div>
-      <div class="player" ng-repeat="ranking in favor.rankings"><span>{{ranking.player.userName}}</span></div>
+<div class="kingsFavorsContainer">
+<h4>King's Favors</h4>
+<div class="container align-middle" id="kingsFavors">
+  <div class="row" id="kingsFavorsRow" ng-repeat="favor in favors">
+    <div class="col-sm-1">
+      <img ng-mouseover="kingsFavorsInfo(favor.attributeToCheck)" ng-mouseleave="kingsFavorsInfo(favor.attributeToCheck)" id="kingsFavorsImg" src="/images/kingsFavorActivityRoom-sm.png">
+    </div>
+    <div id="inner1">
+      <span ng-show="showInfo">{{favor.attributeToCheck}}</span>
+      <ol ng-hide="showInfo" id="smallFont">
+        <li ng-repeat="ranking in favor.rankings">{{ranking.player.userName}}</li>
+      </ol>
     </div>
   </div>
 </div>
+</div>
+
