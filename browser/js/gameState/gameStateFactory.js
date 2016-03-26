@@ -16,9 +16,6 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
     //master builder buying turn
     if (game.turnCount % (numberPlayers + 1) !== 0) {
       getCurrentPlayer(game).canBuy = true;
-      if (game.roomCards.length <= game.players.length) {
-        game.lastTurn = true;
-      }
     }
 
     //master builder gameState turn

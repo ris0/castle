@@ -8,10 +8,10 @@ app.factory('scoringFactory', function() {
       var score = 0;
       //depleted rooms
       for(var key in player.publicScore){
-        score += player.publicScore[key];
+        score += +player.publicScore[key];
       }
-      score += player.privateBonusCardPts;
-      score += Math.floor(player.cashMoney/10000);
+      score += +player.privateBonusCardPts;
+      score += +Math.floor(player.cashMoney/10000);
       playerPoints.push({player: player, score: score});
     });
 
@@ -20,7 +20,6 @@ app.factory('scoringFactory', function() {
 
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
     var conArray = findConnectedRooms(player, room);
-    console.log("connected", conArray);
     player.publicScore.roomPts += room.placementPts;
     room.scoredPoints = room.placementPts;
 
@@ -95,7 +94,7 @@ app.factory('scoringFactory', function() {
       	//for each door on the room
         room.doors.forEach(function(roomDoor) {
         	//see if castle door and room door is a match
-          if (_.isEqual(castleDoor, roomDoor)) {
+          if (Math.floor(castleDoor[0]) === Math.floor(roomDoor[0]) && Math.floor(castleDoor[1]) === Math.floor(roomDoor[1])) {
           	//decrements open doors in castleroom and placed room
           	connectDoorAndCheckCompletion(player, castleDoor);
           	connectDoorAndCheckCompletion(player, roomDoor);

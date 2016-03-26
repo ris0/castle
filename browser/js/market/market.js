@@ -75,8 +75,8 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
       //completion bonus instead of done
-      // completionFactory.assessCompletion(getCurrentPlayer(game), game.currentPlayer, game);
-      gameStateFactory.done(game);
+      completionFactory.assessCompletion(game);
+      // gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 
