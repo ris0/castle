@@ -5,7 +5,7 @@ app.factory('CompletionModalFactory', function($uibModal) {
 
     var modalInstance = $uibModal.open({
       animation: true,
-      templateUrl: 'js/completion/completions.modal.html',
+      templateUrl: 'js/completion/completions.carousel.html',
       controller: 'CompletionModalCtrl',
       size: 'lg',
       resolve: {
