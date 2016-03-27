@@ -1,33 +1,30 @@
-<nav class="navbar navbar-static-top">
+<nav id="market-nav" class="navbar navbar-static-top navbar-inverse">
     <div class="container">
         <div class="navbar-header">
         </div>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-inverse">
             <li class = "market-room" ng-repeat="(price,room) in data.market">
-                <center><div>{{room.room.roomName || "empty"}}</div>
+                <center><b>${{price}} - {{room.room.discount}}</b>
                 <img src = "images/100-pantry.png" class = "img-responsive" ng-click="swapTwo(room)">
-                <button ng-hide="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">Buy</button>
-                <br> ${{price}} - {{room.room.discount}}
+                <!-- <div>{{room.room.roomName || "empty"}}</div> --> 
+                <br> 
+                <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="buy(room.room, price)">{{room.room.roomName||"empty"}}</button>
                 </center>
             </li>
             <li class = "market-room">
                 <center>
-                    Hallway<br>
+                    $3000<br>
                     <img src = "images/150-hallway.png" class = "img-responsive">
-                    $3000<br>
-                    <button ng-hide="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount" ng-click="buy('Hallway', 3000)">Buy</button>
-                    <br>
-                    Stairs<br>
+                    <a ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount" ng-click="buy('Hallway', 3000)">Hallway</a><br><br>
                     <img src = "images/75-stairs.png" class="img-responsive">
-                    $3000<br>
-                    <button ng-hide="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount" ng-click="buy('Stairs', 3000)">Buy</button>
+                    <a ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount" ng-click="buy('Stairs', 3000)">Stairs</a><br>
                 </center>
             </li>
-            <li>
-                <center><button ng-show="data.players[userIndex].canBuy" ng-click="pass()">Pass</button></center>
-            </li>
-            <li>
-                <button ng-show="data.masterBuilder === userIndex && !data.players[userIndex].canBuy && data.currentPlayer === userIndex" ng-click="done()">MB done</button>
+            <li class = "market-room">
+                <center><br>
+                <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy" ng-click="pass()">Pass</button><br>
+                <button class = "btn btn-block btn-sm" ng-disabled="data.masterBuilder !== userIndex || data.players[userIndex].canBuy || data.currentPlayer !== userIndex" ng-click="done()">MB done</button>
+                </center>
             </li>
         </ul>
     </div>

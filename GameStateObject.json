@@ -262,7 +262,7 @@
     "fence": null,
     "rotation": 0
   }, {
-    "roomName": "Throne room",
+    "roomName": "Throne Room",
     "imagePath": "",
     "sqf": 600,
     "roomType": "Living",
@@ -291,7 +291,7 @@
     "rotation": 0
   }, {
     "roomName": "Hallway",
-    "imagePath": "",
+    "imagePath": "150-hallway.png",
     "sqf": 150,
     "roomType": "Corridor",
     "placementPts": 0,

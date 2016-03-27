@@ -1,7 +1,7 @@
 app.config(function($stateProvider){
 	$stateProvider.state('game', {
 		url: '/game-stats',
-		templateUrl: 'js/gameState/gameStateState.html',
+		templateUrl: 'views/gameboard/gridtesting.html',
 		controller: "gameStats",
 		resolve: {
 			syncObject: function(gameFactory,$firebaseObject){

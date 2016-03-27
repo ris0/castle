@@ -1,2 +1,34 @@
+<div id="sidebar" class="col-sm-3">
+  <div id="playerspanel" class="panel-primary">
+    <div class="panel-heading">
+      <h3 class="text-center">Players</h3>
+    </div>
+    <div id="playerlist" class="panel-body">
+      <ul class="list-group">
+        <li class="list-group-item">Player 1</li>
+        <li class="list-group-item">Player 2</li>
+        <li class="list-group-item">Player 3</li>
+        <li class="list-group-item">Player 4</li>
+      </ul>
+    </div>
+    <div class='container' id="carousel">
+      <div class="panel-body well" id="slides_control">
+        <uib-carousel data="data" userObj='userObj'>
+          <uib-slide class="item">
+              <kings-favors favors="data.kingsFavors" game="data"></kings-favors>
+          </uib-slide>
+          <uib-slide class="item">
+            <bonus-cards cards="userObj.bonusCards"></bonus-cards>
+          </uib-slide>
+          <uib-slide class="item">
+                <img src="/images/roomCompletion.png">
+          </uib-slide>
+        </uib-carousel>
+      </div>  
+    </div>
+  </div>
+</div>
+<div class = "col-sm-9" id="grid-market">
 <market></market>
 <div gridtesting></div>
+</div>

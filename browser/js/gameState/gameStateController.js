@@ -1,4 +1,4 @@
-app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $firebaseObject, gameFactory, gameStateFactory) {
+app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $firebaseObject, gameFactory, gameStateFactory, BonusModalFactory) {
   var numberPlayers;
   var currentPlayer;
   var masterBuilder;
@@ -16,6 +16,14 @@ app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $fi
     .then(function() {
       $scope.userIndex = gameStateFactory.getUserIndex($scope.data);
       $scope.userObj = gameStateFactory.getUserObj($scope.data);
-      console.log($scope.data.kingsFavors);
+      return $scope.userIndex;
+    }).then(function(index){
+      if($scope.data.turnCount === index && !$scope.data.players[index].bonusCards) {
+      	var bonusCards = [];
+      	for(var i = 0; i < 3; i++){
+      		bonusCards.push($scope.data.bonusCards.pop());
+      	}
+      	BonusModalFactory.open(bonusCards, index);
+      }
     });
 });

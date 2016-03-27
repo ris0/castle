@@ -1,12 +1,12 @@
-<div class="container" id="kingsFavors">
-  <div class="row">
-    <div class="col-sm-2" ng-repeat="card in cards">
-      <div class="title">
-	      <li>
-		      <span>
-		      	{{card}}
-		      </span>
-	      </li>
+<div class="kingsFavorsContainer">
+  <h4 stlye="color:white;">Bonus Cards</h4>
+  <div class="container align-middle" id="kingsFavors">
+    <div id="kingsFavorsRow" ng-repeat="card in cards">
+      <div class="col-sm-1">
+        <img id="bonusCardsImg" src="/images/roomCompletion.png">
+      </div>
+      <div id="inner1">
+        <span id="smallFont">{{card.description}}</span>
       </div>
     </div>
   </div>

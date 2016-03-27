@@ -1,41 +1,52 @@
-app.factory('completionFactory', function(){
-	var completion = {};
+app.factory('completionFactory', function(BonusModalFactory, gameStateFactory, CompletionModalFactory) {
+  var completion = {};
+  var savedGame;
 
-	completion.Activity = function(player){
-		player.publicScore.roomPts += 5;
-	};
+  completion.assessCompletion = function(game) {
+    if (!game.players[game.currentPlayer].completionBonus) gameStateFactory.done(game);
+    else CompletionModalFactory.open(game.currentPlayer);
+  };
 
-	completion.Outdoor = function(player){
-		player.cashMoney += 10000;
-	};
+  completion.Activity = function(player, game) {
+    game.players[game.currentPlayer].publicScore.roomPts += 5;
+  };
 
-	completion.Food = function(player){
-		player.canBuy = true;
-	};
+  completion.Outdoor = function(player, game) {
+    game.players[game.currentPlayer].cashMoney += 10000;
+  };
 
-	completion.Utility = function(player){
-		//draw bonus cards;
-	};
+  completion.Food = function(player, game) {
+    game.players[game.currentPlayer].canBuy = true;
+  };
 
-	completion.Corridor = function(player){
-		player.canBuyCorridors = true;
-		//can buy hallways or stairs;
-	};
+  completion.Utility = function(player, game) {
+    var bonuses = [];
+    for (var i = 0; i < 2; i++) {
+      bonuses.push(game.bonusCards.pop());
+    }
+    BonusModalFactory.open(bonuses, player);
+  };
 
-	completion.Living = function(player, room){
-		player.publicScore.livingRoomBonusPts += room.points;
-	};
+  completion.Corridor = function(player, game) {
+    game.players[game.currentPlayer].canBuyCorridors = true;
+  };
 
-	completion.Sleep = function(player){
-		//input type of tile and # to draw
-	};
+  completion.Living = function(player, game, room) {
+    //how to tell which one? push room to array? store more data? ahhhh.
+    game.players[game.currentPlayer].publicScore.livingRoomBonusPts += room.scoredPoints;
+  };
 
-	completion.Downstairs = function(player){
-		var numDownCompleted;
-		if(numDownCompleted%2 === 0){
-			//choose one of the other seven rewards.
-		}
-	};
+  completion.Sleep = function(player, game, tile, num) {
+    //input type of tile and # to draw
+    for (var i = 0; i < num; i++) {
+      game.roomCards.push(game.roomTiles[tile].pop());
+    }
+  };
 
-	return completion;
+  completion.Downstairs = function(player, game, type) {
+    //how to check for every two?
+    game.players[game.currentPlayer].completionBonus.push(type);
+  };
+
+  return completion;
 });

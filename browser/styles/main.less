@@ -32,13 +32,22 @@ a {
 }
 
 html,body {
-	overflow: hidden;
+	overflow: auto;
+}
+
+#market-nav {
+  margin:0;
 }
 
 .market-room {
-    width: 8vw;
-    margin-right: 5px;
+    max-width: 12vw;
+    padding: 5px;
 }
+
+#grid-market {
+  padding:0!important;
+}
+
 
 #gameboard {
     overflow: hidden;
@@ -58,15 +67,6 @@ svg {
   font: 10px sans-serif;
 }
 
-rect {
-  fill: #ddd;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #fff;
-}
-
 #sidebar {
     padding: 0;
 }
@@ -76,15 +76,13 @@ rect {
 }
 
 #kingsFavors {
+  color: black;
   margin-left: 20px;
   .title{
     border-bottom: 1px solid black;
   }
   #inner1{
-    float:left;
-    display:inline-block; 
-  }
-  #inner1{
+    width: 100px;
     float:left;
     display:inline-block; 
   }
@@ -95,6 +93,10 @@ rect {
     height:80%;
     width:80%;
   }
+  #bonusCardsImg{
+    height:80%;
+    width:80%;
+  }
 }
 
 #smallFont{
@@ -102,15 +104,20 @@ rect {
 }
 
 #slides_control {
-  width: 325px;
+  text-align: center;
   height: 356px;
+  max-width: 325px;
   left:50%;
   top:20px;
-  margin-left:-200px;
 }
 
 .item {
   height: 325px;
+}
+
+#carousel{
+  float:left;
+  border-radius: 5px;
 }
 
 .carousel-control.left, .carousel-control.right {
@@ -127,3 +134,30 @@ rect {
 }
 
 
+.normal {
+  fill: black;
+  opacity: 0.3;
+}
+
+.overlapping {
+  fill: red;
+  opacity: 0.3;
+}
+
+.adjacent {
+  fill: blue;
+  opacity: 0.3;
+}
+
+.legit {
+    fill: green;
+    opacity: 0.3;
+}
+
+#sidebar {
+  background-color: #334857;
+}
+
+.well {
+   background-color: rgba(245, 245, 245, 0.4);
+}

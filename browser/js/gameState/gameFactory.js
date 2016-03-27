@@ -9,9 +9,6 @@ app.factory('gameFactory', function($firebaseAuth){
     	return $firebaseAuth(ref);
     };
 
-    //currentplayer = turn%players.length
-    //masterplayer = turn%players.length^2
-
 	return gameState;
     
 });
