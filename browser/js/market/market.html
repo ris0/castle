@@ -19,7 +19,7 @@
             </li>
             <li class = "market-room">
                 <center><br>
-                <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy" ng-click="pass()">Pass</button><br>
+                <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy" ng-click="buy()">Buy/Pass</button><br>
                 <button class = "btn btn-block btn-sm" ng-disabled="data.masterBuilder !== userIndex || data.players[userIndex].canBuy || data.currentPlayer !== userIndex" ng-click="done()">MB done</button>
                 </center>
             </li>

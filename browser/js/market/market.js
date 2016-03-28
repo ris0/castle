@@ -16,13 +16,13 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       }).then(function(game) {
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
-        scope.buy = function(room, price) {
-          scope.buyError = marketFactory.buy(scope.data, room, price);
+        scope.buy = function() {
+          marketFactory.buy(scope.data);
         };
 
         scope.try = function(room, price) {
           room.trying = true;
-          room.price = price;
+          room.room.price = price;
           marketFactory.try(scope.data, room.room);
         };
 
@@ -86,7 +86,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
     });
   };
 
-  market.buy = function(game, room) {
+  market.buy = function(game) {
 
     if (getCurrentPlayer(game).canBuy) {
       //check how many rooms are not final
@@ -96,21 +96,25 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
 
       var newRooms = getCurrentPlayer(game).castle.reduce(function(collection, castleRoom) {
         if (!castleRoom.final) collection.push(castleRoom);
+        return collection;
       }, []);
 
       if (newRooms.length === 0) {
+        console.log('passing');
         market.pass(game);
       }
       else if (newRooms.length === 1) {
         var newRoom = newRooms[0];
+        console.log('buying one room', newRoom);
         var truePrice = +newRoom.price - (+newRoom.discount);
         scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
         cashFlow(game, newRoom.price, truePrice);
-        roomToPlayer(game, room, newRoom.price);
+        roomToPlayer(game, newRoom, newRoom.price);
         bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
         getCurrentPlayer(game).canBuy = false;
         completionFactory.assessCompletion(game);
       } else {
+        console.log('too many');
         return "You can't add more than one room!";
       }
 
@@ -153,10 +157,12 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
 
   //send room from deck to player castle
   function roomToPlayer(game, room, price) {
+    console.log("price", price);
     room.discount = 0;
     room.final = true;
     // getCurrentPlayer(game).castle.push(room);
     game.market[price].room = "empty";
+    game.market[price].trying = false;
   }
 
   return market;
