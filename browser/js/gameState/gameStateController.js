@@ -15,6 +15,5 @@ app.controller('gameStats', function(kingsFavorsFactory, syncObject, $scope, $fi
       	}
       	BonusModalFactory.open(bonusCards, index);
       }
-
     });
 });

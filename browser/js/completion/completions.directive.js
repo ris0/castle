@@ -5,7 +5,7 @@ app.factory('CompletionModalFactory', function($uibModal) {
 
     var modalInstance = $uibModal.open({
       animation: true,
-      templateUrl: 'js/completion/completions.carousel.html',
+      templateUrl: 'js/completion/completions.modal.html',
       controller: 'CompletionModalCtrl',
       size: 'lg',
       resolve: {
@@ -44,6 +44,9 @@ app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, player
     $uibModalInstance.close();
   };
 
+  $scope.sleepBonus  = function(){
+    completionFactory.Sleep(game, $scope.sleepTile, $scope.sleepNumber);
+  };
 
   var counter = 0;
   $scope.done = function() {

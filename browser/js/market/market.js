@@ -64,19 +64,24 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
     return true;
   };
 
+  market.try = function(game, room){
+    getCurrentPlayer(game).castle.push(room);
+  };
+
+  market.untry = function(game, room){
+    
+  };
+
   market.buy = function(game, room, price) {
     if (getCurrentPlayer(game).canBuy) {
       var truePrice = +price - (+room.discount);
 
-      cashFlow(game, price, truePrice);
       scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
-      // scoreRoom(game, room);
+      cashFlow(game, price, truePrice);
       roomToPlayer(game, room, price);
       bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
       getCurrentPlayer(game).canBuy = false;
-      //completion bonus instead of done
       completionFactory.assessCompletion(game);
-      // gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 

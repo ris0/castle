@@ -31,16 +31,14 @@ app.factory('completionFactory', function(BonusModalFactory, gameStateFactory, C
     game.players[game.currentPlayer].canBuyCorridors = true;
   };
 
-  completion.Living = function(player, game, room) {
-    //how to tell which one? push room to array? store more data? ahhhh.
-    game.players[game.currentPlayer].publicScore.livingRoomBonusPts += room.scoredPoints;
-  };
-
-  completion.Sleep = function(player, game, tile, num) {
-    //input type of tile and # to draw
+  completion.Sleep = function(game, tile, num) {
     for (var i = 0; i < num; i++) {
       game.roomCards.push(game.roomTiles[tile].pop());
     }
+  };
+
+  completion.Living = function(player, game, room) {
+    game.players[game.currentPlayer].publicScore.livingRoomBonusPts += room.scoredPoints;
   };
 
   completion.Downstairs = function(player, game, type) {
