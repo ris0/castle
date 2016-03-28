@@ -5,7 +5,7 @@ var squareRooms = [100,400];
 var roundRooms = [150,500];
 
 bonusCards.getBonusPoints = function(player){
-	var bonusCardsArr = player.bonusCards
+	var bonusCardsArr = player.bonusCards;
 	var bonusesToReward = [];
 	var bonusPoints = 0;
 	bonusCardsArr.forEach(function(bonus){
@@ -75,7 +75,7 @@ bonusCards.getBonusPoints = function(player){
 		player.castle.forEach(function(room){
 			roundRooms.forEach(function(size){
 				if(room.sqf === size) res += 1;
-			})
+			});
 		});
 		return res;
 	}

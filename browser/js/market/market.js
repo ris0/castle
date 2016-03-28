@@ -69,11 +69,26 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   };
 
   market.untry = function(game, room){
-    
+    _.pull(getCurrentPlayers(game).castle, room);
   };
 
   market.buy = function(game, room, price) {
+
     if (getCurrentPlayer(game).canBuy) {
+    //check how many rooms are not final
+    //0 -> pass
+    //1 -> buy
+    //2+ -> splice after one?
+      var newRooms = getCurrentPlayer(game).castle.reduce(function(total, room){
+        if(!room.final) total ++;
+        return total;
+      }, 0);
+
+      if(!newRooms) market.pass(game);
+      else if(newRooms === 1){
+        
+      }
+
       var truePrice = +price - (+room.discount);
 
       scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);

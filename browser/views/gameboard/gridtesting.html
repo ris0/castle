@@ -1,9 +1,7 @@
 <div id="sidebar" class="col-sm-3">
   <div id="playerspanel" class="panel-primary">
     <div class="panel-heading">
-      <h3 class="text-center">
-            Players
-          </h3>
+      <h3 class="text-center">Players</h3>
     </div>
     <div id="playerlist" class="panel-body">
       <ul class="list-group">
@@ -12,6 +10,21 @@
         <li class="list-group-item">Player 3</li>
         <li class="list-group-item">Player 4</li>
       </ul>
+    </div>
+    <div class='container' id="carousel">
+      <div class="panel-body well" id="slides_control">
+        <uib-carousel data="data" userObj='userObj'>
+          <uib-slide class="item">
+              <kings-favors favors="data.kingsFavors" game="data"></kings-favors>
+          </uib-slide>
+          <uib-slide class="item">
+            <bonus-cards points="data.players[userIndex].privateBonusCardPts" cards="data.players[userIndex].bonusCards"></bonus-cards>
+          </uib-slide>
+          <uib-slide class="item">
+                <img src="/images/roomCompletion.png">
+          </uib-slide>
+        </uib-carousel>
+      </div>  
     </div>
   </div>
 </div>

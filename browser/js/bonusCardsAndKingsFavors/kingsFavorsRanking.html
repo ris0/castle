@@ -1,0 +1,15 @@
+<h4>King's Favors</h4>
+<div class="container" id="kingsFavors">
+  <div class="row" id="kingsFavorsRow" ng-repeat="favor in favors">
+    <div class="col-sm-1">
+      <img ng-mouseover="kingsFavorsInfo(favor.attributeToCheck)" ng-mouseleave="kingsFavorsInfo(favor.attributeToCheck)" id="kingsFavorsImg" ng-src="{{favor.imagePath}}">
+    </div>
+    <div id="inner1">
+      <span ng-show="showInfo" id="smallFont">{{favor.attributeToCheck}}</span>
+      <ol ng-hide="showInfo" id="smallFont">
+        <li ng-repeat="ranking in favor.rankings">{{ranking.player.userName}}</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
