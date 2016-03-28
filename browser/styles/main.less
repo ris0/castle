@@ -48,6 +48,9 @@ html,body {
   padding:0!important;
 }
 
+#grid-testing {
+  height: 100%;
+}
 
 #gameboard {
     overflow: hidden;
@@ -55,8 +58,12 @@ html,body {
     border-right: 0.5vh solid black;
     border-bottom: 0.5vh solid black;
     width: 100%;
-    height: 93vh;
+    height: ~"calc(100vh - 175px)";
 }
+
+/*#game {
+  overflow: hidden;
+}*/
 
 #main {
     margin: 0;
@@ -67,12 +74,13 @@ svg {
   font: 10px sans-serif;
 }
 
-#sidebar {
-    padding: 0;
-}
-
 #playerlist {
     padding: 0;
+    width: 95%;
+}
+
+#players {
+  padding-left: 16px;
 }
 
 #kingsFavors {
@@ -118,6 +126,11 @@ svg {
   color:white;
   float:left;
   border-radius: 5px;
+  width: 100%;
+  .well {
+   background-color: #334857;
+   border-color: gray;
+  }
 }
 
 .carousel-inner{
@@ -161,9 +174,13 @@ svg {
 
 #sidebar {
   background-color: #334857;
+  height: 100vh;
 }
 
-.well {
-   background-color: #334857;
-   border-color: gray;
+.playerTurn{
+  background-color: #C3E4ED;
 }
+
+ul#scoreCard {
+  list-style-type: none;
+ }
