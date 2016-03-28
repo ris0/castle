@@ -18,11 +18,8 @@ bonusCards.getBonusPoints = function(player){
 		if(bonus.allRoomSizes) bonusPoints += eightForAllSizes(player);
 		if(bonus.fiveThousandMarks) bonusPoints += onePointForMarks(player);
 	});
-	console.log(bonusCardsArr);
-	console.log('BonusPoints:', bonusPoints);
-	console.log(player);
 	player.privateBonusCardPts = bonusPoints;
-}
+};
 
 	function sevenForAllTypes (player){
 		var res = {};
@@ -78,7 +75,7 @@ bonusCards.getBonusPoints = function(player){
 		player.castle.forEach(function(room){
 			roundRooms.forEach(function(size){
 				if(room.sqf === size) res += 1;
-			})
+			});
 		});
 		return res;
 	}
@@ -92,7 +89,7 @@ bonusCards.getBonusPoints = function(player){
 		else roomTypeOrName = "roomType";
 		var res = 0;
 		player.castle.forEach(function(room){
-			if(room[roomTypeOrName] == type) res += points;
+			if(room[roomTypeOrName] == type) res += +points;
 		});
 		return res;
 	}
@@ -100,7 +97,7 @@ bonusCards.getBonusPoints = function(player){
 	function pointsForRoomSize(player, size, points){
 		var res = 0;
 		player.castle.forEach(function(room){
-			if(room.sqf == size) res += points;
+			if(room.sqf == size) res += +points;
 		});
 		return res;
 	}

@@ -7,43 +7,41 @@ app.factory('completionFactory', function(BonusModalFactory, gameStateFactory, C
     else CompletionModalFactory.open(game.currentPlayer);
   };
 
-  completion.Activity = function(player, game) {
+  completion.Activity = function(game) {
     game.players[game.currentPlayer].publicScore.roomPts += 5;
   };
 
-  completion.Outdoor = function(player, game) {
+  completion.Outdoor = function(game) {
     game.players[game.currentPlayer].cashMoney += 10000;
   };
 
-  completion.Food = function(player, game) {
+  completion.Food = function(game) {
     game.players[game.currentPlayer].canBuy = true;
   };
 
-  completion.Utility = function(player, game) {
+  completion.Utility = function(game) {
     var bonuses = [];
     for (var i = 0; i < 2; i++) {
       bonuses.push(game.bonusCards.pop());
     }
-    BonusModalFactory.open(bonuses, player);
+    BonusModalFactory.open(bonuses, game.players[game.currentPlayer]);
   };
 
-  completion.Corridor = function(player, game) {
+  completion.Corridor = function(game) {
     game.players[game.currentPlayer].canBuyCorridors = true;
   };
 
-  completion.Living = function(player, game, room) {
-    //how to tell which one? push room to array? store more data? ahhhh.
-    game.players[game.currentPlayer].publicScore.livingRoomBonusPts += room.scoredPoints;
-  };
-
-  completion.Sleep = function(player, game, tile, num) {
-    //input type of tile and # to draw
+  completion.Sleep = function(game, tile, num) {
     for (var i = 0; i < num; i++) {
       game.roomCards.push(game.roomTiles[tile].pop());
     }
   };
 
-  completion.Downstairs = function(player, game, type) {
+  completion.Living = function(game, room) {
+    game.players[game.currentPlayer].publicScore.livingRoomBonusPts += room.scoredPoints;
+  };
+
+  completion.Downstairs = function(game, type) {
     //how to check for every two?
     game.players[game.currentPlayer].completionBonus.push(type);
   };

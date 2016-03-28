@@ -9,17 +9,17 @@ app.factory('CompletionModalFactory', function($uibModal) {
       controller: 'CompletionModalCtrl',
       size: 'lg',
       resolve: {
-        playerIndex: function(){
+        playerIndex: function() {
           return player;
         },
         game: function(gameFactory, $firebaseObject) {
           var userID = gameFactory.auth().$getAuth().uid;
           var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-          return userGame.$loaded().then(function(data){
+          return userGame.$loaded().then(function(data) {
             return data.$value;
-          }).then(function(game){
+          }).then(function(game) {
             return $firebaseObject(gameFactory.ref().child('games').child(game));
-          }).then(function(syncObject){
+          }).then(function(syncObject) {
             return syncObject;
           });
         }
@@ -36,14 +36,20 @@ app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, player
 
   $scope.completions = game.players[game.currentPlayer].completionBonus;
 
-  $scope.assessCompletion = function(type, game){
-    completionFactory[type](game.currentPlayer, game);
-    var ind = $scope.game.players[playerIndex].completionBonus.indexOf(type);
-    $scope.game.players[playerIndex].completionBonus.splice(ind, 1);
-    completionFactory.assessCompletion($scope.game);
-    $uibModalInstance.close();
+  $scope.assessCompletion = function(type, game) {
+    if (type === "Sleep") $scope.showSleep = true;
+    else {
+      completionFactory[type](game);
+      var ind = $scope.game.players[playerIndex].completionBonus.indexOf(type);
+      $scope.game.players[playerIndex].completionBonus.splice(ind, 1);
+      completionFactory.assessCompletion($scope.game);
+      $uibModalInstance.close();
+    }
   };
 
+  $scope.sleepBonus = function() {
+    completionFactory.Sleep(game, $scope.sleepTile, $scope.sleepNumber);
+  };
 
   var counter = 0;
   $scope.done = function() {

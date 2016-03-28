@@ -1,4 +1,4 @@
-app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFactory) {
+app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFactory, scoringFactory) {
   var gameState = {};
   var currentPlayer;
   var masterBuilder;
@@ -8,9 +8,9 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   	var userObj;
   	game.players.forEach(function(player){
   		if(user === player.userID) userObj = player;
-  	})
+  	});
   	return userObj;
-  }
+  };
 
   gameState.getUserIndex = function(game) {
     return game.players.reduce(findMyIndex, "");
@@ -29,7 +29,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
 
     //master builder gameState turn
     if (game.turnCount % (numberPlayers + 1) === 0) {
-      if (game.lastTurn && !game.roomCards) endGame(game);
+      if (!game.roomCards) endGame(game);
       else {
         game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
         gameState.drawToMarket(game);
@@ -44,17 +44,21 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
       if (currentPrice.room !== 'empty') currentPrice.room.discount += 1000;
       while (currentPrice.room === 'empty') {
         var nextCard;
-        if (game.roomCards) nextCard = game.roomCards.pop();
+        if (game.roomCards && game.roomCards.length > 0) {
+          nextCard = game.roomCards.pop();
+          console.log("Drawtomarket");
+          discardCard(game, nextCard);
+        }
         else {
+          console.log('empty deck');
           game.discardRooms = _.shuffle(game.discardRooms);
-          nextCard = game.discardRoom.pop();
+          nextCard = game.discardRooms.pop();
         }
         //********************draw from discard. how to verify?
 
         if (typeof nextCard === 'number') { //if the next card in the pile is a room card
           if (game.roomTiles[nextCard]) currentPrice.room = game.roomTiles[nextCard].pop();
         } else currentPrice.room = nextCard; //if the next card in the pile is a tile
-        discardCard(game, nextCard);
       }
     }
   };
@@ -72,13 +76,15 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
 
   function endGame(game) {
     console.log("the game is over");
+    console.log(scoringFactory.finalScoring(game));
     //final scoring
     //determine winner
   }
 
   function discardCard(game, nextCard) {
+    console.log("discarding", nextCard);
     if (!game.discardRooms) game.discardRooms = [nextCard];
-    else game.discardRooms.push(nextCard);
+    else if(nextCard) game.discardRooms.push(nextCard);
   }
 
   return gameState;
