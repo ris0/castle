@@ -7,7 +7,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
     link: function(scope) {
       var userID = gameFactory.auth().$getAuth().uid;
       var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-      userGame.$loaded().then(function(data) {
+      return userGame.$loaded().then(function(data) {
         return data.$value;
       }).then(function(game) {
         return $firebaseObject(gameFactory.ref().child('games').child(game));
@@ -17,18 +17,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function(room, price) {
-          scope.buyError = marketFactory.buy(scope.data, room, price);
-        };
-
-        scope.try = function(room, price) {
-          room.trying = true;
-          room.price = price;
-          marketFactory.try(scope.data, room.room);
-        };
-
-        scope.untry = function(room) {
-          room.trying = false;
-          marketFactory.untry(scope.data, room.room);
+          marketFactory.buy(scope.data, room, price);
         };
 
         scope.pass = function() {
@@ -48,7 +37,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         var firstChoice = null;
 
         scope.swapTwo = function(price) {
-          if (!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex) {
+          if(!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex){
             if (firstChoice) {
               marketFactory.swapMarket(firstChoice, price);
               firstChoice = null;
@@ -75,54 +64,19 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
     return true;
   };
 
-  market.try = function(game, room) {
-    getCurrentPlayer(game).castle.push(room);
-  };
-
-  market.untry = function(game, room) {
-    room.price = null;
-    _.remove(getCurrentPlayer(game).castle, function(castleRoom) {
-      return castleRoom.roomName === room.roomName;
-    });
-  };
-
-  market.buy = function(game, room) {
-
+  market.buy = function(game, room, price) {
     if (getCurrentPlayer(game).canBuy) {
-      //check how many rooms are not final
-      //0 -> pass
-      //1 -> buy
-      //2+ -> splice after one?
+      var truePrice = +price - (+room.discount);
 
-      var newRooms = getCurrentPlayer(game).castle.reduce(function(collection, castleRoom) {
-        if (!castleRoom.final) collection.push(castleRoom);
-      }, []);
-
-      if (newRooms.length === 0) {
-        market.pass(game);
-      }
-      else if (newRooms.length === 1) {
-        var newRoom = newRooms[0];
-        var truePrice = +newRoom.price - (+newRoom.discount);
-        scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
-        cashFlow(game, newRoom.price, truePrice);
-        roomToPlayer(game, room, newRoom.price);
-        bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
-        getCurrentPlayer(game).canBuy = false;
-        completionFactory.assessCompletion(game);
-      } else {
-        return "You can't add more than one room!";
-      }
-
-      // var truePrice = +price - (+room.discount);
-
-      // scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
-      // cashFlow(game, price, truePrice);
-      // roomToPlayer(game, room, price);
-      // bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
-      // getCurrentPlayer(game).canBuy = false;
-      // completionFactory.assessCompletion(game);
-
+      cashFlow(game, price, truePrice);
+      scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
+      // scoreRoom(game, room);
+      roomToPlayer(game, room, price);
+      bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
+      getCurrentPlayer(game).canBuy = false;
+      //completion bonus instead of done
+      completionFactory.assessCompletion(game);
+      // gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 
@@ -154,10 +108,10 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   //send room from deck to player castle
   function roomToPlayer(game, room, price) {
     room.discount = 0;
-    room.final = true;
-    // getCurrentPlayer(game).castle.push(room);
+    getCurrentPlayer(game).castle.push(room);
     game.market[price].room = "empty";
   }
 
   return market;
 });
+

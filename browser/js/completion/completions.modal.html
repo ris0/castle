@@ -7,19 +7,6 @@
             <div ng-click="$event.preventDefault(); assessCompletion(type, game)">{{ type }}</div>
         </li>
     </ul>
-    <form class="form-inline" ng-submit="sleepBonus()">
-        <div class="form-group">
-            <label for="numTiles">Number of Tiles (0-2)</label>
-            <input ng-model="sleepNumber" type="number" min="0" max="2" class="form-control" id="numTiles" placeholder="0">
-        </div>
-        <div class="form-group">
-            <label for="typeTiles">Tile Type</label>
-            <select ng-model="sleepTile" class="form-control">
-                <option ng-repeat="(size, tile) in game.roomTiles" id="typeTiles" value="tile">{{size}}</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="done()">Done</button>
