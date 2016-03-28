@@ -149,6 +149,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   function roomToPlayer(game, room, price) {
     console.log("price", price);
     room.discount = 0;
+    room.final = true;
     getCurrentPlayer(game).castle.push(room);
     game.market[price].room = "empty";
     game.market[price].trying = false;
