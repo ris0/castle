@@ -7,7 +7,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
     link: function(scope) {
       var userID = gameFactory.auth().$getAuth().uid;
       var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-      userGame.$loaded().then(function(data) {
+      return userGame.$loaded().then(function(data) {
         return data.$value;
       }).then(function(game) {
         return $firebaseObject(gameFactory.ref().child('games').child(game));
@@ -48,7 +48,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         var firstChoice = null;
 
         scope.swapTwo = function(price) {
-          if (!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex) {
+          if(!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex){
             if (firstChoice) {
               marketFactory.swapMarket(firstChoice, price);
               firstChoice = null;
@@ -127,6 +127,15 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       // getCurrentPlayer(game).canBuy = false;
       // completionFactory.assessCompletion(game);
 
+      cashFlow(game, price, truePrice);
+      scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
+      // scoreRoom(game, room);
+      roomToPlayer(game, room, price);
+      bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
+      getCurrentPlayer(game).canBuy = false;
+      //completion bonus instead of done
+      completionFactory.assessCompletion(game);
+      // gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 
@@ -159,11 +168,11 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   function roomToPlayer(game, room, price) {
     console.log("price", price);
     room.discount = 0;
-    room.final = true;
-    // getCurrentPlayer(game).castle.push(room);
+    getCurrentPlayer(game).castle.push(room);
     game.market[price].room = "empty";
     game.market[price].trying = false;
   }
 
   return market;
 });
+
