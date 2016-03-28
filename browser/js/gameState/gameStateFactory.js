@@ -35,6 +35,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
         gameState.drawToMarket(game);
       }
     }
+    console.log(game.turnCount);
     kingsFavorsFactory.getRankings(game);
   };
 
