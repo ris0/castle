@@ -117,25 +117,6 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
         console.log('too many');
         return "You can't add more than one room!";
       }
-
-      // var truePrice = +price - (+room.discount);
-
-      // scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
-      // cashFlow(game, price, truePrice);
-      // roomToPlayer(game, room, price);
-      // bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
-      // getCurrentPlayer(game).canBuy = false;
-      // completionFactory.assessCompletion(game);
-
-      cashFlow(game, price, truePrice);
-      scoringFactory.scoreRoom(game, getCurrentPlayer(game), room);
-      // scoreRoom(game, room);
-      roomToPlayer(game, room, price);
-      bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
-      getCurrentPlayer(game).canBuy = false;
-      //completion bonus instead of done
-      completionFactory.assessCompletion(game);
-      // gameStateFactory.done(game);
     } else console.log("It's not your turn");
   };
 
@@ -168,6 +149,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   function roomToPlayer(game, room, price) {
     console.log("price", price);
     room.discount = 0;
+    room.final = true;
     getCurrentPlayer(game).castle.push(room);
     game.market[price].room = "empty";
     game.market[price].trying = false;
