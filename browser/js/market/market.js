@@ -7,7 +7,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
     link: function(scope) {
       var userID = gameFactory.auth().$getAuth().uid;
       var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-      return userGame.$loaded().then(function(data) {
+      userGame.$loaded().then(function(data) {
         return data.$value;
       }).then(function(game) {
         return $firebaseObject(gameFactory.ref().child('games').child(game));
