@@ -8,9 +8,9 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   	var userObj;
   	game.players.forEach(function(player){
   		if(user === player.userID) userObj = player;
-  	})
+  	});
   	return userObj;
-  }
+  };
 
   gameState.getUserIndex = function(game) {
     return game.players.reduce(findMyIndex, "");

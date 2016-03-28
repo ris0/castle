@@ -7,27 +7,27 @@ app.factory('completionFactory', function(BonusModalFactory, gameStateFactory, C
     else CompletionModalFactory.open(game.currentPlayer);
   };
 
-  completion.Activity = function(player, game) {
+  completion.Activity = function(game) {
     game.players[game.currentPlayer].publicScore.roomPts += 5;
   };
 
-  completion.Outdoor = function(player, game) {
+  completion.Outdoor = function(game) {
     game.players[game.currentPlayer].cashMoney += 10000;
   };
 
-  completion.Food = function(player, game) {
+  completion.Food = function(game) {
     game.players[game.currentPlayer].canBuy = true;
   };
 
-  completion.Utility = function(player, game) {
+  completion.Utility = function(game) {
     var bonuses = [];
     for (var i = 0; i < 2; i++) {
       bonuses.push(game.bonusCards.pop());
     }
-    BonusModalFactory.open(bonuses, player);
+    BonusModalFactory.open(bonuses, game.players[game.currentPlayer]);
   };
 
-  completion.Corridor = function(player, game) {
+  completion.Corridor = function(game) {
     game.players[game.currentPlayer].canBuyCorridors = true;
   };
 
@@ -37,11 +37,11 @@ app.factory('completionFactory', function(BonusModalFactory, gameStateFactory, C
     }
   };
 
-  completion.Living = function(player, game, room) {
+  completion.Living = function(game, room) {
     game.players[game.currentPlayer].publicScore.livingRoomBonusPts += room.scoredPoints;
   };
 
-  completion.Downstairs = function(player, game, type) {
+  completion.Downstairs = function(game, type) {
     //how to check for every two?
     game.players[game.currentPlayer].completionBonus.push(type);
   };
