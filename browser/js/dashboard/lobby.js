@@ -27,9 +27,7 @@ app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebas
             playerName = obj.email.slice(0,indexSlice);
         });
 
-        $scope.isHost = function () {
-            return $scope.data.players[0] === playerRef.$id;
-        };
+        $scope.isHost = function () { return $scope.data.players[0] === playerRef.$id };
 
         $scope.sendMessage = function () {
             if (!$scope.data.messages) { $scope.data.messages = [] }
@@ -44,11 +42,12 @@ app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebas
         $scope.startGame = function () {
             // copy the base state and attach it to the current lobby
 
+
             // shuffle the deck
 
+            // move this object into the games object, delete the lobby
 
-
-            // add game uid to the specific player
+            // associate this new game object ID to each player
 
             // go to the game state
         }

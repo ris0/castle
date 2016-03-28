@@ -12,8 +12,19 @@ app.factory('BonusModalFactory', function($uibModal) {
         bonuses: function() {
           return bonuses;
         },
-        player: function() {
-        	return player;
+        playerIndex: function(){
+          return player;
+        },
+        players: function(gameFactory, $firebaseObject) {
+          var userID = gameFactory.auth().$getAuth().uid;
+          var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+          return userGame.$loaded().then(function(data){
+            return data.$value;
+          }).then(function(game){
+            return $firebaseObject(gameFactory.ref().child('games').child(game).child('players'));
+          }).then(function(syncObject){
+            return syncObject;
+          });
         }
       }
     });
@@ -23,8 +34,9 @@ app.factory('BonusModalFactory', function($uibModal) {
   return bonusModal;
 });
 
-app.controller('bonusModalCtrl', function($scope, $uibModalInstance, bonuses, player) {
+app.controller('bonusModalCtrl', function($scope, $uibModalInstance, bonuses, players, playerIndex) {
 
+  players.$bindTo($scope, 'players');
   $scope.bonuses = bonuses;
   $scope.selected = {
     bonus: $scope.bonuses[0]
@@ -33,12 +45,12 @@ app.controller('bonusModalCtrl', function($scope, $uibModalInstance, bonuses, pl
   $scope.ok = function() {
     $scope.bonuses.forEach(function(bonus){
       if(bonus !== $scope.selected.bonus){
-        if(!player.bonusCards) player.bonusCards = [bonus];
-        else player.bonusCards.push(bonus);
-        console.log(player);
+        if(!$scope.players[playerIndex].bonusCards) $scope.players[playerIndex].bonusCards = [bonus];
+        else $scope.players[playerIndex].bonusCards.push(bonus);
+        console.log($scope.players[playerIndex]);
 	  	}
 	  });
 
-    $uibModalInstance.close();
+    $uibModalInstance.close($scope.players[playerIndex]);
   };
 });

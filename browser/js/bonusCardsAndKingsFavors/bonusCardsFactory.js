@@ -5,7 +5,7 @@ var squareRooms = [100,400];
 var roundRooms = [150,500];
 
 bonusCards.getBonusPoints = function(player){
-	var bonusCardsArr = player.bonusCards
+	var bonusCardsArr = player.bonusCards;
 	var bonusesToReward = [];
 	var bonusPoints = 0;
 	bonusCardsArr.forEach(function(bonus){
@@ -18,7 +18,9 @@ bonusCards.getBonusPoints = function(player){
 		if(bonus.allRoomSizes) bonusPoints += eightForAllSizes(player);
 		if(bonus.fiveThousandMarks) bonusPoints += onePointForMarks(player);
 	});
+	console.log(bonusCardsArr);
 	console.log('BonusPoints:', bonusPoints);
+	console.log(player);
 	player.privateBonusCardPts = bonusPoints;
 }
 
@@ -104,7 +106,7 @@ bonusCards.getBonusPoints = function(player){
 	}
 	// onePointForEach5000Marks
 	function onePointForMarks(player){
-		return Math.floor(player.cashmoney/5000);
+		return Math.floor(player.cashMoney/5000);
 	}
 
 	return bonusCards;

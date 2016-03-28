@@ -21,6 +21,7 @@ app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $
                 DashboardFactory.findRandomGame($scope.data, $scope.user);
             }, 1000)
         }
+
     });
 });
 

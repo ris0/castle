@@ -1,51 +1,53 @@
-app.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
+app.factory('CompletionModalFactory', function($uibModal) {
+  var completionModal = {};
 
-  $scope.items = ['item1', 'item2', 'item3'];
-
-  $scope.animationsEnabled = true;
-
-  $scope.open = function (size) {
+  completionModal.open = function(player) {
 
     var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'myModalContent.html',
-      controller: 'ModalInstanceCtrl',
-      size: size,
+      animation: true,
+      templateUrl: 'js/completion/completions.modal.html',
+      controller: 'CompletionModalCtrl',
+      size: 'lg',
       resolve: {
-        items: function () {
-          return $scope.items;
+        playerIndex: function(){
+          return player;
+        },
+        game: function(gameFactory, $firebaseObject) {
+          var userID = gameFactory.auth().$getAuth().uid;
+          var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+          return userGame.$loaded().then(function(data){
+            return data.$value;
+          }).then(function(game){
+            return $firebaseObject(gameFactory.ref().child('games').child(game));
+          }).then(function(syncObject){
+            return syncObject;
+          });
         }
       }
     });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
   };
 
-  $scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-  };
-
+  return completionModal;
 });
 
-// Please note that $uibModalInstance represents a modal window (instance) dependency.
-// It is not the same as the $uibModal service used above.
+app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, playerIndex, game, completionFactory, gameStateFactory) {
 
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+  game.$bindTo($scope, "game");
 
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
+  $scope.completions = game.players[game.currentPlayer].completionBonus;
+
+  $scope.assessCompletion = function(type, game){
+    completionFactory[type](game.currentPlayer, game);
+    var ind = $scope.game.players[playerIndex].completionBonus.indexOf(type);
+    $scope.game.players[playerIndex].completionBonus.splice(ind, 1);
+    completionFactory.assessCompletion($scope.game);
+    $uibModalInstance.close();
   };
 
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
-  };
 
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
+  var counter = 0;
+  $scope.done = function() {
+    gameStateFactory.done($scope.game);
+    $uibModalInstance.close();
   };
 });
