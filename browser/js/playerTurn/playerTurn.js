@@ -10,6 +10,7 @@ app.directive('playerTurn', function(_){
 		templateUrl: './js/playerTurn/playerTurn.html',
 		link: function(scope){
 			scope._ = _;
+			scope.open = true;
 		}
 	}
 })

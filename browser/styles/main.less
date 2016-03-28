@@ -50,7 +50,7 @@ html,body {
   }
   .market-room {
       max-width: 12vw;
-      padding: 5px;
+      padding: 5px 0 5px 5px;
   }
 }
 
@@ -86,12 +86,11 @@ svg {
 }
 
 #playerlist {
-    padding: 0;
-    width: 95%;
-}
-
-#players {
-  padding-left: 16px;
+    padding: 0 16px;
+    width: 100%;
+    .list-group{
+      max-width: 325px;
+    }
 }
 
 #kingsFavors {
@@ -186,6 +185,7 @@ svg {
 #sidebar {
   background-color: #334857;
   height: 100vh;
+  overflow: auto;
 }
 
 .playerTurn{
