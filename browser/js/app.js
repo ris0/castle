@@ -28,7 +28,12 @@ window.app = angular
             .state('dashboard', {
                 url: '/dashboard',
                 parent: 'base',
-                templateUrl: 'views/dashboard.html',
+                templateUrl: 'views/dashboard.html'
+            })
+            .state('overview', {
+                url: '/overview',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/overview.html',
                 controller: 'DashboardCtrl',
                 resolve: {
                     syncObject: function($firebaseObject, gameFactory) {
@@ -42,16 +47,11 @@ window.app = angular
                     }
                 }
             })
-            .state('overview', {
-                url: '/overview',
-                parent: 'dashboard',
-                templateUrl: 'views/dashboard/overview.html'
-            })
-            .state('create', {
-                url: '/create',
+            .state('lobby', {
+                url: '/lobby',
                 parent: 'overview',
-                templateUrl: 'views/dashboard/createLobby.html',
-                controller: 'createLobbyCtrl'
+                templateUrl: 'views/dashboard/lobby.html',
+                controller: 'lobbyCtrl'
             })
             .state('join', {
                 url: '/join',

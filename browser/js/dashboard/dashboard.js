@@ -1,13 +1,11 @@
-app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $state, $firebaseObject, gameFactory, DashboardFactory, CreateModalFactory) {
+app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $state, $firebaseObject, gameFactory, DashboardFactory, CreateModalFactory, $timeout) {
 
     $scope.auth = gameFactory.auth();
-    $scope.isLoading;
+    $scope.isLoading = null;
     $scope.open = CreateModalFactory.open;
 
     var userObj = $firebaseObject(usersRef.child(userId));
-    userObj.$loaded().then(function(user) {
-        $scope.user = user;
-    });
+    userObj.$loaded().then(function(user) { $scope.user = user });
 
     $scope.logout = function(){
         $scope.auth.$unauth();
@@ -16,15 +14,12 @@ app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $
 
     syncObject.$bindTo($scope, "data").then(function() {
 
-        $scope.findRandomGame = function(game, user){
+        $scope.findRandomGame = function(){
             $scope.isLoading = true;
-            DashboardFactory.findRandomGame($scope.data,$scope.user)
-                .then(function(resolve) {
-                    $scope.isLoading = false;
-                    return resolve;
-                })
+            $timeout(function() {
+                DashboardFactory.findRandomGame($scope.data, $scope.user);
+            }, 1000)
         }
-
     });
 });
 

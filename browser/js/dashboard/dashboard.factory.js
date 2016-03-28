@@ -1,18 +1,17 @@
-app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
+app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q) {
 
-    var dashboard = {};
-    var players;
+    var dashboard = {}, players;
     var playersRef = gameFactory.ref().child("playersQueue");
     var UsersRef = gameFactory.ref().child("users");
     var ref = gameFactory.ref().child("games");
 
+
     dashboard.createRandomGame = function(game) {
 
             var playersObj = game.playersQueue;
-
             players = _.clone(playersObj);
+
             var baseState = _.clone(game.baseState);
-            console.log(players);
             var counter = 0;
 
             shuffleDecks(game);
@@ -30,7 +29,8 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
 
             var gamePlayersArr = $firebaseArray(ref.child(gameID).child("players"));
             //$firebaseArray(gamesRef.child(gameID).child("players"));
-            gamePlayersArr.$loaded().then(function(gamePlayers) {
+            return gamePlayersArr.$loaded()
+                .then(function(gamePlayers) {
                 for (var j = 0; j < counter; j++) {
                     dashboard.addGameToUsers(gamePlayersArr[j].userID, gameID);
                 }
@@ -47,22 +47,19 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray) {
         UsersRef.child(uid).child('game').set(gameID);
     };
 
+
     dashboard.findRandomGame = function(game, user) {
         console.log(user);
         if (game.playersQueue) {
-
             for (var key in game.playersQueue) {
                 if (game.playersQueue[key] === user.$id) return;
             }
-
             game.playersQueue.push({ userId: user.$id, email: user.email })
+            return $q.when({});
 
         } else {
-            game.playersQueue = [{ userId: user.$id, email: user.email }];
-            setTimeout(function(){
-                return dashboard.createRandomGame(game);
-            }, 5000);
-            console.log('Game will be ready in 5 seconds');
+            game.playersQueue = [{userId: user.$id, email: user.email}];
+            return dashboard.createRandomGame(game);
         }
 
     };
