@@ -2,7 +2,8 @@ app.directive('bonusCards', function(bonusCardsFactory) {
   return {
     restrict: 'E',
     scope: {
-      cards: "="
+      cards: "=",
+      points: "="
     },
     templateUrl: './js/bonusCardsAndKingsFavors/bonusCards.html',
     link: function(scope) {

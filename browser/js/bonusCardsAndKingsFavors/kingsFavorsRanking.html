@@ -1,8 +1,8 @@
-<h4 >King's Favors</h4>
+<h4>King's Favors</h4>
 <div class="container" id="kingsFavors">
   <div class="row" id="kingsFavorsRow" ng-repeat="favor in favors">
     <div class="col-sm-1">
-      <img ng-mouseover="kingsFavorsInfo(favor.attributeToCheck)" ng-mouseleave="kingsFavorsInfo(favor.attributeToCheck)" id="kingsFavorsImg" src="/images/kingsFavorActivityRoom-sm.png">
+      <img ng-mouseover="kingsFavorsInfo(favor.attributeToCheck)" ng-mouseleave="kingsFavorsInfo(favor.attributeToCheck)" id="kingsFavorsImg" ng-src="{{favor.imagePath}}">
     </div>
     <div id="inner1">
       <span ng-show="showInfo" id="smallFont">{{favor.attributeToCheck}}</span>
