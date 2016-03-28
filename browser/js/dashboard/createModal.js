@@ -24,11 +24,14 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
         $q.resolve(lobbiesRef.push({
             name: $scope.lobby.name,
             password: $scope.lobby.password,
-            messages: "",
+            messages: [],
             players: [userId]
-        })).then(function(lobby) { LobbyFactory.registerInfo(lobby.key()) });
-        $uibModalInstance.close();
-        $state.go('lobby');
+        })).then(function(lobby) {
+            LobbyFactory.registerInfo(lobby.key());
+            $uibModalInstance.close();
+            $state.go('lobby');
+        });
+
     };
 
 

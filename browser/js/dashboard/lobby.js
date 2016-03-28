@@ -11,35 +11,49 @@ app.factory('LobbyFactory', function() {
 
 
 
-app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebaseArray, usersRef) {
+app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, DashboardFactory) {
 
-    var lobbyId = LobbyFactory.ref,
-        playerId = gameFactory.auth().$getAuth().uid,
-        users = $firebaseArray(usersRef),
-        record = users.$indexFor(playerId);
+    var lobbyId = LobbyFactory.ref, playerId = userId;
+    const playerRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/users/' + playerId));
+    const lobbyRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/lobbies/' + lobbyId));
 
-    $scope.lobbyRef = $firebaseArray(new Firebase ('https://castle-fullstack.firebaseio.com/lobbies/' + lobbyId));
-    $scope.messages = $firebaseArray(new Firebase ('https://castle-fullstack.firebaseio.com/lobbies/' + lobbyId + '/messages'));
-    $scope.players = $firebaseArray(new Firebase ('https://castle-fullstack.firebaseio.com/lobbies/' + lobbyId + '/players'));
+    $scope.obj = {};
 
-    // find the reference uid for the given player
+    lobbyRef.$bindTo($scope, "data").then(function() {
+        var playerName;
 
-    // look up their e-mail...
-    $scope.usersTest = function () {
-        for (var key in users) {
-            console.log(users);
-            console.log(key);
+        playerRef.$loaded().then(function(obj) {
+            var indexSlice = obj.email.indexOf('@');
+            playerName = obj.email.slice(0,indexSlice);
+        });
+
+        $scope.isHost = function () {
+            return $scope.data.players[0] === playerRef.$id;
+        };
+
+        $scope.sendMessage = function () {
+            if (!$scope.data.messages) { $scope.data.messages = [] }
+            $scope.data.messages.push({
+                from: playerName,
+                sent: Firebase.ServerValue.TIMESTAMP,
+                content: $scope.obj.msg
+            });
+            $scope.obj.msg = "";
+        };
+
+        $scope.startGame = function () {
+            // copy the base state and attach it to the current lobby
+
+            // shuffle the deck
+
+
+
+            // add game uid to the specific player
+
+            // go to the game state
         }
-    };
 
-    console.log('the users ref', users);
-    //console.log('get record of', record);
-
-    $scope.messages.$add({
-        from: playerId,
-        timestamp: Firebase.ServerValue.TIMESTAMP,
-        content: "I like to code and play video games"
-    })
+    });
 
 });
 
