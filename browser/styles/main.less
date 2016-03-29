@@ -17,11 +17,37 @@ a {
   color: white;
 }
 
-#btn1{ padding-top: 12px;}
+#btn1{
+  padding-top: 12px;
+  color: white;
 
-#btn2{ padding-left: 15px; padding-top: 10px; }
+}
+
+.tester{
+  display: block;
+  height: 75%;
+  width: 500px !important;
+
+}
+
+#btn1:hover{
+  transform: scale3d(1.1,1.1,1.1);
+
+  text-shadow: 0.5px 0px 10px rgb(252,72,7);
+}
+
+#btn2{ padding-left: 15px; padding-top: 10px; color: white;}
+#btn2:hover{
+  transform: scale3d(1.1,1.1,1.1);
+
+  text-shadow: 0.5px 0px 10px rgb(252,72,7);
+}
+
+
 #signup1{ position: relative; bottom: 13px; }
 #login1{ position: relative; bottom: 10px; left: 7px;}
+
+
 
 // Other
 .browsehappy {
@@ -35,12 +61,76 @@ html,body {
 	overflow: auto;
 }
 
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: white;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+      transform: scale3D(0, 0, 1);
+    }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
 .discount {
   color:red;
 }
 
 .price{
   color:white;
+
 }
 
 #market-nav {
@@ -199,3 +289,4 @@ svg {
 ul#scoreCard {
   list-style-type: none;
  }
+

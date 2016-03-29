@@ -31,7 +31,6 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                 function redrawCastle(castle) {
 
                     var currentCastle = d3.select("#currentCastle");
-
                     var roomTiles = currentCastle.selectAll("g")
                         .data(castle)
                         .enter()
