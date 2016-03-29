@@ -4,6 +4,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
     var playersRef = gameFactory.ref().child("playersQueue");
     var UsersRef = gameFactory.ref().child("users");
     var ref = gameFactory.ref().child("games");
+    var baseState = gameFactory.ref().child("baseState");
 
 
     dashboard.createRandomGame = function(game) {
@@ -11,7 +12,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
             var playersObj = game.playersQueue;
             players = _.clone(playersObj);
 
-            var baseState = _.clone(game.baseState);
+            // var baseState = _.clone(game.baseState);
             var counter = 0;
 
             shuffleDecks(baseState,playersObj);
@@ -56,15 +57,15 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
                 if (game.playersQueue[key] === user.$id) return;
             }
             game.playersQueue.push({ userId: user.$id, email: user.email });
-            $rootScope.$on('gameCreated', function(){
-                $state.go('game');
-            });
+            setTimeout(function(){
+                dashboard.createRandomGame(game);
+            }, 1000);
             return $q.when({});
         } else {
             game.playersQueue = [{userId: user.$id, email: user.email}];
             setTimeout(function(){
-                dashboard.createRandomGame(game);
-            }, 5000);
+                $state.go('game');
+            }, 6000);
         }
 
     };
