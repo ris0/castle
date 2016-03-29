@@ -17,8 +17,20 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function() {
-          scope.buyError=marketFactory.buy(scope.data);
+          var buyError=marketFactory.buy(scope.data);
+          if(buyError) $.jGrowl(buyError, {themeState: 'highlight'});
         };
+
+        scope.tryCorridor = function(type){
+          var corridor = scope.data.roomTiles[type][0];
+          corridor.price = 3000;
+          market.try(scope.data, corridor);
+        };
+
+        scope.untryCorridor = function(type){
+          var corridor = scope.data.roomTiles[type][0];
+          market.untry(scope.data, corridor);
+        }
 
         scope.try = function(room, price) {
           room.trying = true;
