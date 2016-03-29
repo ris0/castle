@@ -17,7 +17,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function() {
-          marketFactory.buy(scope.data);
+          scope.buyError=marketFactory.buy(scope.data);
         };
 
         scope.try = function(room, price) {
@@ -89,10 +89,6 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   market.buy = function(game) {
 
     if (getCurrentPlayer(game).canBuy) {
-      //check how many rooms are not final
-      //0 -> pass
-      //1 -> buy
-      //2+ -> splice after one?
 
       var newRooms = getCurrentPlayer(game).castle.reduce(function(collection, castleRoom) {
         if (!castleRoom.final) collection.push(castleRoom);
@@ -107,6 +103,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
         var newRoom = newRooms[0];
         console.log('buying one room', newRoom);
         var truePrice = +newRoom.price - (+newRoom.discount);
+
         scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
         cashFlow(game, newRoom.price, truePrice);
         roomToPlayer(game, newRoom, newRoom.price);
