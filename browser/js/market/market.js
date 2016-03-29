@@ -22,15 +22,19 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         };
 
         scope.tryCorridor = function(type){
+          console.log(type);
+          scope[type] = true;
           var corridor = scope.data.roomTiles[type][0];
           corridor.price = 3000;
-          market.try(scope.data, corridor);
+          marketFactory.try(scope.data, corridor);
         };
 
         scope.untryCorridor = function(type){
+          console.log(type);
+          scope[type] = null;
           var corridor = scope.data.roomTiles[type][0];
-          market.untry(scope.data, corridor);
-        }
+          marketFactory.untry(scope.data, corridor);
+        };
 
         scope.try = function(room, price) {
           room.trying = true;
@@ -108,8 +112,8 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       }, []);
 
       if (newRooms.length === 0) {
-        console.log('passing');
         market.pass(game);
+        return "Passing, +$5000";
       }
       else if (newRooms.length === 1) {
         var newRoom = newRooms[0];
@@ -122,6 +126,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
         bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
         getCurrentPlayer(game).canBuy = false;
         completionFactory.assessCompletion(game);
+        return "Buying the " + newRoom.roomName;
       } else {
         console.log('too many');
         return "You can't add more than one room!";
