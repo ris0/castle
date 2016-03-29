@@ -11,11 +11,15 @@ app.factory('LobbyFactory', function() {
 
 
 
-app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, DashboardFactory) {
+app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray) {
 
     var lobbyId = LobbyFactory.ref, playerId = userId;
+
     const playerRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/users/' + playerId));
     const lobbyRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/lobbies/' + lobbyId));
+
+    const gamesRef = gameFactory.ref().child('games');
+    const game = syncObject;
 
     $scope.obj = {};
 
@@ -40,10 +44,26 @@ app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebas
         };
 
         $scope.startGame = function () {
-            // copy the base state and attach it to the current lobby
 
+            var baseState = _.clone(game.baseState);
+            var newGame = gamesRef.push(baseState);
+            var gameId = newGame.key();
+            var fireNewGame = $firebaseObject(newGame);
+            var lobbyLength;
 
-            // shuffle the deck
+            lobbyRef.$loaded()
+                .then(function(lobbyData){
+                    lobbyLength = lobbyData.players.length;
+                });
+
+            fireNewGame.$loaded()
+                .then(function(){
+                   for (var i = 0; i < lobbyLength; i++) {
+                       fireNewGame.players[i].userID = lobbyRef.players[i];
+                       fireNewGame.players[i].userName = playerName;
+                   }
+                    console.log(fireNewGame);
+                });
 
             // move this object into the games object, delete the lobby
 

@@ -13,7 +13,7 @@ app.factory('JoinModalFactory', function($uibModal) {
     return joinModal;
 });
 
-app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $q, $firebaseObject) {
+app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $q, $firebaseObject, $firebaseArray) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = $firebaseObject(gameRef.child('lobbies')),
@@ -27,7 +27,8 @@ app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, Lobb
             for (var key in lobbies) {
                 if (lobbies[key] && lobbies[key].name === $scope.lobby.name) {
                 if (lobbies[key] && lobbies[key].password === $scope.lobby.password) {
-                    gameRef.child('lobbies').child(key).child('players').push().set(userId);
+                    var fireArr = $firebaseArray(gameRef.child('lobbies').child(key).child('players'));
+                    fireArr.$add(userId);
                     lobbyId = gameRef.child('lobbies').child(key).key();
 
                     LobbyFactory.registerInfo(lobbyId);

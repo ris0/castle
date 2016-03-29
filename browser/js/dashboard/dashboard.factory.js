@@ -28,7 +28,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
             var gameID = newGameRef.key();
 
             var gamePlayersArr = $firebaseArray(ref.child(gameID).child("players"));
-            //$firebaseArray(gamesRef.child(gameID).child("players"));
+
             return gamePlayersArr.$loaded()
                 .then(function(gamePlayers) {
                 for (var j = 0; j < counter; j++) {
@@ -54,7 +54,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
             for (var key in game.playersQueue) {
                 if (game.playersQueue[key] === user.$id) return;
             }
-            game.playersQueue.push({ userId: user.$id, email: user.email })
+            game.playersQueue.push({ userId: user.$id, email: user.email });
             return $q.when({});
 
         } else {
@@ -65,8 +65,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
     };
 
     //shuffles decks and removes card based on # players
-    function shuffleDecks(game){
-        console.log(game);
+    function shuffleDecks (game){
         var numberPlayers = Object.keys(game.playersQueue).length;
         var numRoomCards = numberPlayers * 11;
         var numFavors = Math.max(numberPlayers, 3);
