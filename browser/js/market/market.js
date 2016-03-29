@@ -113,8 +113,8 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       }
       else if (newRooms.length === 1) {
         var newRoom = newRooms[0];
-        console.log('buying one room', newRoom);
         var truePrice = +newRoom.price - (+newRoom.discount);
+        if(getCurrentPlayer(game).cashMoney < truePrice) return "Not enough $$$";
 
         scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
         cashFlow(game, newRoom.price, truePrice);
