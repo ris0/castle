@@ -1,16 +1,16 @@
 <ul class="list-group" id="players">	
 	<li ng-class="{'playerTurn': currentPlayer === players.indexOf(player) }" ng-repeat="player in players" class="list-group-item" ng-click="isCollapsed = !isCollapsed">
-		<i class="fa fa-fort-awesome" ng-show="masterBuilder === players.indexOf(player)"></i> {{player.userName}} | <span>Public Score: {{_.sum(_.values(player.publicScore))}}</span>
+		<i class="fa fa-fort-awesome" ng-show="masterBuilder === players.indexOf(player)"></i> {{player.userName}} | <span>Public Score: {{_.sum(_.values(player.publicScore)) - player.publicScore.kingsFavorPts}}</span>
 		<div uib-collapse="!isCollapsed">
-		<div class="well well-sm">
-			<ul id="scoreCard">
-				<h5><b>${{player.cashMoney}}</b></h5>
-				<li><b>Activity Room Bonus</b> : {{player.publicScore.activityRoomBonusPts}}</li>
-				<li><b>Kings Favors</b> : {{player.publicScore.kingsFavorPts}}</li>
-				<li><b>Living Room Bonus</b> : {{player.publicScore.livingRoomBonusPts}}</li>
-				<li><b>Room Points</b> : {{player.publicScore.roomPts}}</li>
-			</ul>
-		</div>
+			<div class="well well-sm">
+				<ul id="scoreCard">
+					<h5><b>${{player.cashMoney}}</b></h5>
+					<li><b>Activity Room Bonus</b> : {{player.publicScore.activityRoomBonusPts}}</li>
+					<li><b>Kings Favors</b> : {{player.publicScore.kingsFavorPts}}</li>
+					<li><b>Living Room Bonus</b> : {{player.publicScore.livingRoomBonusPts}}</li>
+					<li><b>Room Points</b> : {{player.publicScore.roomPts}}</li>
+				</ul>
+			</div>
 		</div>
 	</li>
 </ul>

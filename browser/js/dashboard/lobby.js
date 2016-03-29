@@ -9,24 +9,24 @@ app.factory('LobbyFactory', function() {
 
 });
 
-
-
-app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray) {
+app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray,gamesRef, lobbyRef) {
 
     var lobbyId = LobbyFactory.ref, playerId = userId;
+    console.log($stateParams);
 
-    const playerRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/users/' + playerId));
-    const lobbyRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/lobbies/' + lobbyId));
-
-    const gamesRef = gameFactory.ref().child('games');
     const game = syncObject;
+
+    const playerRef = $firebaseObject(gameFactory.ref().child('users').child(playerId));
 
     $scope.obj = {};
 
     lobbyRef.$bindTo($scope, "data").then(function() {
+        console.log($scope.data);
         var playerName;
 
         playerRef.$loaded().then(function(obj) {
+            console.log(userId);
+            console.log(obj)
             var indexSlice = obj.email.indexOf('@');
             playerName = obj.email.slice(0,indexSlice);
         });
