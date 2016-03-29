@@ -55,16 +55,6 @@ window.app = angular
                 templateUrl: 'views/dashboard/lobby.html',
                 controller: 'lobbyCtrl'
             })
-            .state('join', {
-                url: '/join',
-                parent: 'overview',
-                templateUrl: 'views/dashboard/join.html'
-            })
-            .state('random', {
-                url: '/random',
-                parent: 'dashboard',
-                templateUrl: 'views/dashboard/random.html'
-            })
             .state('gridtesting', {
                 url: '/gridtesting',
                 controller: 'GridTestingCtrl',

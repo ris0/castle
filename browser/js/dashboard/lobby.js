@@ -60,7 +60,7 @@ app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebas
                 .then(function(){
                    for (var i = 0; i < lobbyLength; i++) {
                        fireNewGame.players[i].userID = lobbyRef.players[i];
-                       fireNewGame.players[i].userName = playerName;
+                       fireNewGame.players[i].userName = lobbyRef.players[i];
                    }
                     console.log(fireNewGame);
                 });

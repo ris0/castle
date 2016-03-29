@@ -13,7 +13,7 @@ app.factory('JoinModalFactory', function($uibModal) {
     return joinModal;
 });
 
-app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $q, $firebaseObject, $firebaseArray) {
+app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $firebaseObject, $firebaseArray) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = $firebaseObject(gameRef.child('lobbies')),
