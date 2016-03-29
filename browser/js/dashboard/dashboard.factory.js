@@ -1,4 +1,4 @@
-app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q) {
+app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q, $rootScope) {
 
     var dashboard = {}, players;
     var playersRef = gameFactory.ref().child("playersQueue");
@@ -14,7 +14,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
             var baseState = _.clone(game.baseState);
             var counter = 0;
 
-            shuffleDecks(game);
+            shuffleDecks(baseState,playersObj);
 
             for (var key in players) {
                 baseState.players[counter].userID = players[key].userId;
@@ -39,6 +39,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
                 }
                 return gamePlayersArr;
             }).then(function(){
+                $rootScope.$broadcast('gameCreated');
                 $state.go('game');
             });
     };
@@ -55,18 +56,22 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
                 if (game.playersQueue[key] === user.$id) return;
             }
             game.playersQueue.push({ userId: user.$id, email: user.email });
+            $rootScope.$on('gameCreated', function(){
+                $state.go('game');
+            });
             return $q.when({});
-
         } else {
             game.playersQueue = [{userId: user.$id, email: user.email}];
-            return dashboard.createRandomGame(game);
+            setTimeout(function(){
+                dashboard.createRandomGame(game);
+            }, 5000);
         }
 
     };
 
     //shuffles decks and removes card based on # players
-    function shuffleDecks (game){
-        var numberPlayers = Object.keys(game.playersQueue).length;
+    function shuffleDecks (game, playersQueue){
+        var numberPlayers = Object.keys(playersQueue).length;
         var numRoomCards = numberPlayers * 11;
         var numFavors = Math.max(numberPlayers, 3);
         var numTileMult = (numberPlayers - 4);

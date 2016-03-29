@@ -327,6 +327,9 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     var theCastle = castle.val();
                     console.log("Firebase saw a change in values, resyncing...");
                     console.log(theCastle);
+
+                    console.log('changing', theCastle);
+
                     redrawCastle(theCastle);
                 });
             });
