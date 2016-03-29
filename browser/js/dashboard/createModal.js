@@ -13,7 +13,7 @@ app.factory('CreateModalFactory', function($uibModal) {
     return createModal;
 });
 
-app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $q, $firebaseObject) {
+app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $firebaseObject) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = gameRef.child('lobbies'),
@@ -47,7 +47,7 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
                 $uibModalInstance.close();
                 $state.go('lobby');
             });
-    }
+    };
 
 
 

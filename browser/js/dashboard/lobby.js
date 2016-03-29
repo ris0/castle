@@ -45,31 +45,36 @@ app.controller('lobbyCtrl', function($scope, LobbyFactory, gameFactory, $firebas
 
         $scope.startGame = function () {
 
-            var baseState = _.clone(game.baseState);
-            var newGame = gamesRef.push(baseState);
-            var gameId = newGame.key();
-            var fireNewGame = $firebaseObject(newGame);
-            var lobbyLength;
+            var baseState = _.clone(game.baseState),
+                newGame = gamesRef.push(baseState),
+                gameId = newGame.key(),
+                fireNewGame = $firebaseObject(newGame),
+                lobbyLength, fireUsers;
 
+            // find the amount of players in lobby, then load up the newGame object
+            // then reassign the userID and userName to the correct information as found in the lobby
             lobbyRef.$loaded()
                 .then(function(lobbyData){
-                    lobbyLength = lobbyData.players.length;
-                });
-
-            fireNewGame.$loaded()
+                    return lobbyLength = lobbyData.players.length;
+                })
+                .then(function() {
+                    return fireNewGame.$loaded()
+                })
                 .then(function(){
                    for (var i = 0; i < lobbyLength; i++) {
-                       fireNewGame.players[i].userID = lobbyRef.players[i];
-                       fireNewGame.players[i].userName = lobbyRef.players[i];
+                       fireNewGame.players[i].userID = lobbyRef.players[i].userID;
+                       fireNewGame.players[i].userName = lobbyRef.players[i].userName;
                    }
-                    console.log(fireNewGame);
+                })
+                .then(function(){
+                    fireUsers = $firebaseObject(usersRef);
+                    return fireUsers.$loaded()
+                })
+                .then(function(users) {
+                    // can I do a query search and look for a particular key?
+                    // if not let's iterate through these object keys and assign the gameID to it
                 });
 
-            // move this object into the games object, delete the lobby
-
-            // associate this new game object ID to each player
-
-            // go to the game state
         }
 
     });
