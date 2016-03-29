@@ -389,8 +389,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
 
                 castleRef.on('value', function(castle) {
                     var theCastle = castle.val();
-                    console.log("ASDFASDF");
-                    console.log(theCastle);
+                    console.log('changing', theCastle);
                     redrawCastle(theCastle);
                 });
             });
