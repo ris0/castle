@@ -17,8 +17,20 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
         scope.buy = function() {
-          scope.buyError=marketFactory.buy(scope.data);
+          var buyError=marketFactory.buy(scope.data);
+          if(buyError) $.jGrowl(buyError, {themeState: 'highlight'});
         };
+
+        scope.tryCorridor = function(type){
+          var corridor = scope.data.roomTiles[type][0];
+          corridor.price = 3000;
+          market.try(scope.data, corridor);
+        };
+
+        scope.untryCorridor = function(type){
+          var corridor = scope.data.roomTiles[type][0];
+          market.untry(scope.data, corridor);
+        }
 
         scope.try = function(room, price) {
           room.trying = true;
@@ -101,8 +113,8 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       }
       else if (newRooms.length === 1) {
         var newRoom = newRooms[0];
-        console.log('buying one room', newRoom);
         var truePrice = +newRoom.price - (+newRoom.discount);
+        if(getCurrentPlayer(game).cashMoney < truePrice) return "Not enough $$$";
 
         scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
         cashFlow(game, newRoom.price, truePrice);
