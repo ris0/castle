@@ -45,3 +45,123 @@
 	"completed": false,
 	"boardPosition": [null, null]
 }
+
+// castle = [{
+                //         "affectedBy": [],
+                //         "boardPosition": [0, 0],
+                //         "completed": false,
+                //         "containerDim": [60, 60],
+                //         "doors": [
+                //             [30, 0],
+                //             [60, 30],
+                //             [0, 30]
+                //         ],
+                //         "effectPts": 0,
+                //         "fence": null,
+                //         "final": true,
+                //         "imagePath": "images/foyer.png",
+                //         "placementPts": 0,
+                //         "points": [
+                //             [15, 0],
+                //             [45, 0],
+                //             [60, 15],
+                //             [60, 45],
+                //             [45, 60],
+                //             [15, 60],
+                //             [0, 45],
+                //             [0, 15]
+                //         ],
+                //         "roomName": "YellowFoyer",
+                //         "roomType": "Corridor",
+                //         "rotation": 0,
+                //         "sqf": 125,
+                //     },
+                //     // {
+                //     //     "roomName": "Solar",
+                //     //     "imagePath": "images/200-solar.png",
+                //     //     "sqf": 200,
+                //     //     "roomType": "Sleeping",
+                //     //     "placementPts": 2,
+                //     //     "affectedBy": ["Outdoor"],
+                //     //     "effectPts": 2,
+                //     //     "completed": false,
+                //     //     "boardPosition": [0, 0],
+                //     //     "containerDim": [80, 40],
+                //     //     "points": [
+                //     //         [0, 0],
+                //     //         [80, 0],
+                //     //         [80, 40],
+                //     //         [0, 40]
+                //     //     ],
+                //     //     "doors": [
+                //     //         [80, 30],
+                //     //         [0, 40]
+                //     //     ],
+                //     //     "fence": null,
+                //     //     "rotation": 0,
+                //     //     "final": true
+                //     // }
+                //     // , 
+                //     // {
+                //     //     "roomName": "Flute-Room",
+                //     //     "imagePath": "images/150-fake-room-money-money.png",
+                //     //     "sqf": 150,
+                //     //     "roomType": "Activity",
+                //     //     "placementPts": 3,
+                //     //     "affectedBy": ["Living", "Sleep"],
+                //     //     "effectPts": -1,
+                //     //     "completed": false,
+                //     //     "boardPosition": [-60, 0],
+                //     //     "containerDim": [60, 60],
+                //     //     "points": [
+                //     //         [30, 30]
+                //     //     ],
+                //     //     "radius": 30,
+                //     //     "doors": [
+                //     //         [30, 0],
+                //     //         [0, 30],
+                //     //         [60, 30]
+                //     //     ],
+                //     //     "fence": null,
+                //     //     "rotation": 0,
+                //     //     "final": true
+                //     // }
+                //     // ,
+                //     {
+                //         "roomName": "Hallway",
+                //         "imagePath": "images/150-hallway.png",
+                //         "sqf": 150,
+                //         "roomType": "Corridor",
+                //         "placementPts": 0,
+                //         "affectedBy": [],
+                //         "effectPts": 0,
+                //         "completed": false,
+                //         "boardPosition": [0, 0],
+                //         "containerDim": [120, 20],
+                //         "points": [
+                //             [0, 0],
+                //             [120, 0],
+                //             [120, 20],
+                //             [0, 20]
+                //         ],
+                //         "doors": [
+                //             [0, 10],
+                //             [120, 10],
+                //             [10, 0],
+                //             [30, 0],
+                //             [50, 0],
+                //             [70, 0],
+                //             [90, 0],
+                //             [110, 0],
+                //             [10, 20],
+                //             [30, 20],
+                //             [50, 20],
+                //             [70, 20],
+                //             [90, 20],
+                //             [110, 20]
+                //         ],
+                //         "fence": null,
+                //         "rotation": 0,
+                //         "final": false
+                //     }
+                // ];
