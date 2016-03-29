@@ -30,6 +30,7 @@ app.factory('BonusModalFactory', function($uibModal) {
     });
   };
 
+
   return bonusModal;
 });
 

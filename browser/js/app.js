@@ -15,6 +15,7 @@ window.app = angular
         $urlRouterProvider.otherwise('/login');
 
         $stateProvider
+
             .state('base', {
                 abstract: true,
                 url: '',
@@ -29,51 +30,38 @@ window.app = angular
             .state('dashboard', {
                 url: '/dashboard',
                 parent: 'base',
-                templateUrl: 'views/dashboard.html',
+                templateUrl: 'views/dashboard.html'
+            })
+            .state('overview', {
+                url: '/overview',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/overview.html',
                 controller: 'DashboardCtrl',
                 resolve: {
                     syncObject: function($firebaseObject, gameFactory) {
                         return $firebaseObject(gameFactory.ref());
-                    },
-                    baseStateRef: function($firebaseObject, gameFactory) {
-                        return gameFactory.ref().child("baseState");
-                    },
-                    gamesRef: function($firebaseObject, gameFactory) {
-                        return gameFactory.ref().child("games");
-                    },
-                    playersRef: function($firebaseObject, gameFactory) {
-                        return gameFactory.ref().child("playersQueue");
                     },
                     usersRef: function($firebaseObject, gameFactory) {
                         return gameFactory.ref().child("users");
                     },
                     userId: function($firebaseObject, gameFactory) {
                         return gameFactory.auth().$getAuth().uid;
-                    },
-                    userEmail: function($firebaseObject, gameFactory) {
-                        return gameFactory.auth().$getAuth().password.email;
                     }
                 }
             })
-            .state('overview', {
-                url: '/overview',
-                parent: 'dashboard',
-                templateUrl: 'views/dashboard/overview.html'
-            })
-            .state('create', {
-                url: '/create',
-                parent: 'dashboard',
-                templateUrl: 'views/dashboard/create.html'
-            })
-            .state('join', {
-                url: '/join',
-                parent: 'dashboard',
-                templateUrl: 'views/dashboard/join.html'
-            })
-            .state('random', {
-                url: '/random',
-                parent: 'dashboard',
-                templateUrl: 'views/dashboard/random.html'
+            .state('lobby', {
+                url: '/lobby/:lobbyId',
+                parent: 'overview',
+                templateUrl: 'views/dashboard/lobby.html',
+                controller: 'lobbyCtrl',
+                resolve: {
+                    gamesRef: function(gameFactory){
+                        return gameFactory.ref().child('games');
+                    },
+                    lobbyRef: function($firebaseObject, gameFactory, $stateParams){
+                        return $firebaseObject(gameFactory.ref().child('lobbies').child($stateParams.lobbyId));
+                    }
+                }
             })
             .state('gridtesting', {
                 url: '/gridtesting',
@@ -84,6 +72,7 @@ window.app = angular
     .run(function($rootScope, _) {
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
             if (error) console.log(error);
-        })
+        });
         $rootScope._ = window._;
     });
+
