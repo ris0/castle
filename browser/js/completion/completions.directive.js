@@ -56,7 +56,7 @@ app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, player
   };
 
   $scope.downstairsBonus = function(){
-    
+    completionFactory.Downstairs($scope.roomType);
   };
 
   var counter = 0;

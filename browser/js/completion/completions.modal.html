@@ -3,8 +3,8 @@
 </div>
 <div class="modal-body">
     <ul>
-        <li ng-repeat="type in completions">
-            <div ng-click="$event.preventDefault(); assessCompletion(type, game)">{{ type }}</div>
+        <li ng-repeat="room in completions">
+            <div ng-click="$event.preventDefault(); assessCompletion(type, game)">{{ room.roomType }}</div>
         </li>
     </ul>
     <form ng-show="showSleep" class="form-inline" ng-submit="sleepBonus()">

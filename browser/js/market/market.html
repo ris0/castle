@@ -1,7 +1,7 @@
 <nav id="market-nav" class="navbar navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav navbar-inverse">
-            <li class = "market-room" ng-repeat="(price,room) in data.market">
+            <li class = "market-room" ng-repeat="(price,room) in data.market" draggable = "true">
                 <center><span class="price">${{price}}</span><span class = "discount" ng-if="room.room.discount"> -${{room.room.discount}}</span>
                 <span ng-show="data.players[userIndex].canBuy"><a ng-show="!room.trying" ng-click="try(room, price)">+ </a><a ng-show="room.trying" ng-click="untry(room)">-</a></span>
                 <a class = "price" ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="swap(price)">

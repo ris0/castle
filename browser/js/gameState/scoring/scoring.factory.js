@@ -20,8 +20,8 @@ app.factory('scoringFactory', function() {
 
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
     var conArray = findConnectedRooms(player, room);
-    player.publicScore.roomPts += room.placementPts;
-    room.scoredPoints = room.placementPts;
+    player.publicScore.roomPts += room.placementPts || 0;
+    room.scoredPoints = room.placementPts || 0;
 
     //checking synergy points of current room to connected rooms and vice versa
     conArray.forEach(function(conRoom) {
@@ -113,8 +113,8 @@ app.factory('scoringFactory', function() {
     else if(room.externalDoors === 1) {
     	room.externalDoors--;
         room.completed = true;
-        if (!player.completionBonus) player.completionBonus = [room.roomType];
-        else player.completionBonus.push(room.roomType);
+        if (!player.completionBonus) player.completionBonus = [room];
+        else player.completionBonus.push(room);
     }
   }
 
