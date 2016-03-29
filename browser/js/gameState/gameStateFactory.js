@@ -2,6 +2,15 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   var gameState = {};
   var currentPlayer;
   var masterBuilder;
+  var user = gameFactory.auth().$getAuth().uid;
+
+  gameState.getUserObj = function(game){
+  	var userObj;
+  	game.players.forEach(function(player){
+  		if(user === player.userID) userObj = player;
+  	})
+  	return userObj;
+  }
 
   gameState.getUserIndex = function(game) {
     return game.players.reduce(findMyIndex, "");
@@ -26,6 +35,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
         gameState.drawToMarket(game);
       }
     }
+    console.log(game.turnCount);
     kingsFavorsFactory.getRankings(game);
   };
 
@@ -51,7 +61,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   };
 
   function findMyIndex(prev, curr, index) {
-    if (gameFactory.auth().$getAuth().uid === curr.userID) {
+    if (user === curr.userID) {
       return index;
     }
     return prev;

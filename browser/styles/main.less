@@ -35,27 +35,53 @@ html,body {
 	overflow: auto;
 }
 
-#market-nav {
-  margin:0;
+.discount {
+  color:red;
 }
 
-.market-room {
-    max-width: 12vw;
-    padding: 5px;
+.price{
+  color:white;
+}
+
+#market-nav {
+  margin:0;
+  .container{
+    width: 100%;
+  }
+  .market-room {
+      width: 8vw;
+      padding: 5px;
+      vertical-align: middle;
+  }
+}
+
+#market-img {
+  vertical-align: middle;
 }
 
 #grid-market {
   padding:0!important;
 }
 
+#grid-testing {
+  height: 100%;
+}
 
 #gameboard {
     overflow: hidden;
     border: 0.5vh solid black;
     width: 100%;
+<<<<<<< HEAD
     height: 93vh;
     background-color: #3333ff;
+=======
+    height: ~"calc(100vh - 125px)";
+>>>>>>> master
 }
+
+/*#game {
+  overflow: hidden;
+}*/
 
 #main {
     margin: 0;
@@ -66,13 +92,83 @@ svg {
   font: 10px sans-serif;
 }
 
-#sidebar {
-    padding: 0;
-}
-
 #playerlist {
     padding: 0;
+    width: 95%;
 }
+
+#players {
+  padding-left: 16px;
+}
+
+#kingsFavors {
+  margin-left: 20px;
+  .title{
+    border-bottom: 1px solid black;
+  }
+  #inner1{
+    width: 100px;
+    float:left;
+    display:inline-block; 
+  }
+  #kingsFavorsRow{
+    height: 68px;
+  }
+  #kingsFavorsImg{
+    height:80%;
+    width:80%;
+  }
+  #bonusCardsImg{
+    height:80%;
+    width:80%;
+  }
+}
+
+#smallFont{
+  font-size: x-small;
+}
+
+#slides_control {
+  text-align: center;
+  height: 356px;
+  max-width: 325px;
+  left:50%;
+  top:20px;
+}
+
+.item {
+  height: 325px;
+}
+
+#carousel{
+  color:white;
+  float:left;
+  border-radius: 5px;
+  width: 100%;
+  .well {
+   background-color: #334857;
+   border-color: gray;
+  }
+}
+
+.carousel-inner{
+  overflow: auto;
+}
+
+
+.carousel-control.left, .carousel-control.right {
+   background-image:none !important;
+   filter:none !important;
+}
+
+.carousel-control {
+  opacity: 0.15;
+}
+
+.carousel-control:hover {
+  opacity: 0.15;
+}
+
 
 .normal {
   fill: black;
@@ -93,3 +189,16 @@ svg {
     fill: green;
     opacity: 0.3;
 }
+
+#sidebar {
+  background-color: #334857;
+  height: 100vh;
+}
+
+.playerTurn{
+  background-color: #C3E4ED;
+}
+
+ul#scoreCard {
+  list-style-type: none;
+ }

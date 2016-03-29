@@ -1,9 +1,12 @@
 app.config(function($stateProvider){
 	$stateProvider.state('game', {
 		url: '/game-stats',
-		templateUrl: 'js/gameState/gameStateState.html',
+		templateUrl: 'views/gameboard/gridtesting.html',
 		controller: "gameStats",
 		resolve: {
+			userId: function(gameFactory){
+				return gameFactory.auth().$getAuth().uid;
+			},
 			syncObject: function(gameFactory,$firebaseObject){
 				var userID = gameFactory.auth().$getAuth().uid;
 				var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));

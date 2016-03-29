@@ -7,6 +7,8 @@ window.app = angular
         'firebase',
         'snap'
     ])
+    .constant('_', window._)
+  // use in views, ng-repeat="x in _.range(3)"
     .config(function($urlRouterProvider, $locationProvider, $stateProvider) {
         $locationProvider.html5Mode(true);
         $urlRouterProvider.when('/dashboard', '/dashboard/overview');
@@ -79,8 +81,9 @@ window.app = angular
                 templateUrl: 'views/gameboard/gridtesting.html'
             });
     })
-    .run(function($rootScope) {
+    .run(function($rootScope, _) {
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
             if (error) console.log(error);
         })
+        $rootScope._ = window._;
     });
