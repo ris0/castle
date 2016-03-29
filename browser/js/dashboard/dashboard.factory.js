@@ -1,4 +1,4 @@
-app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q) {
+app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q, $rootScope) {
 
     var dashboard = {}, players;
     var playersRef = gameFactory.ref().child("playersQueue");
@@ -39,6 +39,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
                 }
                 return gamePlayersArr;
             }).then(function(){
+                $rootScope.$broadcast('gameCreated');
                 $state.go('game');
             });
     };
@@ -55,11 +56,15 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
                 if (game.playersQueue[key] === user.$id) return;
             }
             game.playersQueue.push({ userId: user.$id, email: user.email });
+            $rootScope.$on('gameCreated', function(){
+                $state.go('game');
+            });
             return $q.when({});
-
         } else {
             game.playersQueue = [{userId: user.$id, email: user.email}];
-            return dashboard.createRandomGame(game);
+            setTimeout(function(){
+                dashboard.createRandomGame(game);
+            }, 5000);
         }
 
     };
