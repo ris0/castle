@@ -27,8 +27,6 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                 var castle = scope.game.players[currentUserIndex].castle;
 
                 var castleRef = gameFactory.ref().child('games').child(agame).child('players').child(currentUserIndex).child('castle');
-console.log(castle);
-console.log(castleRef);
 
                 // -------------------------------------------------------------------------------------------
                 // -------------------------------------------------------------------------------------------
