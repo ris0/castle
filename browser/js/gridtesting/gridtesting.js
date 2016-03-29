@@ -102,7 +102,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     .attr("id", "currentCastle");
 
                 function redrawCastle(castle) {
-
+                    console.log("redrawing castle")
                     d3.select("#currentCastle").remove();
 
                     currentCastle = svg.append("g")
@@ -325,7 +325,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
 
                 castleRef.on('value', function(castle) {
                     var theCastle = castle.val();
-                    console.log("ASDFASDF");
+                    console.log("Firebase saw a change in values, resyncing...");
                     console.log(theCastle);
                     redrawCastle(theCastle);
                 });
