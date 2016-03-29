@@ -1,4 +1,5 @@
-<div>
+<div ng-hide="isLoading">
+
 	<snap-drawer>
 		<div class="snap-menu">
 
@@ -7,10 +8,10 @@
 			</div>
 
 			<ul class="snap-ul">
-				<li ng-class="{active: $state.includes('overview')}"><a ui-sref="overview">HOME</a></li>
-				<li ng-class="{active: $state.includes('create')}"><a ui-sref="create">CREATE GAME</a></li>
-				<li ng-class="{active: $state.includes('join')}"><a ui-sref="join">JOIN GAME</a></li>
-				<li ng-class="{active: $state.includes('random')}"><a ui-sref="random">RANDOM GAME</a></li>
+				<li ><a ui-sref="overview">HOME</a></li>
+				<li ><a ng-click="open()">CREATE GAME</a></li>
+				<li ><a ng-click="join()">JOIN GAME</a></li>
+				<li ><a ng-click="findRandomGame()">RANDOM GAME</a></li>
 				<li><a ng-click="logout()">LOGOUT</a></li>
 			</ul>
 
@@ -27,6 +28,9 @@
 				<i ng-show="menuOpen" class="fa fa-times fa-2x" ></i>
 			</span>
 		</a>
+
+
+		<ui-view>
 
 		<div class="fr">
 		<h2> Castles </h2>
@@ -66,7 +70,23 @@
 
 			</div>
 		</div>
+
+		</ui-view>
+
+
 	</snap-content>
 
+</div>
+
+<div class="sk-cube-grid" ng-show="isLoading">
+	<div class="sk-cube sk-cube1"></div>
+	<div class="sk-cube sk-cube2"></div>
+	<div class="sk-cube sk-cube3"></div>
+	<div class="sk-cube sk-cube4"></div>
+	<div class="sk-cube sk-cube5"></div>
+	<div class="sk-cube sk-cube6"></div>
+	<div class="sk-cube sk-cube7"></div>
+	<div class="sk-cube sk-cube8"></div>
+	<div class="sk-cube sk-cube9"></div>
 </div>
 
