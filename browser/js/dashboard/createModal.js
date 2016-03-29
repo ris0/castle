@@ -20,7 +20,7 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
         userId = gameFactory.auth().$getAuth().uid;
         $scope.lobby = {};
 
-    const playerRef = $firebaseObject(new Firebase ('https://castle-fullstack.firebaseio.com/users/' + userId));
+    const playerRef = $firebaseObject(gameRef.child('users').child(userId));
 
     $scope.ok = function() {
 
@@ -44,8 +44,9 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
             })
             .then(function (lobby) {
                 LobbyFactory.registerInfo(lobby.key());
+                var lobbyId = lobby.key();
                 $uibModalInstance.close();
-                $state.go('lobby');
+                $state.go('lobby',{lobbyId: lobbyId});
             });
     };
 
