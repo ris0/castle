@@ -7,6 +7,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
         link: function(scope, el, attr) {
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
+            var agame;
 
             var userID = gameFactory.auth().$getAuth().uid;
 
@@ -15,134 +16,102 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
             userGame.$loaded().then(function(data) {
                 return data.$value;
             }).then(function(game) {
+                console.log(game);
+                agame = game;
                 return $firebaseObject(gameFactory.ref().child('games').child(game));
             }).then(function(syncObject) {
                 return syncObject.$bindTo(scope, 'game');
             }).then(function() {
-                var currentUserIndex = gameStateFactory.getUserIndex(scope.game);
 
+                var currentUserIndex = gameStateFactory.getUserIndex(scope.game);
                 var castle = scope.game.players[currentUserIndex].castle;
 
-                console.log(castle);
-                // castle = [{
-                //         "affectedBy": [],
-                //         "boardPosition": [0, 0],
-                //         "completed": false,
-                //         "containerDim": [60, 60],
-                //         "doors": [
-                //             [30, 0],
-                //             [60, 30],
-                //             [0, 30]
-                //         ],
-                //         "effectPts": 0,
-                //         "fence": null,
-                //         "final": true,
-                //         "imagePath": "images/foyer.png",
-                //         "placementPts": 0,
-                //         "points": [
-                //             [15, 0],
-                //             [45, 0],
-                //             [60, 15],
-                //             [60, 45],
-                //             [45, 60],
-                //             [15, 60],
-                //             [0, 45],
-                //             [0, 15]
-                //         ],
-                //         "roomName": "YellowFoyer",
-                //         "roomType": "Corridor",
-                //         "rotation": 0,
-                //         "sqf": 125,
-                //     },
-                //     // {
-                //     //     "roomName": "Solar",
-                //     //     "imagePath": "images/200-solar.png",
-                //     //     "sqf": 200,
-                //     //     "roomType": "Sleeping",
-                //     //     "placementPts": 2,
-                //     //     "affectedBy": ["Outdoor"],
-                //     //     "effectPts": 2,
-                //     //     "completed": false,
-                //     //     "boardPosition": [0, 0],
-                //     //     "containerDim": [80, 40],
-                //     //     "points": [
-                //     //         [0, 0],
-                //     //         [80, 0],
-                //     //         [80, 40],
-                //     //         [0, 40]
-                //     //     ],
-                //     //     "doors": [
-                //     //         [80, 30],
-                //     //         [0, 40]
-                //     //     ],
-                //     //     "fence": null,
-                //     //     "rotation": 0,
-                //     //     "final": true
-                //     // }
-                //     // , 
-                //     // {
-                //     //     "roomName": "Flute-Room",
-                //     //     "imagePath": "images/150-fake-room-money-money.png",
-                //     //     "sqf": 150,
-                //     //     "roomType": "Activity",
-                //     //     "placementPts": 3,
-                //     //     "affectedBy": ["Living", "Sleep"],
-                //     //     "effectPts": -1,
-                //     //     "completed": false,
-                //     //     "boardPosition": [-60, 0],
-                //     //     "containerDim": [60, 60],
-                //     //     "points": [
-                //     //         [30, 30]
-                //     //     ],
-                //     //     "radius": 30,
-                //     //     "doors": [
-                //     //         [30, 0],
-                //     //         [0, 30],
-                //     //         [60, 30]
-                //     //     ],
-                //     //     "fence": null,
-                //     //     "rotation": 0,
-                //     //     "final": true
-                //     // }
-                //     // ,
-                //     {
-                //         "roomName": "Hallway",
-                //         "imagePath": "images/150-hallway.png",
-                //         "sqf": 150,
-                //         "roomType": "Corridor",
-                //         "placementPts": 0,
-                //         "affectedBy": [],
-                //         "effectPts": 0,
-                //         "completed": false,
-                //         "boardPosition": [0, 0],
-                //         "containerDim": [120, 20],
-                //         "points": [
-                //             [0, 0],
-                //             [120, 0],
-                //             [120, 20],
-                //             [0, 20]
-                //         ],
-                //         "doors": [
-                //             [0, 10],
-                //             [120, 10],
-                //             [10, 0],
-                //             [30, 0],
-                //             [50, 0],
-                //             [70, 0],
-                //             [90, 0],
-                //             [110, 0],
-                //             [10, 20],
-                //             [30, 20],
-                //             [50, 20],
-                //             [70, 20],
-                //             [90, 20],
-                //             [110, 20]
-                //         ],
-                //         "fence": null,
-                //         "rotation": 0,
-                //         "final": false
-                //     }
-                // ];
+                var castleRef = gameFactory.ref().child('games').child(agame).child('players').child(currentUserIndex).child('castle');
+
+                function redrawCastle(castle) {
+
+                    var currentCastle = d3.select("#currentCastle");
+
+                    var roomTiles = currentCastle.selectAll("g")
+                        .data(castle)
+                        .enter()
+                        .append("g")
+                        .attr("transform", function(d) {
+                            var snapX = Math.round(d.boardPosition[0] / 10) * 10;
+                            var snapY = Math.round(d.boardPosition[1] / 10) * 10;
+                            return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")";
+                        })
+                        .call(drag)
+                        .on("dblclick", rotate);
+
+                    var roomImages = roomTiles.append("image")
+                        .attr("xlink:href", function(d) {
+                            return d.imagePath;
+                        })
+                        .attr("height", function(d) {
+                            return d.containerDim[1];
+                        })
+                        .attr("width", function(d) {
+                            return d.containerDim[0];
+                        });
+
+                    var polyRooms = roomTiles.append("polygon")
+                        .filter(function(d) {
+                            return !d.radius;
+                        })
+                        .attr("points", function(d) {
+                            return d.points.map(function(v) {
+                                return v.join(",");
+                            }).join(" ");
+                        })
+                        .style("stroke", "black")
+                        .style("stroke-width", "0")
+                        .classed("polygon", true)
+                        .classed("shadow", true)
+                        .classed("normal", true);
+                    // .classed("normal", "normal" === checkOverlaps(d))
+                    // .classed("overlapping", "overlapping" === checkOverlaps(d));
+
+                    var circleRooms = roomTiles.append("circle")
+                        .filter(function(d) {
+                            return d.radius;
+                        })
+                        .attr("cx", function(d) {
+                            return d.points[0][0];
+                        })
+                        .attr("cy", function(d) {
+                            return d.points[0][1];
+                        })
+                        .attr("r", function(d) {
+                            return d.radius;
+                        })
+                        .style("stroke", "black")
+                        .style("stroke-width", "0")
+                        .classed("circle", true)
+                        .classed("shadow", true)
+                        .classed("normal", true);
+                    // .classed("normal", "normal" === checkOverlaps(d))
+                    // .classed("overlapping", "overlapping" === checkOverlaps(d));
+
+
+                    d3.select(this).select(".shadow")
+                        .classed("normal", function(d) {
+                            return "normal" === checkOverlaps(d);
+                        })
+                        .classed("overlapping", function(d) {
+                            return "overlapping" === checkOverlaps(d);
+                        });
+                }
+
+                // function drawBoard(castle) {
+                // console.log("drawBoard!!!!!!!!");
+                // console.log(castle);
+
+                // -------------------------------------------------------------------------------------------
+                // -------------------------------------------------------------------------------------------
+                // -------------------------------------------------------------------------------------------
+                // -------------------------------------------------------------------------------------------
+                // -------------------------------------------------------------------------------------------
 
                 var drag = d3.behavior.drag()
                     .origin(function(d) {
@@ -247,9 +216,9 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     .style("stroke-width", "0")
                     .classed("polygon", true)
                     .classed("shadow", true)
-                    .classed("normal", true)
-                    // .classed("normal", "normal" === checkOverlaps(d))
-                    // .classed("overlapping", "overlapping" === checkOverlaps(d));
+                    .classed("normal", true);
+                // .classed("normal", "normal" === checkOverlaps(d))
+                // .classed("overlapping", "overlapping" === checkOverlaps(d));
 
                 var circleRooms = roomTiles.append("circle")
                     .filter(function(d) {
@@ -268,9 +237,9 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     .style("stroke-width", "0")
                     .classed("circle", true)
                     .classed("shadow", true)
-                    .classed("normal", true)
-                    // .classed("normal", "normal" === checkOverlaps(d))
-                    // .classed("overlapping", "overlapping" === checkOverlaps(d));
+                    .classed("normal", true);
+                // .classed("normal", "normal" === checkOverlaps(d))
+                // .classed("overlapping", "overlapping" === checkOverlaps(d));
 
 
                 d3.select(this).select(".shadow")
@@ -280,6 +249,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     .classed("overlapping", function(d) {
                         return "overlapping" === checkOverlaps(d);
                     });
+
                 // -------------------------------------------------------------------------------------------
                 // -------------------------------------------------------------------------------------------
                 // -------------------------------------------------------------------------------------------
@@ -417,6 +387,13 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                         return (a[0] == b[0]) && (a[1] == b[1]);
                     }
                 }
+
+                castleRef.on('value', function(castle) {
+                    var theCastle = castle.val();
+                    console.log("ASDFASDF");
+                    console.log(theCastle);
+                    redrawCastle(theCastle);
+                });
             });
         }
     };
