@@ -22,15 +22,19 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
         };
 
         scope.tryCorridor = function(type){
+          console.log(type);
+          scope[type] = true;
           var corridor = scope.data.roomTiles[type][0];
           corridor.price = 3000;
-          market.try(scope.data, corridor);
+          marketFactory.try(scope.data, corridor);
         };
 
         scope.untryCorridor = function(type){
+          console.log(type);
+          scope[type] = null;
           var corridor = scope.data.roomTiles[type][0];
-          market.untry(scope.data, corridor);
-        }
+          marketFactory.untry(scope.data, corridor);
+        };
 
         scope.try = function(room, price) {
           room.trying = true;
