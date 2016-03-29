@@ -1,0 +1,2357 @@
+{
+    "masterBuilder": 0,
+    "players": [{
+        "cashMoney": 15000,
+        "castle": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "doors": [
+                [-2, 0],
+                [0, 2],
+                [2, 0]
+            ],
+            "effectPts": 0,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 0,
+            "points": [
+                [17.5, 0],
+                [42.5, 0],
+                [60, 17.5],
+                [60, 42.5],
+                [42.5, 60],
+                [17.5, 60],
+                [0, 42.5],
+                [0, 17.5]
+            ],
+            "radius": null,
+            "roomName": "RedFoyer",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 125
+        }],
+        "privateBonusCardPts": 0,
+        "publicScore": {
+            "activtyRoomBonusPts": 0,
+            "kingsFavorPts": 0,
+            "livingRoomBonusPts": 0,
+            "roomPts": 0
+        },
+        "userID": "ebdb0a7c-f58b-44dd-8bb3-495ff6225697",
+        "userName": "Mad King Ludwig"
+    }, {
+        "cashMoney": 15000,
+        "castle": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "doors": [
+                [-2, 0],
+                [0, 2],
+                [2, 0]
+            ],
+            "effectPts": 0,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 0,
+            "points": [
+                [17.5, 0],
+                [42.5, 0],
+                [60, 17.5],
+                [60, 42.5],
+                [42.5, 60],
+                [17.5, 60],
+                [0, 42.5],
+                [0, 17.5]
+            ],
+            "radius": null,
+            "roomName": "YellowFoyer",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 125
+        }],
+        "privateBonusCardPts": 0,
+        "publicScore": {
+            "activtyRoomBonusPts": 0,
+            "kingsFavorPts": 0,
+            "livingRoomBonusPts": 0,
+            "roomPts": 0
+        },
+        "userID": "2n3f8123gf1273abcdg",
+        "userName": "Sane King Ludwig"
+    }, {
+        "cashMoney": 15000,
+        "castle": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "doors": [
+                [-2, 0],
+                [0, 2],
+                [2, 0]
+            ],
+            "effectPts": 0,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 0,
+            "points": [
+                [17.5, 0],
+                [42.5, 0],
+                [60, 17.5],
+                [60, 42.5],
+                [42.5, 60],
+                [17.5, 60],
+                [0, 42.5],
+                [0, 17.5]
+            ],
+            "radius": null,
+            "roomName": "GreenFoyer",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 125
+        }],
+        "privateBonusCardPts": 0,
+        "publicScore": {
+            "activtyRoomBonusPts": 0,
+            "kingsFavorPts": 0,
+            "livingRoomBonusPts": 0,
+            "roomPts": 0
+        }
+    }, {
+        "cashMoney": 15000,
+        "castle": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "doors": [
+                [-2, 0],
+                [0, 2],
+                [2, 0]
+            ],
+            "effectPts": 0,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 0,
+            "points": [
+                [17.5, 0],
+                [42.5, 0],
+                [60, 17.5],
+                [60, 42.5],
+                [42.5, 60],
+                [17.5, 60],
+                [0, 42.5],
+                [0, 17.5]
+            ],
+            "radius": null,
+            "roomName": "BlueFoyer",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 125
+        }],
+        "privateBonusCardPts": 0,
+        "publicScore": {
+            "activtyRoomBonusPts": 0,
+            "kingsFavorPts": 0,
+            "livingRoomBonusPts": 0,
+            "roomPts": 0
+        }
+    }],
+    "roomCards": [100, 100, 100, 100, 100, 100, 150, 150, 150, 150, 150, 150, 200, 200, 200, 200, 200, 200, 250, 250, 250, 250, 250, 250, 300, 300, 300, 300, 300, 300, 350, 350, 350, 350, 400, 400, 400, 400, 450, 450, 450, 450, 500, 500, 500, 500, 600, 600, 600, 600],
+
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    "roomTiles": {
+        "100": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-2, 1],
+                [2, 1],
+                [1, 2],
+                [1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Pink Cabinet",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-2, 1],
+                [-1, 2],
+                [2, -1],
+                [1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Lilac Cabinet",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-2, -1],
+                [2, -1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Larder",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-2, 1],
+                [2, -1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Buttery",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-2, -1],
+                [2, 1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Pantry",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-2, 1],
+                [1, 2],
+                [2, -1],
+                [1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Focus Room",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Cloak Room",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [-1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Broom Closet",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 100
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 40],
+            "discount": 0,
+            "doors": [
+                [1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Powder Room",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 100
+        }],
+        "150": [{
+            "affectedBy": ["Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [3, 0],
+                [0, 3],
+                [0, -3]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Flute Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, -3],
+                [0, 3],
+                [3, 0]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Piano Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, -3],
+                [0, 3],
+                [3, 0],
+                [-3, 0]
+            ],
+            "effectPts": 1,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Sitting Room",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, 3]
+            ],
+            "effectPts": 1,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Bottomless Pit",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, -3],
+                [0, 3],
+                [3, 0],
+                [-3, 0]
+            ],
+            "effectPts": 1,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Study",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [-3, 0],
+                [0, 3]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Fungus Room",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, -3],
+                [0, 3],
+                [3, 0],
+                [-3, 0]
+            ],
+            "effectPts": -1,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Parlor",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, -3]
+            ],
+            "effectPts": 1,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "The Hole",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 150
+        }, {
+            "affectedBy": ["Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [60, 60],
+            "discount": 0,
+            "doors": [
+                [0, -3],
+                [-3, 0],
+                [3, 0]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [30, 30]
+            ],
+            "radius": 30,
+            "roomName": "Berchta Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 150
+        }],
+        "200": [{
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [4, -1],
+                [3, -2]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Solar",
+            "roomType": "Sleeping",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [4, -1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Utility Room",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [4, 1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Dirt Room",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [1, -2]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Washroom",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [4, -1],
+                [-1, -2]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Nap Room",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": ["Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [-1, 2],
+                [1, -2]
+            ],
+            "effectPts": 3,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Anteroom",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [-4, -1],
+                [4, 1]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Dressing Room",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": ["Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [3, 2],
+                [3, -2]
+            ],
+            "effectPts": 3,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Food Prep Room",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 200
+        }, {
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 40],
+            "discount": 0,
+            "doors": [
+                [-4, 1],
+                [4, 1]
+            ],
+            "effectPts": 3,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Meat Locker",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 200
+        }],
+        "250": [{
+            "affectedBy": ["Corridor", "Downstairs", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 40],
+            "discount": 0,
+            "doors": [
+                [3, 2],
+                [3, -2],
+                [4, -1]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Sewing Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [-4, -2],
+                [4, -2]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": [
+                [-5, 2],
+                [5, 2]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Porch",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Utility"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [-4, -2],
+                [5, -1]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": [
+                [-5, 2],
+                [5, 2]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Shed",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [-5, -1],
+                [4, -2]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Knight Room",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [-5, -1],
+                [0, -2]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Mold Room",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Sleep", "Downstairs", "Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [0, 2],
+                [5, 1],
+                [5, -1]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Oratory",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [-5, -1],
+                [4, -2]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Crypt",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Food", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [0, 2],
+                [5, 1],
+                [-2, -2]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Billiards Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 250
+        }, {
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [40, 100],
+            "discount": 0,
+            "doors": [
+                [-4, -2],
+                [4, -2]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": [
+                [-5, 2],
+                [5, 2]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [100, 0],
+                [100, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Gatehouse",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 250
+        }],
+        "300": [{
+            "affectedBy": ["Sleeping"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-3, 4],
+                [0, 3]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Queen's Bedroom",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-4, 3],
+                [3, -4]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Tasso Room",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-1, -4],
+                [4, -3]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Guest Bedroom",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [4, -1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Laundry Room",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [0, 3]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Panic Room",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [0, 2],
+                [-1, -4]
+            ],
+            "effectPts": 3,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Kitchen",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": ["Utility"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-4, -3],
+                [4, -1]
+            ],
+            "effectPts": 3,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Scullery",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [4, -3]
+            ],
+            "effectPts": 0,
+            "externalDoors": 1,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Sauna",
+            "roomType": "Utility",
+            "rotation": 0,
+            "sqf": 300
+        }, {
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-4, 1],
+                [4, -1]
+            ],
+            "effectPts": 3,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [40, 0],
+                [40, 40],
+                [80, 40],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Dining Room",
+            "roomType": "Food",
+            "rotation": 0,
+            "sqf": 300
+        }],
+        "350": [{
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 40],
+            "discount": 0,
+            "doors": [
+                [0, 2],
+                [4, 2],
+                [7, 1],
+                [7, -1],
+                [6, -2],
+                [2, -2],
+                [-2, -2],
+                [-6, -2],
+                [-7, -1],
+                [-7, 1],
+                [-4, 2]
+            ],
+            "effectPts": 1,
+            "externalDoors": 11,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [140, 0],
+                [140, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Upper Hall",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 350
+        }, {
+            "affectedBy": ["Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 40],
+            "discount": 0,
+            "doors": [
+                [-7, -1],
+                [4, 2],
+                [3, -2],
+                [7, -1]
+            ],
+            "effectPts": 2,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [140, 0],
+                [140, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Salon",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 350
+        }, {
+            "affectedBy": ["Corridor", "Downstairs", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 40],
+            "discount": 0,
+            "doors": [
+                [4, 2],
+                [7, -1],
+                [4, -2]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [0, 0],
+                [140, 0],
+                [140, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Train Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 350
+        }, {
+            "affectedBy": ["Food", "Utility", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 40],
+            "discount": 0,
+            "doors": [
+                [-6, 2],
+                [-7, 1],
+                [-6, -2]
+            ],
+            "effectPts": -1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [0, 0],
+                [140, 0],
+                [140, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "9 Pin Alley",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 350
+        }, {
+            "affectedBy": ["Corridor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 40],
+            "discount": 0,
+            "doors": [
+                [-7, -1],
+                [-6, -2],
+                [6, 2],
+                [7, -1]
+            ],
+            "effectPts": 2,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [140, 0],
+                [140, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Gallery of Mirrors",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 350
+        }, {
+            "affectedBy": ["Utility"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 40],
+            "discount": 0,
+            "doors": [
+                [0, 2],
+                [4, 2],
+                [7, 1],
+                [7, -1],
+                [6, -2],
+                [2, -2],
+                [-2, -2],
+                [-6, -2],
+                [-7, -1],
+                [-7, 1],
+                [-4, 2]
+            ],
+            "effectPts": 1,
+            "externalDoors": 11,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [140, 0],
+                [140, 40],
+                [0, 40]
+            ],
+            "radius": null,
+            "roomName": "Great Hall",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 350
+        }],
+        "400": [{
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [4, 3],
+                [-4, -1],
+                [3, -4]
+            ],
+            "effectPts": 1,
+            "externalDoors": 3,
+            "fence": [
+                [-4, 4],
+                [4, 4]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Pumpkin Garden",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 400
+        }, {
+            "affectedBy": ["Outdoor", "Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [4, 1],
+                [-4, 1],
+                [3, -4],
+                [1, 4]
+            ],
+            "effectPts": 2,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "East Tapestry Chamber",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 400
+        }, {
+            "affectedBy": ["Corridor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-4, 3],
+                [3, -4]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Grand Bedchamber",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 400
+        }, {
+            "affectedBy": ["Living", "Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-4, -1],
+                [-1, 4],
+                [4, 1],
+                [1, -4]
+            ],
+            "effectPts": 2,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Observatory",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 400
+        }, {
+            "affectedBy": ["Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [4, -3],
+                [-4, -1],
+                [-1, -4]
+            ],
+            "effectPts": 1,
+            "externalDoors": 3,
+            "fence": [
+                [-4, 4],
+                [4, 4]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "French Gazebo",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 400
+        }, {
+            "affectedBy": ["Corridor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [80, 80],
+            "discount": 0,
+            "doors": [
+                [-4, -1],
+                [-1, -4]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [0, 0],
+                [80, 0],
+                [80, 80],
+                [0, 80]
+            ],
+            "radius": null,
+            "roomName": "Servant's Quarters",
+            "roomType": "Sleep",
+            "rotation": 0,
+            "sqf": 400
+        }],
+        "450": [{
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [120, 60],
+            "discount": 0,
+            "doors": [
+                [6, 2],
+                [6, -2],
+                [3, -3]
+            ],
+            "effectPts": 1,
+            "externalDoors": 3,
+            "fence": [
+                [-6, 3],
+                [6, 3]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 60],
+                [0, 60]
+            ],
+            "radius": null,
+            "roomName": "Formal Gardens",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 450
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [120, 60],
+            "discount": 0,
+            "doors": [
+                [6, 2],
+                [3, -3]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": [
+                [-6, 3],
+                [6, 3]
+            ],
+            "final": false,
+            "imagePath": "",
+            "placementPts": 3,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 60],
+                [0, 60]
+            ],
+            "radius": null,
+            "roomName": "Coach House",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 450
+        }, {
+            "affectedBy": ["Downstairs"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [120, 60],
+            "discount": 0,
+            "doors": [
+                [-1, -3],
+                [6, -2]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 60],
+                [0, 60]
+            ],
+            "radius": null,
+            "roomName": "Dungeon",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 450
+        }, {
+            "affectedBy": ["Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [120, 60],
+            "discount": 0,
+            "doors": [
+                [3, -3],
+                [6, 0]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 60],
+                [0, 60]
+            ],
+            "radius": null,
+            "roomName": "Armory",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 450
+        }, {
+            "affectedBy": ["Activity", "Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [120, 60],
+            "discount": 0,
+            "doors": [
+                [-6, 0],
+                [5, 3],
+                [6, 0],
+                [-5, -3]
+            ],
+            "effectPts": 3,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 60],
+                [0, 60]
+            ],
+            "radius": null,
+            "roomName": "West Tapestry Room",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 450
+        }, {
+            "affectedBy": ["Activity", "Utility"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [120, 60],
+            "discount": 0,
+            "doors": [
+                [-6, 0],
+                [-1, 3],
+                [6, 2],
+                [5, -3]
+            ],
+            "effectPts": 3,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 2,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 60],
+                [0, 60]
+            ],
+            "radius": null,
+            "roomName": "Drawing Room",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 450
+        }],
+        "500": [{
+            "affectedBy": ["Corridor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 100],
+            "discount": 0,
+            "doors": [
+                [-5, 0],
+                [5, 0]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [50, 50]
+            ],
+            "radius": 50,
+            "roomName": "Venus Grotto",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 500
+        }, {
+            "affectedBy": ["Living"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 100],
+            "discount": 0,
+            "doors": [
+                [-5, 0],
+                [5, 0]
+            ],
+            "effectPts": 1,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [50, 50]
+            ],
+            "radius": 50,
+            "roomName": "Green House",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 500
+        }, {
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 100],
+            "discount": 0,
+            "doors": [
+                [-5, 0],
+                [5, 0],
+                [0, -5]
+            ],
+            "effectPts": 1,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 4,
+            "points": [
+                [50, 50]
+            ],
+            "radius": 50,
+            "roomName": "Hunding's Hut",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 500
+        }, {
+            "affectedBy": ["Utility"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 100],
+            "discount": 0,
+            "doors": [
+                [-5, 0],
+                [0, -5]
+            ],
+            "effectPts": 2,
+            "externalDoors": 2,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [50, 50]
+            ],
+            "radius": 50,
+            "roomName": "Secret Lair",
+            "roomType": "Downstairs",
+            "rotation": 0,
+            "sqf": 500
+        }, {
+            "affectedBy": ["Food", "Downstairs", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 100],
+            "discount": 0,
+            "doors": [
+                [-5, 0],
+                [0, 5],
+                [0, -5]
+            ],
+            "effectPts": -2,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 6,
+            "points": [
+                [50, 50]
+            ],
+            "radius": 50,
+            "roomName": "Forum",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 500
+        }, {
+            "affectedBy": ["Corridor", "Utility", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [100, 100],
+            "discount": 0,
+            "doors": [
+                [-5, 0],
+                [5, 0],
+                [0, 5]
+            ],
+            "effectPts": -2,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 6,
+            "points": [
+                [50, 50]
+            ],
+            "radius": 50,
+            "roomName": "Theater",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 500
+        }],
+        "600": [{
+            "affectedBy": ["Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 80],
+            "discount": 0,
+            "doors": [
+                [4, 4],
+                [7, -1],
+                [4, -4],
+                [-7, 1]
+            ],
+            "effectPts": 4,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [20, 0],
+                [120, 0],
+                [140, 20],
+                [140, 60],
+                [120, 80],
+                [20, 80],
+                [0, 60],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Throne room",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 600
+        }, {
+            "affectedBy": ["Food"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 80],
+            "discount": 0,
+            "doors": [
+                [0, 4],
+                [7, -1],
+                [0, -4],
+                [-7, 1]
+            ],
+            "effectPts": 4,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 1,
+            "points": [
+                [20, 0],
+                [120, 0],
+                [140, 20],
+                [140, 60],
+                [120, 80],
+                [20, 80],
+                [0, 60],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Vestibule",
+            "roomType": "Living",
+            "rotation": 0,
+            "sqf": 600
+        }, {
+            "affectedBy": ["Food", "Downstairs", "Utility", "Corridor", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 80],
+            "discount": 0,
+            "doors": [
+                [-2, 4],
+                [7, 1],
+                [7, -1]
+            ],
+            "effectPts": -2,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 7,
+            "points": [
+                [20, 0],
+                [120, 0],
+                [140, 20],
+                [140, 60],
+                [120, 80],
+                [20, 80],
+                [0, 60],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Audience Room",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 600
+        }, {
+            "affectedBy": ["Food", "Downstairs", "Utility", "Corridor", "Living", "Sleep"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 80],
+            "discount": 0,
+            "doors": [
+                [-2, -4],
+                [0, -4],
+                [2, -4]
+            ],
+            "effectPts": -2,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 7,
+            "points": [
+                [20, 0],
+                [120, 0],
+                [140, 20],
+                [140, 60],
+                [120, 80],
+                [20, 80],
+                [0, 60],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Singers' Chamber",
+            "roomType": "Activity",
+            "rotation": 0,
+            "sqf": 600
+        }, {
+            "affectedBy": ["Activity"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 80],
+            "discount": 0,
+            "doors": [
+                [-7, -1],
+                [-7, 1],
+                [7, -1],
+                [7, 1]
+            ],
+            "effectPts": 1,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "points": [
+                [20, 0],
+                [120, 0],
+                [140, 20],
+                [140, 60],
+                [120, 80],
+                [20, 80],
+                [0, 60],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Stables",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 600
+        }, {
+            "affectedBy": ["Outdoor"],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [140, 80],
+            "discount": 0,
+            "doors": [
+                [-7, 1],
+                [7, 1],
+                [-4, -4],
+                [4, -4]
+            ],
+            "effectPts": 1,
+            "externalDoors": 4,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 5,
+            "points": [
+                [20, 0],
+                [120, 0],
+                [140, 20],
+                [140, 60],
+                [120, 80],
+                [20, 80],
+                [0, 60],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Terrace Gardens",
+            "roomType": "Outdoor",
+            "rotation": 0,
+            "sqf": 600
+        }],
+        "Hallway": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [20, 120],
+            "discount": 0,
+            "doors": [
+                [-1, 1],
+                [-3, 1],
+                [-5, 1],
+                [-1, -1],
+                [-3, -1],
+                [-5, -1],
+                [1, 1],
+                [3, 1],
+                [5, 1],
+                [1, -1],
+                [3, -1],
+                [5, -1]
+            ],
+            "effectPts": 0,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 0,
+            "points": [
+                [0, 0],
+                [120, 0],
+                [120, 20],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Hallway",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 150
+        }],
+        "Stairs": [{
+            "affectedBy": [],
+            "boardPosition": [0, 0],
+            "completed": false,
+            "containerDim": [20, 60],
+            "discount": 0,
+            "doors": [
+                [-3, 0],
+                [3, 0]
+            ],
+            "effectPts": 0,
+            "externalDoors": 3,
+            "fence": null,
+            "final": false,
+            "imagePath": "",
+            "placementPts": 0,
+            "points ": [
+                [0, 0],
+                [60, 0],
+                [60, 20],
+                [0, 20]
+            ],
+            "radius": null,
+            "roomName": "Stairs",
+            "roomType": "Corridor",
+            "rotation": 0,
+            "sqf": 75
+        }]
+    },
+    "turnCount": 0
+}
