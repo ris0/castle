@@ -170,13 +170,13 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     // .classed("overlapping", "overlapping" === checkOverlaps(d));
 
 
-                    d3.select(this).select(".shadow")
-                        .classed("normal", function(d) {
-                            return "normal" === checkOverlaps(d);
-                        })
-                        .classed("overlapping", function(d) {
-                            return "overlapping" === checkOverlaps(d);
-                        });
+                //     d3.select(this).select(".shadow")
+                //         .classed("normal", function(d) {
+                //             return "normal" === checkOverlaps(d);
+                //         })
+                //         .classed("overlapping", function(d) {
+                //             return "overlapping" === checkOverlaps(d);
+                //         });
                 }
 
                 // -------------------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                 }
 
                 function dragged(d, x) {
-                    var overlapStatus = checkOverlaps(d);
+                    // var overlapStatus = checkOverlaps(d);
                     if (d.final !== true) {
                         d.boardPosition[0] += d3.event.dx;
                         d.boardPosition[1] += d3.event.dy;
@@ -240,9 +240,9 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                             d.doors[j][0] += d3.event.dx;
                             d.doors[j][1] += d3.event.dy;
                         }
-                        d3.select(this).select(".shadow")
-                            .classed("normal", "normal" === overlapStatus)
-                            .classed("overlapping", "overlapping" === overlapStatus);
+                        // d3.select(this).select(".shadow")
+                        //     .classed("normal", "normal" === overlapStatus)
+                        //     .classed("overlapping", "overlapping" === overlapStatus);
                     }
                 }
 
