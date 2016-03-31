@@ -59,7 +59,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
           gameStateFactory.drawToMarket(scope.data);
         };
 
-        if (scope.data.turnCount === 0 && scope.data.market[1000].room === "empty") scope.drawToMarket();
+        if (scope.data.turnCount === 0 && scope.data.market[2000].room === "empty") scope.drawToMarket();
 
         var firstChoice = null;
 
