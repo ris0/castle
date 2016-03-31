@@ -81,6 +81,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
     function shuffleDecks (game, playersQueue){
         var numberPlayers = Object.keys(playersQueue).length;
         var numRoomCards, numFavors, numTileMult;
+        console.log('this many players', numberPlayers);
 
         if(numberPlayers > 1){
             numRoomCards = numberPlayers * 11;

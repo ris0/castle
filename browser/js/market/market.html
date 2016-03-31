@@ -9,7 +9,7 @@
             </li>
             <li class = "market-room" 
                 ng-repeat="(price,room) in data.market" 
-                ng-model="room" 
+                ng-model="room.room" 
                 data-drop="true" 
                 data-jqyoui-options 
                 jqyoui-droppable
@@ -29,8 +29,8 @@
                 <div
                     data-drag="data.masterBuilder === userIndex" 
                     data-jqyoui-options="{revert: 'invalid'}"
-                    jqyoui-draggable="{animate:true}"
-                    ng-model="room" 
+                    jqyoui-draggable="{animate:true, placeholder:true}"
+                    ng-model="room.room" 
                     >
                     <img src = "{{room.room.imagePath}}" 
                         class = "img-responsive room-img" 
