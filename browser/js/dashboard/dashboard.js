@@ -16,13 +16,13 @@ app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $
     syncObject.$bindTo($scope, "data").then(function() {
 
         $scope.singlePlayer = function(){
-            DashboardFactory.singlePlayerGame($scope.data, $scope.user)
+            DashboardFactory.singlePlayerGame($scope.data, $scope.user);
         };
         $scope.findRandomGame = function(){
             $scope.isLoading = true;
             console.log('5 seconds');
             DashboardFactory.findRandomGame($scope.data, $scope.user);
-        }
+        };
 
     });
 });
