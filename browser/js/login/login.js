@@ -20,6 +20,7 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
 
   $scope.login = function() {
+    console.log('login clicked')
     $scope.message = null;
     $scope.error = null;
 
@@ -38,6 +39,7 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
 
   $scope.signup = function() {
+      console.log('sign up clicked')
     $scope.message = null;
     $scope.error = null;
 
@@ -46,7 +48,13 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
         password: $scope.signup.password
     })
     .then(function(user) {
-        console.log('Signing up as, ', user);
+        console.log(user);
+        $scope.auth.$authWithPassword({
+            email: user.email,
+            password: user.password
+        })
+    })
+    .then(function() {
         $state.go('dashboard');
     })
     .catch(function(error) {

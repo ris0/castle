@@ -1,68 +1,3 @@
-app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameStateFactory, marketFactory) {
-
-  return {
-    restrict: 'E',
-    scope: {},
-    templateUrl: 'js/market/market.html',
-    link: function(scope) {
-      var userID = gameFactory.auth().$getAuth().uid;
-      var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-      userGame.$loaded().then(function(data) {
-        return data.$value;
-      }).then(function(game) {
-        return $firebaseObject(gameFactory.ref().child('games').child(game));
-      }).then(function(syncObject) {
-        return syncObject.$bindTo(scope, 'data');
-      }).then(function(game) {
-        scope.userIndex = gameStateFactory.getUserIndex(scope.data);
-
-        scope.buy = function() {
-          scope.buyError=marketFactory.buy(scope.data);
-        };
-
-        scope.try = function(room, price) {
-          room.trying = true;
-          room.room.price = price;
-          marketFactory.try(scope.data, room.room);
-        };
-
-        scope.untry = function(room) {
-          room.trying = false;
-          marketFactory.untry(scope.data, room.room);
-        };
-
-        scope.pass = function() {
-          marketFactory.pass(scope.data);
-        };
-
-        scope.done = function() {
-          gameStateFactory.done(scope.data);
-        };
-
-        scope.drawToMarket = function() {
-          gameStateFactory.drawToMarket(scope.data);
-        };
-
-        if (scope.data.turnCount === 0 && scope.data.market[1000].room === "empty") scope.drawToMarket();
-
-        var firstChoice = null;
-
-        scope.swapTwo = function(price) {
-          if(!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex){
-            if (firstChoice) {
-              marketFactory.swapMarket(firstChoice, price);
-              firstChoice = null;
-            } else {
-              firstChoice = price;
-            }
-          }
-        };
-
-      });
-    }
-  };
-});
-
 
 //add scoring factory
 app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scoringFactory, completionFactory) {
@@ -87,34 +22,32 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   };
 
   market.buy = function(game) {
-
     if (getCurrentPlayer(game).canBuy) {
-
       var newRooms = getCurrentPlayer(game).castle.reduce(function(collection, castleRoom) {
         if (!castleRoom.final) collection.push(castleRoom);
         return collection;
       }, []);
 
       if (newRooms.length === 0) {
-        console.log('passing');
         market.pass(game);
+        return "Passing, +$5000";
       }
       else if (newRooms.length === 1) {
         var newRoom = newRooms[0];
-        console.log('buying one room', newRoom);
         var truePrice = +newRoom.price - (+newRoom.discount);
-
+        if(getCurrentPlayer(game).cashMoney < truePrice) return "Not enough $$$";
         scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
+
         cashFlow(game, newRoom.price, truePrice);
         roomToPlayer(game, newRoom, newRoom.price);
         bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
         getCurrentPlayer(game).canBuy = false;
         completionFactory.assessCompletion(game);
+        return "Buying the " + newRoom.roomName;
       } else {
-        console.log('too many');
         return "You can't add more than one room!";
       }
-    } else console.log("It's not your turn");
+    } else return "It's not your turn";
   };
 
   market.pass = function(game) {
@@ -122,7 +55,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
       getCurrentPlayer(game).canBuy = false;
       getCurrentPlayer(game).cashMoney += 5000;
       gameStateFactory.done(game);
-    } else console.log("It's not your turn");
+    }
   };
 
   function getMasterBuilder(game) {
@@ -137,8 +70,11 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   //transfer cash from currentplayer to masterbuilder or 'bank'
   function cashFlow(game, price, truePrice) {
     getCurrentPlayer(game).cashMoney -= truePrice;
-    if (game.currentPlayer !== game.masterBuilder) {
+    if(game.players.length === 1) return;
+    else {
+      if (game.currentPlayer !== game.masterBuilder) {
       getMasterBuilder(game).cashMoney += +price;
+      }
     }
   }
 
@@ -154,4 +90,3 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
 
   return market;
 });
-

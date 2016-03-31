@@ -20,8 +20,8 @@ app.factory('scoringFactory', function() {
 
   scoring.scoreRoom = function(game, player, room, adjArray) { //adjacent rooms, connectedRooms
     var conArray = findConnectedRooms(player, room);
-    player.publicScore.roomPts += room.placementPts;
-    room.scoredPoints = room.placementPts;
+    player.publicScore.roomPts += room.placementPts || 0;
+    room.scoredPoints = room.placementPts || 0;
 
     //checking synergy points of current room to connected rooms and vice versa
     conArray.forEach(function(conRoom) {
@@ -76,7 +76,7 @@ app.factory('scoringFactory', function() {
       else player.globalEffects.push({ roomType: room.affectedBy[0], effectPts: room.effectPts });
       player.castle.forEach(function(castleRoom) {
         room.affectedBy.forEach(function(type) {
-          if (type === castleRoom.roomType) {
+          if (castleRoom.final && type === castleRoom.roomType) {
             player.publicScore.roomPts += +room.effectPts;
             castleRoom.scoredPoints += +room.effectPts;
           }
@@ -94,7 +94,7 @@ app.factory('scoringFactory', function() {
       	//for each door on the room
         room.doors.forEach(function(roomDoor) {
         	//see if castle door and room door is a match
-          if (Math.floor(castleDoor[0]) === Math.floor(roomDoor[0]) && Math.floor(castleDoor[1]) === Math.floor(roomDoor[1])) {
+          if (castleRoom.final && Math.floor(castleDoor[0]) === Math.floor(roomDoor[0]) && Math.floor(castleDoor[1]) === Math.floor(roomDoor[1])) {
           	//decrements open doors in castleroom and placed room
           	connectDoorAndCheckCompletion(player, castleDoor);
           	connectDoorAndCheckCompletion(player, roomDoor);
@@ -113,8 +113,8 @@ app.factory('scoringFactory', function() {
     else if(room.externalDoors === 1) {
     	room.externalDoors--;
         room.completed = true;
-        if (!player.completionBonus) player.completionBonus = [room.roomType];
-        else player.completionBonus.push(room.roomType);
+        if (!player.completionBonus) player.completionBonus = [room];
+        else player.completionBonus.push(room);
     }
   }
 

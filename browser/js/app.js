@@ -50,10 +50,18 @@ window.app = angular
                 }
             })
             .state('lobby', {
-                url: '/lobby',
+                url: '/lobby/:lobbyId',
                 parent: 'overview',
                 templateUrl: 'views/dashboard/lobby.html',
-                controller: 'lobbyCtrl'
+                controller: 'lobbyCtrl',
+                resolve: {
+                    gamesRef: function(gameFactory){
+                        return gameFactory.ref().child('games');
+                    },
+                    lobbyRef: function($firebaseObject, gameFactory, $stateParams){
+                        return $firebaseObject(gameFactory.ref().child('lobbies').child($stateParams.lobbyId));
+                    }
+                }
             })
             .state('gridtesting', {
                 url: '/gridtesting',

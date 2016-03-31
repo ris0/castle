@@ -17,9 +17,8 @@ app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $
 
         $scope.findRandomGame = function(){
             $scope.isLoading = true;
-            $timeout(function() {
-                DashboardFactory.findRandomGame($scope.data, $scope.user);
-            }, 1000)
+            console.log('5 seconds');
+            DashboardFactory.findRandomGame($scope.data, $scope.user);
         }
 
     });

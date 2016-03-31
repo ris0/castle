@@ -38,9 +38,12 @@ app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, player
 
   $scope.completions = game.players[game.currentPlayer].completionBonus;
 
-  $scope.assessCompletion = function(type, game) {
+  $scope.assessCompletion = function(room, game) {
+    var type = room.roomType;
     if (type === "Sleep") $scope.showSleep = true;
-    else if(type === "Downstairs") $scope.showDownstairs = true;
+    else if(type === "Downstairs") {
+      $scope.showDownstairs = room;
+    }
     else {
       completionFactory[type](game);
       var ind = $scope.game.players[playerIndex].completionBonus.indexOf(type);
@@ -56,7 +59,9 @@ app.controller('CompletionModalCtrl', function($scope, $uibModalInstance, player
   };
 
   $scope.downstairsBonus = function(){
-    
+    $scope.showDownstairs.roomType = $scope.downstairsType;
+    completionFactory.Downstairs($scope.showDownstairs);
+    $scope.showDownstairs = null;
   };
 
   var counter = 0;
