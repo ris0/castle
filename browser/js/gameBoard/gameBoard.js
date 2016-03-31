@@ -1,9 +1,9 @@
-app.controller('GridTestingCtrl', function($scope) {});
+app.controller('GameBoardCtrl', function($scope) {});
 
-app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFactory) {
+app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFactory) {
     return {
         restrict: "EA",
-        template: "<div id='gameboard'></div>",
+        template: "<div id='gameBoard'></div>",
         link: function(scope, el, attr) {
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
@@ -48,7 +48,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
 
                 // creating the underlying grid
 
-                var svg = d3.select("#gameboard")
+                var svg = d3.select("#gameBoard")
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
