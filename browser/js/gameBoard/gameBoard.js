@@ -187,7 +187,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
 
                 // functions
 
-                function rotate(d) {
+                function rotate(d, x) {
                     var temp;
                     d3.event.stopPropagation();
                     if (d.final !== true) {
@@ -195,7 +195,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                             .transition()
                             // .ease("elastic")
                             .duration(500)
-                            .attr("transform", function(d, x) {
+                            .attr("transform", function(d) {
                                 d.rotation = d.rotation + 90;
                                 var snapX = Math.round(d.boardPosition[0] / 10) * 10;
                                 var snapY = Math.round(d.boardPosition[1] / 10) * 10;
