@@ -26,13 +26,14 @@
     <div class="input-group">
         <input type="text" class="form-control" ng-model="obj.msg" placeholder="Type a message...">
     <span class="input-group-btn">
-      <button class="btn btn-default" type="submit">Send</button>
+        <button class="btn btn-default" type="submit">Send</button>
     </span>
+        <button class="btn btn-default" type="submit" ng-show="isHost()" ng-click="startGame()">Start</button>
     </div>
 </form>
 
 
-<button class="btn btn-default" type="submit" ng-show="isHost()" ng-click="startGame()">Start</button>
+
 
 
 </div>

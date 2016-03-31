@@ -11,30 +11,24 @@ app.factory('LobbyFactory', function() {
 
 app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray,gamesRef, lobbyRef) {
 
-    var lobbyId = LobbyFactory.ref, playerId = userId;
-    console.log($stateParams);
+    var lobbyId = LobbyFactory.ref,
+        playerId = userId;
 
     const game = syncObject;
-
     const playerRef = $firebaseObject(gameFactory.ref().child('users').child(playerId));
 
     $scope.obj = {};
 
     lobbyRef.$bindTo($scope, "data").then(function() {
-        console.log($scope.data);
         var playerName;
 
         playerRef.$loaded().then(function(obj) {
-            console.log(userId);
-            console.log(obj)
             var indexSlice = obj.email.indexOf('@');
             playerName = obj.email.slice(0,indexSlice);
         });
 
         $scope.isHost = function () {
-            console.log('scope.data loaded', $scope.data.players[0]);
-            console.log('firebaseObject loaded',playerRef.$id);
-            return $scope.data.players[0] === playerRef.$id;
+            return $scope.data.players[0].userID === playerRef.$id;
         };
 
         $scope.sendMessage = function () {
@@ -50,32 +44,38 @@ app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFac
         $scope.startGame = function () {
 
             var baseState = _.clone(game.baseState),
-                newGame = gamesRef.push(baseState),
-                gameId = newGame.key(),
-                fireNewGame = $firebaseObject(newGame),
-                lobbyLength, fireUsers;
+                newGame, gameId, fireNewGame, lobbyLength, fireUsers;
 
-            // find the amount of players in lobby, then load up the newGame object
-            // then reassign the userID and userName to the correct information as found in the lobby
-            // Can I refactor this to resolve the async nature of loading the $firebaseObject?
             lobbyRef.$loaded()
-                .then(function(lobbyData){ // determine the length
-                    return lobbyLength = lobbyData.players.length;
+                .then(function(lobbyData){
+                    lobbyLength = lobbyData.players.length;
+
                 })
-                .then(function() { // avoid async issues
-                    console.log('fireNewGameloaded', fireNewGame);
+                .then(function() {
+                    for (var i = 0; i < lobbyLength; i++) {
+                        baseState.players[i].userID = lobbyRef.players[i].userID;
+                        baseState.players[i].userName = lobbyRef.players[i].userName;
+                        baseState.messages = lobbyRef.messages;
+                    }
+                    gamesRef.push(baseState);
+                    newGame = gamesRef.push(baseState);
+                    gameId = newGame.key();
+                    fireNewGame = $firebaseObject(newGame);
+                    lobbyRef.$remove();
                     return fireNewGame.$loaded()
                 })
-                .then(function(){ // assign firenewgame properties
-                    console.log('firenewgame.players', fireNewGame.players[0]);
-                   for (var i = 0; i < lobbyLength; i++) {
-                       fireNewGame.players[i].userID = lobbyRef.players[i].userID;
-                       fireNewGame.players[i].userName = lobbyRef.players[i].userName;
-                   }
-                })
-                .then(function(){ // load users ref
+                .then(function(){
+
+                    for (var j = 0; j < lobbyLength; j++) {
+                        console.log(fireNewGame.players[j]);
+                        //if (!fireNewGame.players[j].userID) {
+                        //    console.log('The following player has been removed',fireNewGame.players[j]);
+                        //    fireNewGame.players[j].$remove()
+                        //}
+                    }
+
+
                     fireUsers = $firebaseObject(usersRef);
-                    console.log('fireUsers exists', fireUsers);
                     return fireUsers.$loaded()
                 })
                 .then(function(users) {
@@ -84,10 +84,10 @@ app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFac
                     console.log('gameId exists', gameId);
                     // if not let's iterate through these object keys and assign the gameID to it
                     // how does this object look again? array like object?
-                    for (var j = 0; j < users.length; j++) {
-                        console.log('reaching the end of the barrel');
-                        users[j].gameID = gameId
-                    }
+                    //for (var j = 0; j < users.length; j++) {
+                    //    console.log('reaching the end of the barrel');
+                    //    users[j].gameID = gameId
+                    //}
                 });
 
         }

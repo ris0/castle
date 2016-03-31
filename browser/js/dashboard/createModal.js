@@ -26,13 +26,9 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
 
         var playerName;
 
-        console.log(playerRef);
-        console.log(userId);
-        console.log('hit');
 
         playerRef.$loaded()
             .then(function (obj) {
-
                 var indexSlice = obj.email.indexOf('@');
                 playerName = obj.email.slice(0, indexSlice);
             })
