@@ -74,21 +74,34 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
     //shuffles decks and removes card based on # players
     function shuffleDecks (game, playersQueue){
         var numberPlayers = Object.keys(playersQueue).length;
-        var numRoomCards = numberPlayers * 11;
-        var numFavors = Math.max(numberPlayers, 3);
-        var numTileMult = (numberPlayers - 4);
+        var numRoomCards, numFavors, numTileMult;
 
-        game.roomCards = _.shuffle(game.roomCards).slice(0, numRoomCards);
-        game.bonusCards = _.shuffle(game.bonusCards);
-        game.kingsFavors = _.shuffle(game.kingsFavors).slice(0, numFavors);
-
-        //removing from piles depending on #players
-        for (var roomSize in game.roomTiles) {
-            var toRemove = game.roomTiles[roomSize].length;
-            //removing 0, 1, or 2 from large rooms piles, 0, 2, or 4 from small room piles
-            if (roomSize.length < 4 && numTileMult < 0) toRemove = (+roomSize > 350) ? 1 * numTileMult : 2 * numTileMult;
-            game.roomTiles[roomSize] = _.shuffle(game.roomTiles[roomSize]).slice(0, toRemove);
+        if(numberPlayers > 1){
+            numRoomCards = numberPlayers * 11;
+            numFavors = Math.max(numberPlayers, 3);
+            numTileMult = (numberPlayers - 4);
+            game.kingsFavors = _.shuffle(game.kingsFavors).slice(0, numFavors);
+        } else {
+            numRoomCards = 33;
+            numTileMult = -1;
+            game.kingsFavors = null;
+            game.market = {
+                2000: {room:'empty'},
+                4000: {room:'empty'},
+                6000: {room:'empty'}
+            };
         }
+
+            game.roomCards = _.shuffle(game.roomCards).slice(0, numRoomCards);
+            game.bonusCards = _.shuffle(game.bonusCards);
+
+            //removing from piles depending on #players
+            for (var roomSize in game.roomTiles) {
+                var toRemove = game.roomTiles[roomSize].length;
+                //removing 0, 1, or 2 from large rooms piles, 0, 2, or 4 from small room piles
+                if (roomSize.length < 4 && numTileMult < 0) toRemove = (+roomSize > 350) ? 1 * numTileMult : 2 * numTileMult;
+                game.roomTiles[roomSize] = _.shuffle(game.roomTiles[roomSize]).slice(0, toRemove);
+            }
     }
     return dashboard;
 });
