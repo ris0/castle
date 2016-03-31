@@ -8,9 +8,9 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   	var userObj;
   	game.players.forEach(function(player){
   		if(user === player.userID) userObj = player;
-  	})
+  	});
   	return userObj;
-  }
+  };
 
   gameState.getUserIndex = function(game) {
     console.log('players', game.players);
@@ -18,31 +18,38 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   };
 
   gameState.done = function(game) {
-    var numberPlayers;
-    numberPlayers = game.players.length;
+    var numberPlayers = game.players.length;
     game.turnCount++;
-    game.currentPlayer = (game.turnCount) % numberPlayers;
 
-    //master builder buying turn
-    if (game.turnCount % (numberPlayers + 1) !== 0) {
-      getCurrentPlayer(game).canBuy = true;
-    }
+    if(numberPlayers > 1){
+      game.currentPlayer = (game.turnCount) % numberPlayers;
 
-    //master builder gameState turn
-    if (game.turnCount % (numberPlayers + 1) === 0) {
-      if (game.lastTurn && !game.roomCards) endGame(game);
-      else {
-        game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
-        gameState.drawToMarket(game);
+      //master builder buying turn
+      if (game.turnCount % (numberPlayers + 1) !== 0) {
+        getCurrentPlayer(game).canBuy = true;
       }
+
+      //master builder gameState turn
+      if (game.turnCount % (numberPlayers + 1) === 0) {
+        if (!game.roomCards) endGame(game);
+        else {
+          game.masterBuilder = (game.masterBuilder + 1) % numberPlayers;
+          gameState.drawToMarket(game);
+        }
+      }
+      console.log(game.turnCount);
+      kingsFavorsFactory.getRankings(game);
+    } else {
+      if(!game.roomCards) endGame(game);
+      gameState.drawToMarket(game);
+      game.players[0].canBuy = true;
     }
-    console.log(game.turnCount);
-    kingsFavorsFactory.getRankings(game);
   };
 
   gameState.drawToMarket = function(game) {
     for (var price in game.market) {
       var currentPrice = game.market[price];
+      if(game.players.length === 1) currentPrice.room = 'empty';
       if (currentPrice.room !== 'empty') currentPrice.room.discount += 1000;
       while (currentPrice.room === 'empty') {
         var nextCard;
@@ -75,7 +82,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   }
 
   function endGame(game) {
-    console.log("the game is over");
+    $.jGrowl('the game is over!');
     //final scoring
     //determine winner
   }

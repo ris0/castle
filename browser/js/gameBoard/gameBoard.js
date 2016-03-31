@@ -1,9 +1,12 @@
-app.controller('GridTestingCtrl', function($scope) {});
+app.controller('GameBoardCtrl', function($scope) {});
 
-app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFactory) {
+app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFactory) {
     return {
         restrict: "EA",
-        template: "<div id='gameboard'></div>",
+        scope: {
+            gameId: "="
+        },
+        template: "<div id='gameBoard'></div>",
         link: function(scope, el, attr) {
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
@@ -11,15 +14,11 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
 
             var userID = gameFactory.auth().$getAuth().uid;
 
-            var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+            var userGame = $firebaseObject(gameFactory.ref().child('games').child(scope.gameId));
 
-            userGame.$loaded().then(function(data) {
-                return data.$value;
-            }).then(function(game) {
-                console.log(game);
-                agame = game;
-                return $firebaseObject(gameFactory.ref().child('games').child(game));
-            }).then(function(syncObject) {
+            userGame.$loaded()
+            .then(function(syncObject) {
+                agame = syncObject.$id;
                 return syncObject.$bindTo(scope, 'game');
             }).then(function() {
 
@@ -48,7 +47,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
 
                 // creating the underlying grid
 
-                var svg = d3.select("#gameboard")
+                var svg = d3.select("#gameBoard")
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
@@ -170,13 +169,13 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                     // .classed("overlapping", "overlapping" === checkOverlaps(d));
 
 
-                    d3.select(this).select(".shadow")
-                        .classed("normal", function(d) {
-                            return "normal" === checkOverlaps(d);
-                        })
-                        .classed("overlapping", function(d) {
-                            return "overlapping" === checkOverlaps(d);
-                        });
+                //     d3.select(this).select(".shadow")
+                //         .classed("normal", function(d) {
+                //             return "normal" === checkOverlaps(d);
+                //         })
+                //         .classed("overlapping", function(d) {
+                //             return "overlapping" === checkOverlaps(d);
+                //         });
                 }
 
                 // -------------------------------------------------------------------------------------------
@@ -224,7 +223,7 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                 }
 
                 function dragged(d, x) {
-                    var overlapStatus = checkOverlaps(d);
+                    // var overlapStatus = checkOverlaps(d);
                     if (d.final !== true) {
                         d.boardPosition[0] += d3.event.dx;
                         d.boardPosition[1] += d3.event.dy;
@@ -240,9 +239,9 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                             d.doors[j][0] += d3.event.dx;
                             d.doors[j][1] += d3.event.dy;
                         }
-                        d3.select(this).select(".shadow")
-                            .classed("normal", "normal" === overlapStatus)
-                            .classed("overlapping", "overlapping" === overlapStatus);
+                        // d3.select(this).select(".shadow")
+                        //     .classed("normal", "normal" === overlapStatus)
+                        //     .classed("overlapping", "overlapping" === overlapStatus);
                     }
                 }
 

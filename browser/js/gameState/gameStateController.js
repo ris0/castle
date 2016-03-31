@@ -1,4 +1,4 @@
-app.controller('gameStats', function(marketFactory, kingsFavorsFactory, syncObject, $scope, $firebaseObject, gameFactory, gameStateFactory, BonusModalFactory, userId) {
+app.controller('gameStats', function($stateParams, marketFactory, kingsFavorsFactory, syncObject, $scope, $firebaseObject, gameFactory, gameStateFactory, BonusModalFactory, userId) {
   var numberPlayers;
   var currentPlayer;
   var masterBuilder;
@@ -6,6 +6,7 @@ app.controller('gameStats', function(marketFactory, kingsFavorsFactory, syncObje
   $scope.noWrapSlides = false;
   $scope.active = 0;
   $scope.userId = userId;
+  $scope.gameId = $stateParams.gameId;
 
   syncObject.$bindTo($scope, "data")
     .then(function() {
@@ -18,9 +19,10 @@ app.controller('gameStats', function(marketFactory, kingsFavorsFactory, syncObje
       if($scope.data.turnCount === 0 && !$scope.data.players[index].bonusCards) {
       	var bonusCards = [];
       	for(var i = 0; i < 3; i++){
+          console.log($scope.data);
       		bonusCards.push($scope.data.bonusCards.pop());
       	}
-      	BonusModalFactory.open(bonusCards, index);
+      	BonusModalFactory.open(bonusCards, index, $scope.gameId);
       }
     });
 });

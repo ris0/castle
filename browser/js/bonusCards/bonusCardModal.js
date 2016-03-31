@@ -1,7 +1,7 @@
 app.factory('BonusModalFactory', function($uibModal) {
   var bonusModal = {};
 
-  bonusModal.open = function(bonuses, player) {
+  bonusModal.open = function(bonuses, player, gameId) {
 
     var modalInstance = $uibModal.open({
       animation: true,
@@ -16,14 +16,9 @@ app.factory('BonusModalFactory', function($uibModal) {
           return player;
         },
         players: function(gameFactory, $firebaseObject) {
-          var userID = gameFactory.auth().$getAuth().uid;
-          var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-          return userGame.$loaded().then(function(data){
-            return data.$value;
-          }).then(function(game){
-            return $firebaseObject(gameFactory.ref().child('games').child(game).child('players'));
-          }).then(function(syncObject){
-            return syncObject;
+          var gamePlayers = $firebaseObject(gameFactory.ref().child('games').child(gameId).child('players'));
+          return gamePlayers.$loaded().then(function(players){
+            return players;
           });
         }
       }
