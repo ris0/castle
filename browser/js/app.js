@@ -5,7 +5,8 @@ window.app = angular
         'ui.bootstrap',
         'ngAnimate',
         'firebase',
-        'snap'
+        'snap',
+        'ngDragDrop'
     ])
     .constant('_', window._)
   // use in views, ng-repeat="x in _.range(3)"

@@ -263,7 +263,6 @@ app.directive('gridtesting', function($firebaseObject, gameFactory, gameStateFac
                             d.doors[j][1] = Math.round(d.doors[j][1] / 10) * 10;
                         }
                         scope.game.players[currentUserIndex].castle[x].boardPosition = d.boardPosition;
-                        console.log(scope.game.players[currentUserIndex].castle[x].boardPosition);
                     }
                 }
 

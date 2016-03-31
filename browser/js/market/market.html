@@ -7,12 +7,36 @@
                 <button class = "btn btn-block btn-sm" ng-disabled="data.masterBuilder !== userIndex || data.players[userIndex].canBuy || data.currentPlayer !== userIndex" ng-click="done()">MB done</button>
                 </center>
             </li>
-            <li class = "market-room" ng-repeat="(price,room) in data.market" draggable = "true">
-                <center><span class="price">${{price}}</span><span class = "discount" ng-if="room.room.discount"> -${{room.room.discount}}</span>
-                <span ng-show="data.players[userIndex].canBuy"><a ng-show="!room.trying" ng-click="try(room, price)">+ </a><a ng-show="room.trying" ng-click="untry(room)">-</a></span>
-                <a class = "price" ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="swap(price)">
-                <img src = "{{room.room.imagePath}}" class = "img-responsive" id="market-img" ng-click="swapTwo(room)"></a>
+            <li class = "market-room" 
+                ng-repeat="(price,room) in data.market" 
+                ng-model="room" 
+                data-drop="true" 
+                data-jqyoui-options 
+                jqyoui-droppable
+                >
+                <center>
+                <span class="price">${{price}}</span>
+                <span class = "discount" ng-if="room.room.discount"> -${{room.room.discount}}</span>
+                <span 
+                    ng-show="data.players[userIndex].canBuy">
+                    <a  ng-show="!room.trying" 
+                        ng-click="try(room, price)">+ </a>
+                    <a  ng-show="room.trying" 
+                        ng-click="untry(room)">-</a>
+                </span>
                 </center>
+<!--                 <a class = "price" ng-disabled="!data.players[userIndex].canBuy || data.players[userIndex].cashMoney < price-room.room.discount || room.room === 'empty'" ng-click="swap(price)"> -->
+                <div
+                    data-drag="data.masterBuilder === userIndex" 
+                    data-jqyoui-options="{revert: 'invalid'}"
+                    jqyoui-draggable="{animate:true}"
+                    ng-model="room" 
+                    >
+                    <img src = "{{room.room.imagePath}}" 
+                        class = "img-responsive room-img" 
+                        id="market-img">
+                </div>
+                    <!-- </a> -->
             </li>
             <li class = "market-room">
                 <center>

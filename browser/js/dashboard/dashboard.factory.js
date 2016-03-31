@@ -55,6 +55,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
 
     dashboard.findRandomGame = function(game, user) {
         if (game.playersQueue) {
+            console.log('im the second!');
             for (var key in game.playersQueue) {
                 if (game.playersQueue[key] === user.$id) return;
             }
