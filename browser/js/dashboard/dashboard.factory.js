@@ -61,6 +61,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
 
     dashboard.findRandomGame = function(game, user) {
         if (game.playersQueue) {
+            console.log('im the second!');
             for (var key in game.playersQueue) {
                 if (game.playersQueue[key] === user.$id) return;
             }
@@ -94,6 +95,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
     function shuffleDecks (game, playersQueue){
         var numberPlayers = Object.keys(playersQueue).length;
         var numRoomCards, numFavors, numTileMult;
+        console.log('this many players', numberPlayers);
 
         if(numberPlayers > 1){
             numRoomCards = numberPlayers * 11;

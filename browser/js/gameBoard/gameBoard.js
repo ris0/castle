@@ -26,6 +26,8 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                 var castle = scope.game.players[currentUserIndex].castle;
 
                 var castleRef = gameFactory.ref().child('games').child(agame).child('players').child(currentUserIndex).child('castle');
+                console.log("casteref", castleRef.child(0));
+                console.log("currentuserindex", currentUserIndex);
 
                 // -------------------------------------------------------------------------------------------
                 // -------------------------------------------------------------------------------------------
@@ -130,6 +132,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                             return d.containerDim[0];
                         });
 
+
                     var polyRooms = roomTiles.append("polygon")
                         .filter(function(d) {
                             return !d.radius;
@@ -169,13 +172,13 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                     // .classed("overlapping", "overlapping" === checkOverlaps(d));
 
 
-                //     d3.select(this).select(".shadow")
-                //         .classed("normal", function(d) {
-                //             return "normal" === checkOverlaps(d);
-                //         })
-                //         .classed("overlapping", function(d) {
-                //             return "overlapping" === checkOverlaps(d);
-                //         });
+                    //     d3.select(this).select(".shadow")
+                    //         .classed("normal", function(d) {
+                    //             return "normal" === checkOverlaps(d);
+                    //         })
+                    //         .classed("overlapping", function(d) {
+                    //             return "overlapping" === checkOverlaps(d);
+                    //         });
                 }
 
                 // -------------------------------------------------------------------------------------------
@@ -186,7 +189,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
 
                 // functions
 
-                function rotate(d) {
+                function rotate(d, x) {
                     var temp;
                     d3.event.stopPropagation();
                     if (d.final !== true) {
@@ -194,24 +197,24 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                             .transition()
                             // .ease("elastic")
                             .duration(500)
-                            .attr("transform", function(d, x) {
+                            .attr("transform", function(d) {
                                 d.rotation = d.rotation + 90;
                                 var snapX = Math.round(d.boardPosition[0] / 10) * 10;
                                 var snapY = Math.round(d.boardPosition[1] / 10) * 10;
                                 return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")";
-                            });
-                        for (var i = 0; i < d.points.length; i++) {
-                            temp = d.points[i][0] - (d.containerDim[0] / 2) + (d.containerDim[1] / 2);
-                            d.points[i][0] = -d.points[i][1] + (d.containerDim[0] / 2) + (d.containerDim[1] / 2);
-                            d.points[i][1] = temp;
-                        }
+                            }).each("end", function() { castleRef.child(x).update({ "rotation": d.rotation, "points": d.points, "doors": d.doors }); });
+                        // for (var i = 0; i < d.points.length; i++) {
+                        //     temp = d.points[i][0] - (d.containerDim[0] / 2) + (d.containerDim[1] / 2);
+                        //     d.points[i][0] = -d.points[i][1] + (d.containerDim[0] / 2) + (d.containerDim[1] / 2);
+                        //     d.points[i][1] = temp;
+                        // }
 
                         for (var j = 0; j < d.doors.length; j++) {
                             temp = -d.doors[j][0];
                             d.doors[j][0] = d.doors[j][1];
                             d.doors[j][1] = temp;
                         }
-                        castle[x].boardPosition = d.boardPosition;
+
                     }
                 }
 
@@ -231,14 +234,15 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                         var snapY = Math.round(d.boardPosition[1] / 10) * 10;
                         d3.select(this)
                             .attr("transform", "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")");
-                        for (var i = 0; i < d.points.length; i++) {
-                            d.points[i][0] += d3.event.dx;
-                            d.points[i][1] += d3.event.dy;
-                        }
-                        for (var j = 0; j < d.doors.length; j++) {
-                            d.doors[j][0] += d3.event.dx;
-                            d.doors[j][1] += d3.event.dy;
-                        }
+                        // for (var i = 0; i < d.points.length; i++) {
+                        //     d.points[i][0] += d3.event.dx;
+                        //     d.points[i][1] += d3.event.dy;
+                        // }
+                        // for (var j = 0; j < d.doors.length; j++) {
+                        //     d.doors[j][0] += d3.event.dx;
+                        //     d.doors[j][1] += d3.event.dy;
+                        // }
+
                         // d3.select(this).select(".shadow")
                         //     .classed("normal", "normal" === overlapStatus)
                         //     .classed("overlapping", "overlapping" === overlapStatus);
@@ -246,8 +250,6 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                 }
 
                 function dragended(d, x) {
-                    console.log(x);
-                    console.log(castle);
                     if (d.final !== true) {
                         d3.select(this).classed("dragging", false);
                         d.boardPosition[0] = Math.round(d.boardPosition[0] / 10) * 10;
@@ -261,9 +263,15 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                             d.doors[j][0] = Math.round(d.doors[j][0] / 10) * 10;
                             d.doors[j][1] = Math.round(d.doors[j][1] / 10) * 10;
                         }
-                        scope.game.players[currentUserIndex].castle[x].boardPosition = d.boardPosition;
-                        console.log(scope.game.players[currentUserIndex].castle[x].boardPosition);
+                        castleRef.child(x).update({ "boardPosition": d.boardPosition });
+                        // updateFirebase(d, x);
                     }
+                }
+
+                function updateFirebase(d, x) {
+                    castleRef.child(x).update({ "boardPosition": d.boardPosition });
+                    castleRef.child(x).update({ "points": d.boardPosition });
+
                 }
 
                 function checkOverlaps(d) {
@@ -327,10 +335,9 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                     console.log("Firebase saw a change in values, resyncing...");
                     console.log(theCastle);
 
-                    console.log('changing', theCastle);
-
                     redrawCastle(theCastle);
                 });
+                // redrawCastle(castle);
             });
         }
     };

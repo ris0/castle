@@ -39,7 +39,8 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
       }
       console.log(game.turnCount);
       kingsFavorsFactory.getRankings(game);
-    } else {
+    } else if(numberPlayers === 1){
+      console.log('only one player');
       if(!game.roomCards) endGame(game);
       gameState.drawToMarket(game);
       game.players[0].canBuy = true;

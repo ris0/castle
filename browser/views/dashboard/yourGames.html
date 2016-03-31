@@ -4,8 +4,8 @@
 <div class="modal-body">
         <div class="table-form">
         <div class="row" ng-repeat="game in user.games">
-	        <div class="col-sm-2">{{game}}</div>
-			<div class="col-sm-1"><button class="success" ng-click="go(game)">Go!</button></div>
+	        <div class="col-sm-2">{{game.gameID}}</div>
+			<div class="col-sm-1"><button class="success" ng-click="go(game.gameID)">Go!</button></div>
 	    </div>
         <div class="modal-footer">
         </div>

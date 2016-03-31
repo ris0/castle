@@ -76,7 +76,5 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       });
     }
   };
+  
 });
-
-
-
