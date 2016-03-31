@@ -71,6 +71,11 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
 
     };
 
+    dashboard.singlePlayerGame = function(game, user){
+        game.playersQueue = [{userId: user.$id, email: user.email}];
+        dashboard.createRandomGame(game);
+    };
+
     //shuffles decks and removes card based on # players
     function shuffleDecks (game, playersQueue){
         var numberPlayers = Object.keys(playersQueue).length;
