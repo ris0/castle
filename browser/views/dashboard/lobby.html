@@ -1,21 +1,14 @@
-<!--<div>-->
-<!--initial template-->
-    <!--<ul>-->
-        <!--<li ng-repeat="message in messages""> {{ message.from }}: {{ message.content }}-->
-        <!--<button ng-click="messages.$remove(message)">x</button>-->
-        <!--</li>-->
-    <!--</ul>-->
-<!--</div>-->
+
 <div class="tester">
 <div class="header">
     <h1>{{ data.name }}</h1>
 </div>
 
 <div class="message-wrap" ng-repeat="message in data.messages">
-
-        <div class="message">
-            {{ message.sent | date: 'short' }} {{ message.from }}: {{ message.content }}
-        </div>
+    {{ message.sent | date: 'short' }}
+    <div class="ng-cloak">
+        {{ message.from }}: {{ message.content }}
+    </div>
 
 </div>
 
