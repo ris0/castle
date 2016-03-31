@@ -1,7 +1,7 @@
 app.config(function($stateProvider){
 	$stateProvider.state('game', {
 		url: '/game-stats',
-		templateUrl: 'views/gameboard/gridtesting.html',
+		templateUrl: 'views/gameBoard/gameBoard.html',
 		controller: "gameStats",
 		resolve: {
 			userId: function(gameFactory){

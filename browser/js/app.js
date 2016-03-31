@@ -64,10 +64,10 @@ window.app = angular
                     }
                 }
             })
-            .state('gridtesting', {
-                url: '/gridtesting',
-                controller: 'GridTestingCtrl',
-                templateUrl: 'views/gameboard/gridtesting.html'
+            .state('gameBoard', {
+                url: '/gameBoard',
+                controller: 'GameBoardCtrl',
+                templateUrl: 'views/gameBoard/gameBoard.html'
             });
     })
     .run(function($rootScope, _) {
