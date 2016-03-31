@@ -90,6 +90,8 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
             numRoomCards = 33;
             numTileMult = -1;
             game.kingsFavors = null;
+            game.masterBuilder = null;
+            game.players[0].canBuy = true;
             game.market = {
                 2000: {room:'empty'},
                 4000: {room:'empty'},
