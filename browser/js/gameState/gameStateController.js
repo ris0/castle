@@ -9,10 +9,10 @@ app.controller('gameStats', function(marketFactory, kingsFavorsFactory, syncObje
 
   syncObject.$bindTo($scope, "data")
     .then(function() {
+      console.log('made it to game', $scope.data)
       $scope.userIndex = gameStateFactory.getUserIndex($scope.data);
       $scope.userObj = gameStateFactory.getUserObj($scope.data);
       $scope.players = $scope.data.players;
-      console.log($scope.data.currentPlayer);
       return $scope.userIndex;
     }).then(function(index){
       if($scope.data.turnCount === 0 && !$scope.data.players[index].bonusCards) {

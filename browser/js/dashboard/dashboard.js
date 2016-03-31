@@ -1,12 +1,15 @@
-app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $state, $firebaseObject, gameFactory, DashboardFactory, CreateModalFactory, JoinModalFactory, $timeout) {
+app.controller('DashboardCtrl', function(usersRef, userId, syncObject, $scope, $state, $firebaseObject, gameFactory, DashboardFactory, CreateModalFactory, JoinModalFactory, YourGamesModalFactory, $timeout) {
 
     $scope.auth = gameFactory.auth();
     $scope.isLoading = null;
     $scope.open = CreateModalFactory.open;
     $scope.join = JoinModalFactory.open;
+    $scope.yourGames = YourGamesModalFactory.open;
 
     var userObj = $firebaseObject(usersRef.child(userId));
-    userObj.$loaded().then(function(user) { $scope.user = user });
+    userObj.$loaded().then(function(user) { 
+        $scope.user = user
+    });
 
     $scope.logout = function(){
         $scope.auth.$unauth();

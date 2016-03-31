@@ -12,6 +12,8 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
         if(users[authData.uid]) return;
       });
 
+    }
+    else {
       $scope.ref.child("users").child(authData.uid).set({
         email: authData.password.email
       });
