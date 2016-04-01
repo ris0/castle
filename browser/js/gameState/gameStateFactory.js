@@ -13,6 +13,7 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   };
 
   gameState.getUserIndex = function(game) {
+    console.log('players', game.players);
     return game.players.reduce(findMyIndex, "");
   };
 
@@ -68,6 +69,8 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
 
   function findMyIndex(prev, curr, index) {
     if (user === curr.userID) {
+      console.log(user);
+      console.log(index);
       return index;
     }
     return prev;

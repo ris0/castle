@@ -1,12 +1,6 @@
 <nav id="market-nav" class="navbar navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav navbar-inverse">
-            <li class = "market-room">
-                <center><br>
-                <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy" ng-click="buy()">Buy/Pass</button><br>
-                <button class = "btn btn-block btn-sm" ng-disabled="data.masterBuilder !== userIndex || data.players[userIndex].canBuy || data.currentPlayer !== userIndex" ng-click="done()">MB done</button>
-                </center>
-            </li>
             <li class = "market-room" 
                 ng-repeat="(price,room) in data.market" 
                 ng-model="room.room" 
@@ -43,6 +37,12 @@
                     <img src = "images/150-hallway.png" class = "img-responsive" id="market-img"></a><br>
                     <span ng-show="data.players[userIndex].canBuy"><a ng-show="!Stairs" ng-click="tryCorridor('Stairs')">+ </a><a ng-show="Stairs" ng-click="untryCorridor('Stairs')">-</a></span>
                     <img src = "images/75-stairs.png" class="img-responsive" id="market-img"></a>
+                </center>
+            </li>
+            <li class = "market-room">
+                <center><br>
+                <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy" ng-click="buy()">Buy/Pass</button><br>
+                <button class = "btn btn-block btn-sm" ng-disabled="data.masterBuilder !== userIndex || data.players[userIndex].canBuy || data.currentPlayer !== userIndex" ng-click="done()">MB done</button>
                 </center>
             </li>
         </ul>
