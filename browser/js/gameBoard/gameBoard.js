@@ -16,7 +16,6 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
             userGame.$loaded().then(function(data) {
                 return data.$value;
             }).then(function(game) {
-                console.log("game", game);
                 agame = game;
                 return $firebaseObject(gameFactory.ref().child('games').child(game));
             }).then(function(syncObject) {
@@ -24,11 +23,9 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
             }).then(function() {
 
                 var currentUserIndex = gameStateFactory.getUserIndex(scope.game);
-                var castle = scope.game.players[currentUserIndex].castle;
+                // var castle = scope.game.players[currentUserIndex].castle;
 
                 var castleRef = gameFactory.ref().child('games').child(agame).child('players').child(currentUserIndex).child('castle');
-                console.log("casteref", castleRef.child(0));
-                console.log("currentuserindex", currentUserIndex);
 
                 // -------------------------------------------------------------------------------------------
                 // -------------------------------------------------------------------------------------------
@@ -92,101 +89,8 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                     .style("stroke", "white")
                     .style("stroke-width", "0.5");
 
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-
-                // adding tiles to the board
-
                 var currentCastle = svg.append("g")
                     .attr("id", "currentCastle");
-
-                function redrawCastle(castle) {
-                    console.log("redrawing castle")
-                    d3.select("#currentCastle").remove();
-
-                    currentCastle = svg.append("g")
-                        .attr("id", "currentCastle");
-
-                    var roomTiles = currentCastle.selectAll("g")
-                        .data(castle)
-                        .enter()
-                        .append("g")
-                        .attr("transform", function(d) {
-                            var snapX = Math.round(d.boardPosition[0] / 10) * 10;
-                            var snapY = Math.round(d.boardPosition[1] / 10) * 10;
-                            return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")";
-                        })
-                        .call(drag)
-                        .on("dblclick", rotate);
-
-                    var roomImages = roomTiles.append("image")
-                        .attr("xlink:href", function(d) {
-                            return d.imagePath;
-                        })
-                        .attr("height", function(d) {
-                            return d.containerDim[1];
-                        })
-                        .attr("width", function(d) {
-                            return d.containerDim[0];
-                        });
-
-
-                    var polyRooms = roomTiles.append("polygon")
-                        .filter(function(d) {
-                            return !d.radius;
-                        })
-                        .attr("points", function(d) {
-                            return d.points.map(function(v) {
-                                return v.join(",");
-                            }).join(" ");
-                        })
-                        .style("stroke", "black")
-                        .style("stroke-width", "0")
-                        .classed("polygon", true)
-                        .classed("shadow", true)
-                        .classed("normal", true);
-                    // .classed("normal", "normal" === checkOverlaps(d))
-                    // .classed("overlapping", "overlapping" === checkOverlaps(d));
-
-                    var circleRooms = roomTiles.append("circle")
-                        .filter(function(d) {
-                            return d.radius;
-                        })
-                        .attr("cx", function(d) {
-                            return d.points[0][0];
-                        })
-                        .attr("cy", function(d) {
-                            return d.points[0][1];
-                        })
-                        .attr("r", function(d) {
-                            return d.radius;
-                        })
-                        .style("stroke", "black")
-                        .style("stroke-width", "0")
-                        .classed("circle", true)
-                        .classed("shadow", true)
-                        .classed("normal", true);
-                    // .classed("normal", "normal" === checkOverlaps(d))
-                    // .classed("overlapping", "overlapping" === checkOverlaps(d));
-
-
-                    //     d3.select(this).select(".shadow")
-                    //         .classed("normal", function(d) {
-                    //             return "normal" === checkOverlaps(d);
-                    //         })
-                    //         .classed("overlapping", function(d) {
-                    //             return "overlapping" === checkOverlaps(d);
-                    //         });
-                }
-
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
-                // -------------------------------------------------------------------------------------------
 
                 // functions
 
@@ -227,7 +131,6 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                 }
 
                 function dragged(d, x) {
-                    // var overlapStatus = checkOverlaps(d);
                     if (d.final !== true) {
                         d.boardPosition[0] += d3.event.dx;
                         d.boardPosition[1] += d3.event.dy;
@@ -251,6 +154,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                 }
 
                 function dragended(d, x) {
+                    console.log(d);
                     if (d.final !== true) {
                         d3.select(this).classed("dragging", false);
                         d.boardPosition[0] = Math.round(d.boardPosition[0] / 10) * 10;
@@ -265,14 +169,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                             d.doors[j][1] = Math.round(d.doors[j][1] / 10) * 10;
                         }
                         castleRef.child(x).update({ "boardPosition": d.boardPosition });
-                        // updateFirebase(d, x);
                     }
-                }
-
-                function updateFirebase(d, x) {
-                    castleRef.child(x).update({ "boardPosition": d.boardPosition });
-                    castleRef.child(x).update({ "points": d.boardPosition });
-
                 }
 
                 function checkOverlaps(d) {
@@ -331,14 +228,73 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                     }
                 }
 
-                castleRef.on('value', function(castle) {
-                    var theCastle = castle.val();
-                    console.log("Firebase saw a change in values, resyncing...");
-                    console.log(theCastle);
+                castleRef.on('child_added', function(c) {
+                    var newRoom = c.val();
+                    var roomTile = currentCastle.append("g")
+                        .datum(newRoom)
+                        .attr("transform", function(d) {
+                            var snapX = Math.round(d.boardPosition[0] / 10) * 10;
+                            var snapY = Math.round(d.boardPosition[1] / 10) * 10;
+                            return "rotate(" + d.rotation + " " + (snapX + d.containerDim[0] / 2) + " " + (snapY + d.containerDim[1] / 2) + "),translate(" + snapX + "," + snapY + ")";
+                        })
+                        .attr("id", function(d, x) {
+                            var newSelector = "" + d.roomName.replace(/\W/g, '').toLowerCase();
+                            return newSelector;
+                        })
+                        .call(drag)
+                        .on("dblclick", rotate);
 
-                    redrawCastle(theCastle);
+                    var roomImage = roomTile.append("image")
+                        .attr("xlink:href", function(d) {
+                            return d.imagePath;
+                        })
+                        .attr("height", function(d) {
+                            return d.containerDim[1];
+                        })
+                        .attr("width", function(d) {
+                            return d.containerDim[0];
+                        });
+
+                    var polyRoom = roomTile.append("polygon")
+                        .filter(function(d) {
+                            return !d.radius;
+                        })
+                        .attr("points", function(d) {
+                            return d.points.map(function(v) {
+                                return v.join(",");
+                            }).join(" ");
+                        })
+                        .style("stroke", "black")
+                        .style("stroke-width", "0")
+                        .classed("polygon", true)
+                        .classed("shadow", true)
+                        .classed("normal", true);
+
+                    var circleRoom = roomTile.append("circle")
+                        .filter(function(d) {
+                            return d.radius;
+                        })
+                        .attr("cx", function(d) {
+                            return d.points[0][0];
+                        })
+                        .attr("cy", function(d) {
+                            return d.points[0][1];
+                        })
+                        .attr("r", function(d) {
+                            return d.radius;
+                        })
+                        .style("stroke", "black")
+                        .style("stroke-width", "0")
+                        .classed("circle", true)
+                        .classed("shadow", true)
+                        .classed("normal", true);
                 });
-                // redrawCastle(castle);
+
+                castleRef.on('child_removed', function(c) {
+                    var removedRoom = c.val();
+                    var removeSelector = "" + removedRoom.roomName.replace(/\W/g, '').toLowerCase();
+                    d3.select("#" + removeSelector).remove();
+                });
             });
         }
     };
