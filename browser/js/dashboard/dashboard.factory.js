@@ -1,4 +1,4 @@
-app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q, $rootScope, $timeout) {
+app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $firebaseArray, $q, $rootScope, $timeout) {
 
     var dashboard = {}, players;
     var playersRef = gameFactory.ref().child("playersQueue");
@@ -9,47 +9,53 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
     dashboard.createRandomGame = function(game) {
 
         baseState.on('value', function(baseState){
-            var playersObj = game.playersQueue;
-            players = _.clone(playersObj);
-
             var baseState = baseState.val();
-            var counter = 0;
+            playersRef.once('value', function(players){
+                console.log(players.val());
+                var playersObj = players.val();
+            
+                players = _.clone(playersObj);
 
-            shuffleDecks(baseState, playersObj);
-            console.log(baseState);
-            for (var key in players) {
-                console.log('how many players?', players);
-                baseState.players[counter].userID = players[key].userId;
-                baseState.players[counter].userName = players[key].email;
-                counter++;
-            }
-            playersRef.remove();
+                var counter = 0;
 
-            // create game
-            var newGameRef = ref.push(baseState);
-            var gameID = newGameRef.key();
-
-            var gamePlayersArr = $firebaseArray(ref.child(gameID).child("players"));
-
-            return gamePlayersArr.$loaded()
-                .then(function(gamePlayers) {
-                    console.log(gamePlayers);
-                for (var j = 0; j < counter; j++) {
-                    dashboard.addGameToUsers(gamePlayersArr[j].userID, gameID);
+                shuffleDecks(baseState, playersObj);
+                console.log(baseState);
+                for (var key in players) {
+                    console.log('how many players?', players);
+                    baseState.players[counter].userID = players[key].userId;
+                    baseState.players[counter].userName = players[key].email;
+                    counter++;
                 }
-                for (var i = counter; i < gamePlayersArr.length; i++) {
-                    gamePlayersArr.$remove(i);
-                }
-                return gamePlayersArr;
-            }).then(function(){
-                $rootScope.$broadcast('createdGame');
-                $state.go('game');
+                playersRef.remove();
+
+                // create game
+                var newGameRef = ref.push(baseState);
+                var gameID = newGameRef.key();
+
+                var gamePlayersArr = $firebaseArray(ref.child(gameID).child("players"));
+
+                return gamePlayersArr.$loaded()
+                    .then(function(gamePlayers) {
+                        console.log(gamePlayers);
+                    for (var j = 0; j < counter; j++) {
+                        dashboard.addGameToUsers(gamePlayersArr[j].userID, gameID);
+                    }
+                    for (var i = counter; i < gamePlayersArr.length; i++) {
+                        gamePlayersArr.$remove(i);
+                    }
+                    return gamePlayersArr;
+                }).then(function(){
+                    $state.go('game', {gameId: gameID});
+                });
             });
         })
     };
 
     dashboard.addGameToUsers = function(uid, gameID) {
-        UsersRef.child(uid).child('game').set(gameID);
+        var userObj = $firebaseObject(UsersRef.child(uid));
+        userObj.$loaded().then(function(user){
+                UsersRef.child(uid).child('games').push({gameID: gameID, timestamp: Firebase.ServerValue.TIMESTAMP});
+        });
     };
 
 
@@ -59,17 +65,25 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseArray, $q
             for (var key in game.playersQueue) {
                 if (game.playersQueue[key] === user.$id) return;
             }
-            game.playersQueue.push({ userId: user.$id, email: user.email });
+            playersRef.push({ userId: user.$id, email: user.email });
             $timeout(function(){
                 dashboard.createRandomGame(game);
             }, 1000);
         } else {
-            game.playersQueue = [{userId: user.$id, email: user.email}];
-            $timeout(function(){
-                $state.go('game');
-            }, 5000);
-        }
+            playersRef.push({userId: user.$id, email: user.email});
+            var newItems = false;
+            var userGamesRef = UsersRef.child(user.$id).child('games');
+            userGamesRef.on('child_added', function(games){
+                if(!newItems) return;
+                var games = games.val();
+                $state.go('game', {gameId:games.gameID});
+                console.log('games', games);
+            });
 
+            userGamesRef.once('value', function(message){
+                newItems = true;
+            })
+        }
     };
 
     dashboard.singlePlayerGame = function(game, user){
