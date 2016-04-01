@@ -22,7 +22,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                 };
 
                 scope.tryCorridor = function(type) {
-                    console.log(type);
                     scope[type] = true;
                     var corridor = scope.data.roomTiles[type][0];
                     corridor.price = 3000;
@@ -30,7 +29,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                 };
 
                 scope.untryCorridor = function(type) {
-                    console.log(type);
                     scope[type] = null;
                     var corridor = scope.data.roomTiles[type][0];
                     marketFactory.untry(scope.data, corridor);
@@ -60,20 +58,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                 };
 
                 if (scope.data.turnCount === 0 && scope.data.market[2000].room === "empty") scope.drawToMarket();
-
-                scope.firstChoice = null;
-
-                scope.swapTwo = function(price) {
-                    if (!scope.data.players[scope.userIndex].canBuy && scope.data.masterBuilder === scope.userIndex) {
-                        if (firstChoice) {
-                            marketFactory.swapMarket(firstChoice, price);
-                            scope.firstChoice = null;
-                        } else {
-                            scope.firstChoice = price;
-                        }
-                    }
-                };
-
             });
         }
     };

@@ -1,6 +1,6 @@
 app.controller('GameBoardCtrl', function($scope) {});
 
-app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFactory) {
+app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFactory, marketFactory) {
     return {
         restrict: "EA",
         template: "<div id='gameBoard'></div>",
@@ -23,6 +23,9 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                 return syncObject.$bindTo(scope, 'game');
             }).then(function() {
 
+                scope.try = function(room){
+                    marketFactory.try(scope.game, room);
+                };
                 var currentUserIndex = gameStateFactory.getUserIndex(scope.game);
                 var castle = scope.game.players[currentUserIndex].castle;
 

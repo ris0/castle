@@ -10,7 +10,7 @@
       <div class='container' id="carousel">
         <div class="panel-body well" id="slides_control">
           <uib-carousel data="data" userObj='userObj'>
-            <uib-slide class="item">
+            <uib-slide ng-if="data.players.length>1" class="item">
                 <kings-favors favors="data.kingsFavors" game="data"></kings-favors>
             </uib-slide>
             <uib-slide class="item">
@@ -27,6 +27,8 @@
 
   <div class = "col-sm-9" id="grid-market">
   <market></market>
-  <div game-board></div>
+  <div 
+    game-board 
+    ></div>
   </div>
 </div>
