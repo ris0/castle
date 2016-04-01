@@ -1,3 +1,4 @@
+
 @import "less/bootstrap.less";
 // Base
 @import "base.less";
@@ -12,6 +13,42 @@
 @import "../../node_modules/bootstrap-btn-outline-rounded/index.less";
 @import "transitions/all.less";
 @import "transitions/animations.less";
+
+.messages{
+  border-style: hidden;
+  word-wrap: break-word;
+  vertical-align: bottom;
+  width: 100vw;
+  text-align: left;
+}
+
+.message {
+  word-wrap: break-word;
+  word-break: break-all;
+  vertical-align: bottom;
+  text-align: left;
+  width: 100%;
+}
+
+.messagePanel {
+  height:80vh;
+  width:90%;
+  overflow-y:auto;
+  text-align: left;
+}
+
+td {
+  vertical-align: bottom;
+  color: black;
+  text-align: left;
+}
+
+table {
+  height:100%;
+  width: 90%;
+  overflow: auto;
+  text-align: left;
+}
 
 a {
   color: white;
