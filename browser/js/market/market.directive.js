@@ -16,8 +16,10 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     scope.userIndex = gameStateFactory.getUserIndex(scope.data);
 
                     scope.buy = function() {
-                        var buyError = marketFactory.buy(scope.data);
-                        if (buyError) $.jGrowl(buyError, { themeState: 'highlight' });
+                        var buyStatus = marketFactory.buy(scope.data);
+                        if (buyStatus) $.jGrowl(buyStatus.message, { themeState: 'highlight' });
+                        console.log(buyStatus.roomName);
+                        scope[buyStatus.roomName]=false;
                     };
 
                     scope.tryCorridor = function(type) {
