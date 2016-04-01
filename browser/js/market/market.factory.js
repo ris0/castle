@@ -48,7 +48,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
           getCurrentPlayer(game).canBuy = false;
           completionFactory.assessCompletion(game);
           res.message = "Buying the " + newRoom.roomName;
-          res.roomName = newRoom.roomName;
+          res.roomName = newRoom.roomName.slice(0,-1);
         } else{
           scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
 
