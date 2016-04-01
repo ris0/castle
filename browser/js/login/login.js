@@ -8,14 +8,12 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
     if (authData) {
       $scope.usersRef.once('value', function(users){
-        if(users.val()[authData.uid]) {
-            return
-        } else {
-            $scope.ref.child("users").child(authData.uid).set({
-                email: authData.password.email
-            });
+        if(users.val()[authData.uid]) return;
+        else {
+          $scope.ref.child("users").child(authData.uid).set({
+            email: authData.password.email
+          });
         }
-
       });
     }
   });

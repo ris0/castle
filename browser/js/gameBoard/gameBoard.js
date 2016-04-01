@@ -3,6 +3,9 @@ app.controller('GameBoardCtrl', function($scope) {});
 app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFactory) {
     return {
         restrict: "EA",
+        scope: {
+            gameId: "="
+        },
         template: "<div id='gameBoard'></div>",
         link: function(scope, el, attr) {
             var width = el[0].clientWidth;
@@ -11,15 +14,11 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
 
             var userID = gameFactory.auth().$getAuth().uid;
 
-            var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
+            var userGame = $firebaseObject(gameFactory.ref().child('games').child(scope.gameId));
 
-            userGame.$loaded().then(function(data) {
-                return data.$value;
-            }).then(function(game) {
-                console.log("game", game);
-                agame = game;
-                return $firebaseObject(gameFactory.ref().child('games').child(game));
-            }).then(function(syncObject) {
+            userGame.$loaded()
+            .then(function(syncObject) {
+                agame = syncObject.$id;
                 return syncObject.$bindTo(scope, 'game');
             }).then(function() {
 
