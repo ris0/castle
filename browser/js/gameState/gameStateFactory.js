@@ -37,10 +37,8 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
           gameState.drawToMarket(game);
         }
       }
-      console.log(game.turnCount);
       kingsFavorsFactory.getRankings(game);
     } else if(numberPlayers === 1){
-      console.log('only one player');
       if(!game.roomCards) endGame(game);
       gameState.drawToMarket(game);
       game.players[0].canBuy = true;
@@ -84,8 +82,6 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
 
   function endGame(game) {
     $.jGrowl('the game is over!');
-    //final scoring
-    //determine winner
   }
 
   function discardCard(game, nextCard) {
