@@ -7,17 +7,12 @@
                 data-drop="true" 
                 data-jqyoui-options 
                 jqyoui-droppable
+                ng-class="{active:room.trying}"
                 >
                 <center>
-                <span class="price">${{price}}</span>
-                <span class = "discount" ng-if="room.room.discount"> -${{room.room.discount}}</span>
-                <span 
-                    ng-show="data.players[userIndex].canBuy && (!trying || room.trying)">
-                    <a  ng-show="!room.trying" 
-                        ng-click="try(room, price)">+ </a>
-                    <a  ng-show="room.trying" 
-                        ng-click="untry(room)">-</a>
-                </span>
+                <span   class="price">${{price}}</span>
+                <span   class = "discount" 
+                        ng-if="room.room.discount"> -${{room.room.discount}}</span>
                 </center>
                 <div
                     data-drag="data.masterBuilder === userIndex" 
@@ -27,16 +22,27 @@
                     >
                     <img src = "{{room.room.imagePath}}" 
                         class = "img-responsive room-img" 
-                        id="market-img">
+                        id="market-img"
+                        ng-dblclick="evalTry(room, price)">
                 </div>
             </li>
-            <li class = "market-room">
+            <li class = "market-room"
+                ng-class="{active:data.Hallway||data.Stairs}"
+            >
                 <center>
                     <span class = "price">$3000</span><br>
-                    <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)"><a ng-show="!Hallway" ng-click="tryCorridor('Hallway')">+ </a><a ng-show="Hallway" ng-click="untryCorridor('Hallway')">-</a></span>
-                    <img src = "images/150-hallway.png" class = "img-responsive" id="market-img"></a><br>
-                    <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)"><a ng-show="!Stairs" ng-click="tryCorridor('Stairs')">+ </a><a ng-show="Stairs" ng-click="untryCorridor('Stairs')">-</a></span>
-                    <img src = "images/75-stairs.png" class="img-responsive" id="market-img"></a>
+<!--                     <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)">
+                        <a  ng-show="!data.Hallway" 
+                            ng-click="tryCorridor('Hallway')">+ </a>
+                            <a ng-show="data.Hallway" ng-click="untryCorridor('Hallway')">-</a>
+                    </span> -->
+                    <img src = "images/150-hallway.png" class = "img-responsive" id="market-img" ng-dblclick="evalCorridorTry('Hallway')">
+                <br>
+<!--                     <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)">
+                        <a ng-show="!data.Stairs" ng-click="tryCorridor('Stairs')">+ </a>
+                        <a ng-show="data.Stairs" ng-click="untryCorridor('Stairs')">-</a>
+                    </span> -->
+                    <img src = "images/75-stairs.png" class="img-responsive" id="market-img" ng-dblclick="evalCorridorTry('Stairs')"></a>
                 </center>
             </li>
             <li class = "market-room">

@@ -15,8 +15,10 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   };
 
   market.untry = function(game, room) {
+    console.log('factory room', room);
     room.price = null;
     _.remove(getCurrentPlayer(game).castle, function(castleRoom) {
+      console.log(castleRoom.roomName === room.roomName);
       return castleRoom.roomName === room.roomName;
     });
   };
@@ -37,7 +39,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
         var newRoom = newRooms[0];
         var truePrice = +newRoom.price - (+newRoom.discount);
         if(getCurrentPlayer(game).cashMoney < truePrice) res.message = "Not enough $$$";
-        else if(newRoom.roomName === "Stairs" || newRoom.roomName === "Hallway"){
+        else if(newRoom.roomName.slice(0,-1) === "Stairs" || newRoom.roomName.slice(0,-1) === "Hallway"){
           scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
 
           cashFlow(game, newRoom.price, truePrice);
@@ -58,6 +60,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
           getCurrentPlayer(game).canBuy = false;
           completionFactory.assessCompletion(game);
           res.message =  "Buying the " + newRoom.roomName;
+          res.roomName = newRoom.roomName;
         }
       } else {
         res.message = "You can't add more than one room!";

@@ -14,18 +14,20 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     return syncObject.$bindTo(scope, 'data');
                 }).then(function(game) {
                     scope.userIndex = gameStateFactory.getUserIndex(scope.data);
-                    var userCastle = $firebaseArray(gameFactory.ref().child('games').child(scope.gameId).child('players').child(scope.userIndex).child('castle'));
 
                     scope.buy = function() {
                         var buyStatus = marketFactory.buy(scope.data);
                         if (buyStatus) $.jGrowl(buyStatus.message, { themeState: 'highlight' });
-                        scope[buyStatus.roomName]=false;
+                        if(res.roomName){
+                            scope.data[buyStatus.roomName]=false;
+                            scope.data.players[scope.userIndex].trying = false;
+                        }
                     };
 
                     scope.tryCorridor = function(type) {
-                        if(!scope.trying){
-                            scope.trying = true;
-                            scope[type] = true;
+                        if(!scope.data.players[scope.userIndex].trying){
+                            scope.data.players[scope.userIndex].trying = true;
+                            scope.data[type] = true;
                             var corridor = scope.data.roomTiles[type][0];
                             corridor.price = 3000;
                             marketFactory.try(scope.data, corridor);
@@ -33,29 +35,36 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.untryCorridor = function(type) {
-                        if(scope.trying && scope[type]){
-                            scope.trying = false;
-                            scope[type] = null;
+                        if(scope.data.players[scope.userIndex].trying && scope.data[type]){
+                            scope.data.players[scope.userIndex].trying = false;
+                            scope.data[type] = null;
                             var corridor = scope.data.roomTiles[type][0];
                             marketFactory.untry(scope.data, corridor);
                         }
                     };
 
                     scope.try = function(room, price) {
-                        if(!scope.trying){
-                            scope.trying = true;
+                            scope.data.players[scope.userIndex].trying = true;
                             room.trying = true;
                             room.room.price = price;
                             marketFactory.try(scope.data, room.room);
-                        }
                     };
 
                     scope.untry = function(room) {
-                        if(scope.trying && room.trying){
-                            scope.trying = false;
+                            console.log('scope room', room);
+                            scope.data.players[scope.userIndex].trying = false;
                             room.trying = false;
                             marketFactory.untry(scope.data, room.room);
-                        }
+                    };
+
+                    scope.evalTry = function(room, price){
+                        if(!scope.data.players[scope.userIndex].trying) scope.try(room, price);
+                        else if(scope.data.players[scope.userIndex].trying && room.trying) scope.untry(room);
+                    };
+
+                    scope.evalCorridorTry = function(type){
+                        if(!scope.data.players[scope.userIndex].trying) scope.tryCorridor(type);
+                        else if(scope.data.players[scope.userIndex].trying && scope.data[type]) scope.untryCorridor(type);   
                     };
 
                     scope.pass = function() {
