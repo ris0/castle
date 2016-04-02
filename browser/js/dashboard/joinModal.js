@@ -34,7 +34,7 @@ I have not yet dealt with authentication/persistence with Firebase and it will t
 on it. Again, this is not incredibly important for the MVP but it should get done in the near future.
  */
 
-app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $firebaseObject, $firebaseArray) {
+app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, gameFactory, $firebaseObject, $firebaseArray) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = $firebaseObject(gameRef.child('lobbies')),
@@ -65,7 +65,6 @@ app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, Lobb
                         userName: playerName
                     });
                     lobbyId = gameRef.child('lobbies').child(key).key();
-                    LobbyFactory.registerInfo(lobbyId);
                     $uibModalInstance.close();
                     $state.go('lobby',{lobbyId: lobbyId});
                     }

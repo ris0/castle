@@ -61,6 +61,9 @@ window.app = angular
                     },
                     lobbyRef: function($firebaseObject, gameFactory, $stateParams){
                         return $firebaseObject(gameFactory.ref().child('lobbies').child($stateParams.lobbyId));
+                    },
+                    lobbyId: function($stateParams){
+                        return $stateParams.lobbyId;
                     }
                 }
             })
