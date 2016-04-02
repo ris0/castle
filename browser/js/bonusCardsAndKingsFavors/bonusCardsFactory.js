@@ -8,21 +8,23 @@ bonusCards.getBonusPoints = function(player){
 	var bonusCardsArr = player.bonusCards;
 	var bonusesToReward = [];
 	var bonusPoints = 0;
-	bonusCardsArr.forEach(function(bonus){
-		if(bonus.shape) bonusPoints += pointForEachShapeRoom(player, bonus.shape);
-		if(bonus.twoCompletedRooms) bonusPoints += pointForTwoCompletedRooms(player);
-		if(bonus.twoExternalEntrances) bonusPoints += pointForTwoExternalEntrances(player);
-		if(bonus.size) bonusPoints += pointsForRoomSize(player, bonus.sqf, bonus.ptsPerThreshold);
-		if(bonus.type) bonusPoints += pointsForRoomType(player, bonus.type, bonus.ptsPerThreshold);
-		if(bonus.allRoomTypes) bonusPoints += sevenForAllTypes(player);
-		if(bonus.allRoomSizes) bonusPoints += eightForAllSizes(player);
-		if(bonus.fiveThousandMarks) bonusPoints += onePointForMarks(player);
-	});
+	if(bonusCardsArr){
+		bonusCardsArr.forEach(function(bonus){
+			if(bonus.shape) bonusPoints += pointForEachShapeRoom(player, bonus.shape);
+			if(bonus.twoCompletedRooms) bonusPoints += pointForTwoCompletedRooms(player);
+			if(bonus.twoExternalEntrances) bonusPoints += pointForTwoExternalEntrances(player);
+			if(bonus.size) bonusPoints += pointsForRoomSize(player, bonus.sqf, bonus.ptsPerThreshold);
+			if(bonus.type) bonusPoints += pointsForRoomType(player, bonus.type, bonus.ptsPerThreshold);
+			if(bonus.allRoomTypes) bonusPoints += sevenForAllTypes(player);
+			if(bonus.allRoomSizes) bonusPoints += eightForAllSizes(player);
+			if(bonus.fiveThousandMarks) bonusPoints += onePointForMarks(player);
+		});
+	}
 	console.log(bonusCardsArr);
 	console.log('BonusPoints:', bonusPoints);
 	console.log(player);
 	player.privateBonusCardPts = bonusPoints;
-}
+};
 
 	function sevenForAllTypes (player){
 		var res = {};

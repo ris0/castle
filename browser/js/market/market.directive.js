@@ -2,16 +2,15 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
 
   return {
     restrict: 'E',
-    scope: {},
+    scope: {
+      gameId: "="
+    },
     templateUrl: 'js/market/market.html',
     link: function(scope) {
       var userID = gameFactory.auth().$getAuth().uid;
-      var userGame = $firebaseObject(gameFactory.ref().child('users').child(userID).child('game'));
-      userGame.$loaded().then(function(data) {
-        return data.$value;
-      }).then(function(game) {
-        return $firebaseObject(gameFactory.ref().child('games').child(game));
-      }).then(function(syncObject) {
+      var userGame = $firebaseObject(gameFactory.ref().child('games').child(scope.gameId));
+      userGame.$loaded()
+      .then(function(syncObject) {
         return syncObject.$bindTo(scope, 'data');
       }).then(function(game) {
         scope.userIndex = gameStateFactory.getUserIndex(scope.data);
@@ -77,7 +76,5 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
       });
     }
   };
+  
 });
-
-
-
