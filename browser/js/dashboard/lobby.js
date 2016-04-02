@@ -9,7 +9,7 @@ app.factory('LobbyFactory', function() {
 
 });
 
-app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray,gamesRef, lobbyRef, $state) {
+app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray,gamesRef, lobbyRef, $state, DashboardFactory) {
 
     const game = syncObject;
     const playerRef = $firebaseObject(gameFactory.ref().child('users').child(userId));
@@ -35,8 +35,6 @@ app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFac
                 sent: Date.now(),
                 content: $scope.obj.msg
             });
-            console.log($scope.data.messages[0].sent);
-            //console.log($scope.data.messages.$watch())
             $scope.obj.msg = "";
         };
 
@@ -48,29 +46,29 @@ app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFac
             lobbyRef.$loaded()
                 .then(function(lobbyData){
                     lobbyLength = lobbyData.players.length;
+                    DashboardFactory.shuffleDecks(baseState, lobbyLength);
                     newGame = gamesRef.push(baseState);
                     fireNewGame = $firebaseObject(newGame);
                     return fireNewGame.$loaded()
                 })
                 .then(function() {
                     for (var i = 0; i < lobbyLength; i++) {
-                        fireNewGame.players[i].userID = lobbyRef.players[i].userID;
-                        fireNewGame.players[i].userName = lobbyRef.players[i].userName;
-                        fireNewGame.messages = lobbyRef.messages
-                    }
+                            fireNewGame.players[i].userID = lobbyRef.players[i].userID;
+                            fireNewGame.players[i].userName = lobbyRef.players[i].userName;
+                            fireNewGame.messages = lobbyRef.messages
+                        }
                     fireNewGame.players.splice(lobbyLength);
                     return fireNewGame.$save()
                 })
                 .then(function(){
                     var thePlayer = gameFactory.ref().child('users').child(userId).child('games');
-                    thePlayer.push({
-                        gameID: [fireNewGame.$id],
-                        timestamp: Firebase.ServerValue.TIMESTAMP
-                    });
-                    return lobbyRef.$remove()
+                    thePlayer.push({ gameID: fireNewGame.$id });
+                    //console.log('the player', thePlayer);
+                    //console.log('the ROBBY', lobbyRef);
+                    return lobbyRef.$remove();
                 })
                 .then(function() {
-                    $state.go('game',{ gameID: fireNewGame.$id })
+                    $state.go('game',{ gameId: fireNewGame.$id })
                 });
 
         }

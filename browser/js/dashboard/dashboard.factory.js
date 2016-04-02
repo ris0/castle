@@ -18,7 +18,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
 
                 var counter = 0;
 
-                shuffleDecks(baseState, playersObj);
+                dashboard.shuffleDecks(baseState, playersObj);
                 console.log(baseState);
                 for (var key in players) {
                     console.log('how many players?', players);
@@ -92,7 +92,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
     };
 
     //shuffles decks and removes card based on # players
-    function shuffleDecks (game, playersQueue){
+    dashboard.shuffleDecks = function (game, playersQueue){
         var numberPlayers = Object.keys(playersQueue).length;
         var numRoomCards, numFavors, numTileMult;
         console.log('this many players', numberPlayers);
