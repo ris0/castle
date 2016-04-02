@@ -11,6 +11,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
             var width = el[0].clientWidth;
             var height = el[0].clientHeight;
             var agame;
+            var castleLength;
 
             var userID = gameFactory.auth().$getAuth().uid;
 
@@ -335,10 +336,13 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
 
                 castleRef.on('value', function(castle) {
                     var theCastle = castle.val();
-                    console.log("Firebase saw a change in values, resyncing...");
-                    console.log(theCastle);
-
-                    redrawCastle(theCastle);
+                    if(!castleLength || castleLength !== theCastle.length){
+                        console.log("Firebase saw a change in values, resyncing...");
+                        console.log(theCastle);
+                        castleLength = theCastle.length;
+                        redrawCastle(theCastle);
+                        
+                    }
                 });
                 // redrawCastle(castle);
             });

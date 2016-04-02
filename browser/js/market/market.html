@@ -12,7 +12,7 @@
                 <span class="price">${{price}}</span>
                 <span class = "discount" ng-if="room.room.discount"> -${{room.room.discount}}</span>
                 <span 
-                    ng-show="data.players[userIndex].canBuy">
+                    ng-show="data.players[userIndex].canBuy && (!trying || room.trying)">
                     <a  ng-show="!room.trying" 
                         ng-click="try(room, price)">+ </a>
                     <a  ng-show="room.trying" 
@@ -33,9 +33,9 @@
             <li class = "market-room">
                 <center>
                     <span class = "price">$3000</span><br>
-                    <span ng-show="data.players[userIndex].canBuy"><a ng-show="!Hallway" ng-click="tryCorridor('Hallway')">+ </a><a ng-show="Hallway" ng-click="untryCorridor('Hallway')">-</a></span>
+                    <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)"><a ng-show="!Hallway" ng-click="tryCorridor('Hallway')">+ </a><a ng-show="Hallway" ng-click="untryCorridor('Hallway')">-</a></span>
                     <img src = "images/150-hallway.png" class = "img-responsive" id="market-img"></a><br>
-                    <span ng-show="data.players[userIndex].canBuy"><a ng-show="!Stairs" ng-click="tryCorridor('Stairs')">+ </a><a ng-show="Stairs" ng-click="untryCorridor('Stairs')">-</a></span>
+                    <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)"><a ng-show="!Stairs" ng-click="tryCorridor('Stairs')">+ </a><a ng-show="Stairs" ng-click="untryCorridor('Stairs')">-</a></span>
                     <img src = "images/75-stairs.png" class="img-responsive" id="market-img"></a>
                 </center>
             </li>
