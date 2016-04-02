@@ -13,7 +13,7 @@ app.factory('CreateModalFactory', function($uibModal) {
     return createModal;
 });
 
-app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $firebaseObject) {
+app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, gameFactory, $firebaseObject) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = gameRef.child('lobbies'),
@@ -44,7 +44,6 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
                 })
             })
             .then(function (lobby) {
-                LobbyFactory.registerInfo(lobby.key());
                 var lobbyId = lobby.key();
                 $uibModalInstance.close();
                 $state.go('lobby',{lobbyId: lobbyId});
