@@ -15,13 +15,16 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   };
 
   market.untry = function(game, room) {
+    console.log('factory room', room);
     room.price = null;
     _.remove(getCurrentPlayer(game).castle, function(castleRoom) {
+      console.log(castleRoom.roomName === room.roomName);
       return castleRoom.roomName === room.roomName;
     });
   };
 
   market.buy = function(game) {
+    var res = {};
     if (getCurrentPlayer(game).canBuy) {
       var newRooms = getCurrentPlayer(game).castle.reduce(function(collection, castleRoom) {
         if (!castleRoom.final) collection.push(castleRoom);
@@ -30,24 +33,41 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
 
       if (newRooms.length === 0) {
         market.pass(game);
-        return "Passing, +$5000";
+        res.message = "Passing, +$5000";
       }
       else if (newRooms.length === 1) {
         var newRoom = newRooms[0];
         var truePrice = +newRoom.price - (+newRoom.discount);
-        if(getCurrentPlayer(game).cashMoney < truePrice) return "Not enough $$$";
-        scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
+        if(getCurrentPlayer(game).cashMoney < truePrice) res.message = "Not enough $$$";
+        else if(newRoom.roomName.slice(0,-1) === "Stairs" || newRoom.roomName.slice(0,-1) === "Hallway"){
+          scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
 
-        cashFlow(game, newRoom.price, truePrice);
-        roomToPlayer(game, newRoom, newRoom.price);
-        bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
-        getCurrentPlayer(game).canBuy = false;
-        completionFactory.assessCompletion(game);
-        return "Buying the " + newRoom.roomName;
+          cashFlow(game, newRoom.price, truePrice);
+
+          newRoom.final = true;
+          game.roomTiles[newRoom.roomName].shift();
+          bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
+          getCurrentPlayer(game).canBuy = false;
+          completionFactory.assessCompletion(game);
+          res.message = "Buying the " + newRoom.roomName.slice(0,-1);
+          res.roomName = newRoom.roomName.slice(0,-1);
+        } else{
+          scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
+
+          cashFlow(game, newRoom.price, truePrice);
+          roomToPlayer(game, newRoom, newRoom.price);
+          bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
+          getCurrentPlayer(game).canBuy = false;
+          completionFactory.assessCompletion(game);
+          res.message =  "Buying the " + newRoom.roomName;
+          res.roomName = newRoom.roomName;
+        }
       } else {
-        return "You can't add more than one room!";
+        res.message = "You can't add more than one room!";
       }
-    } else return "It's not your turn";
+    } else res.message = "It's not your turn";
+
+    return res;
   };
 
   market.pass = function(game) {
