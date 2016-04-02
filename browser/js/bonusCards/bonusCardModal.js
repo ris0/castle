@@ -42,7 +42,6 @@ app.controller('bonusModalCtrl', function($scope, $uibModalInstance, bonuses, pl
       if(bonus !== $scope.selected.bonus){
         if(!$scope.players[playerIndex].bonusCards) $scope.players[playerIndex].bonusCards = [bonus];
         else $scope.players[playerIndex].bonusCards.push(bonus);
-        console.log($scope.players[playerIndex]);
 	  	}
 	  });
 
