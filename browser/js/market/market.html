@@ -7,7 +7,7 @@
                 data-drop="true" 
                 data-jqyoui-options 
                 jqyoui-droppable
-                ng-class="{active:room.trying}"
+                ng-class="{active:room.trying&&data.currentPlayer===userIndex}"
                 >
                 <center>
                 <span   class="price">${{price}}</span>
@@ -27,7 +27,7 @@
                 </div>
             </li>
             <li class = "market-room"
-                ng-class="{active:data.Hallway||data.Stairs}"
+                ng-class="{active:(data.Hallway||data.Stairs)&&data.currentPlayer===userIndex}"
             >
                 <center>
                     <span class = "price">$3000</span><br>

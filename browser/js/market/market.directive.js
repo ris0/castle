@@ -18,14 +18,12 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     scope.buy = function() {
                         var buyStatus = marketFactory.buy(scope.data);
                         if (buyStatus) $.jGrowl(buyStatus.message, { themeState: 'highlight' });
-                        if(res.roomName){
-                            scope.data[buyStatus.roomName]=false;
-                            scope.data.players[scope.userIndex].trying = false;
-                        }
+                        scope.data[buyStatus.roomName] = false;
+                        scope.data.players[scope.userIndex].trying = false;
                     };
 
                     scope.tryCorridor = function(type) {
-                        if(!scope.data.players[scope.userIndex].trying){
+                        if (!scope.data.players[scope.userIndex].trying) {
                             scope.data.players[scope.userIndex].trying = true;
                             scope.data[type] = true;
                             var corridor = scope.data.roomTiles[type][0];
@@ -35,7 +33,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.untryCorridor = function(type) {
-                        if(scope.data.players[scope.userIndex].trying && scope.data[type]){
+                        if (scope.data.players[scope.userIndex].trying && scope.data[type]) {
                             scope.data.players[scope.userIndex].trying = false;
                             scope.data[type] = null;
                             var corridor = scope.data.roomTiles[type][0];
@@ -44,27 +42,31 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.try = function(room, price) {
-                            scope.data.players[scope.userIndex].trying = true;
-                            room.trying = true;
-                            room.room.price = price;
-                            marketFactory.try(scope.data, room.room);
+                        scope.data.players[scope.userIndex].trying = true;
+                        room.trying = true;
+                        room.room.price = price;
+                        marketFactory.try(scope.data, room.room);
                     };
 
                     scope.untry = function(room) {
-                            console.log('scope room', room);
-                            scope.data.players[scope.userIndex].trying = false;
-                            room.trying = false;
-                            marketFactory.untry(scope.data, room.room);
+                        console.log('scope room', room);
+                        scope.data.players[scope.userIndex].trying = false;
+                        room.trying = false;
+                        marketFactory.untry(scope.data, room.room);
                     };
 
-                    scope.evalTry = function(room, price){
-                        if(!scope.data.players[scope.userIndex].trying) scope.try(room, price);
-                        else if(scope.data.players[scope.userIndex].trying && room.trying) scope.untry(room);
+                    scope.evalTry = function(room, price) {
+                        if (scope.data.currentPlayer === scope.userIndex && scope.data.masterBuilder !== scope.userIndex) {
+                            if (!scope.data.players[scope.userIndex].trying) scope.try(room, price);
+                            else if (scope.data.players[scope.userIndex].trying && room.trying) scope.untry(room);
+                        }
                     };
 
-                    scope.evalCorridorTry = function(type){
-                        if(!scope.data.players[scope.userIndex].trying) scope.tryCorridor(type);
-                        else if(scope.data.players[scope.userIndex].trying && scope.data[type]) scope.untryCorridor(type);   
+                    scope.evalCorridorTry = function(type) {
+                        if (scope.data.currentPlayer === scope.userIndex && scope.data.masterBuilder !== scope.userIndex) {
+                            if (!scope.data.players[scope.userIndex].trying) scope.tryCorridor(type);
+                            else if (scope.data.players[scope.userIndex].trying && scope.data[type]) scope.untryCorridor(type);
+                        }
                     };
 
                     scope.pass = function() {
