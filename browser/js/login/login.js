@@ -8,7 +8,6 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
     if (authData) {
       $scope.usersRef.once('value', function(users){
-        console.log(users.val()[authData.uid]);
         if(users.val()[authData.uid]) return;
         else {
           $scope.ref.child("users").child(authData.uid).set({
@@ -21,7 +20,7 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
 
   $scope.login = function() {
-    console.log('login clicked')
+    console.log('login clicked');
     $scope.message = null;
     $scope.error = null;
 
