@@ -34,12 +34,13 @@ I have not yet dealt with authentication/persistence with Firebase and it will t
 on it. Again, this is not incredibly important for the MVP but it should get done in the near future.
  */
 
-app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $firebaseObject, $firebaseArray) {
+app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, gameFactory, $firebaseObject, $firebaseArray) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = $firebaseObject(gameRef.child('lobbies')),
         userId = gameFactory.auth().$getAuth().uid,
-        lobbyId;
+        lobbyId,
+        userUniqueID;
         $scope.lobby = {};
 
     const playerRef = $firebaseObject(gameFactory.ref().child('users').child(userId));
@@ -59,15 +60,16 @@ app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, Lobb
             for (var key in lobbies) {
                 if (lobbies[key] && lobbies[key].name === $scope.lobby.name) {
                 if (lobbies[key] && lobbies[key].password === $scope.lobby.password) {
-                    var fireArr = $firebaseArray(gameRef.child('lobbies').child(key).child('players'));
-                    fireArr.$add({
-                        userID: userId,
-                        userName: playerName
-                    });
-                    lobbyId = gameRef.child('lobbies').child(key).key();
-                    LobbyFactory.registerInfo(lobbyId);
-                    $uibModalInstance.close();
-                    $state.go('lobby',{lobbyId: lobbyId});
+                        var lobbyPlayersRef = gameRef.child('lobbies').child(key).child('players');
+                        var newPlayer = lobbyPlayersRef.push({
+                            userID: userId,
+                            userName: playerName,
+                            isHost: false
+                        });
+                        userUniqueID = newPlayer.key();
+                        lobbyId = gameRef.child('lobbies').child(key).key();
+                        $uibModalInstance.close();
+                        $state.go('lobby',{lobbyId: lobbyId, userUniqueID: userUniqueID});
                     }
                 }
             }

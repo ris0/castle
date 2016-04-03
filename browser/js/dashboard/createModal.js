@@ -13,7 +13,7 @@ app.factory('CreateModalFactory', function($uibModal) {
     return createModal;
 });
 
-app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, LobbyFactory, gameFactory, $firebaseObject) {
+app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, gameFactory, $firebaseObject) {
 
     var gameRef = gameFactory.ref(),
         lobbiesRef = gameRef.child('lobbies'),
@@ -25,6 +25,7 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
     $scope.ok = function() {
 
         var playerName;
+        var userUniqueID;
 
         playerRef.$loaded()
             .then(function (obj) {
@@ -35,18 +36,21 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, Lo
                 return lobbiesRef.push({
                     name: $scope.lobby.name,
                     password: $scope.lobby.password,
-                    messages: [],
-                    players: [{
-                        userID: userId,
-                        userName: playerName
-                    }]
-                })
+                    messages: []
+                });
             })
             .then(function (lobby) {
-                LobbyFactory.registerInfo(lobby.key());
                 var lobbyId = lobby.key();
+                var lobbyPlayers = gameFactory.ref().child('lobbies').child(lobbyId).child('players');
+                var newPlayer = lobbyPlayers.push({
+                        userID: userId,
+                        userName: playerName,
+                        isHost: true
+                    });
+                userUniqueID = newPlayer.key();
+                console.log(userUniqueID);
                 $uibModalInstance.close();
-                $state.go('lobby',{lobbyId: lobbyId});
+                $state.go('lobby',{lobbyId: lobbyId, userUniqueID: userUniqueID});
             });
     };
 
