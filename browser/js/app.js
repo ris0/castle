@@ -51,7 +51,7 @@ window.app = angular
                 }
             })
             .state('lobby', {
-                url: '/lobby/:lobbyId',
+                url: '/lobby/:lobbyId/:userUniqueID',
                 parent: 'overview',
                 templateUrl: 'views/dashboard/lobby.html',
                 controller: 'lobbyCtrl',
@@ -64,6 +64,12 @@ window.app = angular
                     },
                     lobbyId: function($stateParams){
                         return $stateParams.lobbyId;
+                    },
+                    lobbyUserObj: function($firebaseObject, gameFactory, $stateParams){
+                        var userObj = $firebaseObject(gameFactory.ref().child('lobbies').child($stateParams.lobbyId).child('players').child($stateParams.userUniqueID));
+                        return userObj.$loaded().then(function(userObj){
+                            return userObj;
+                        });
                     }
                 }
             })

@@ -1,10 +1,13 @@
 
-app.controller('lobbyCtrl', function(DashboardFactory,$stateParams, $scope, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray,gamesRef, lobbyRef, $state, lobbyId) {
+app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams, $scope, gameFactory, $firebaseObject, userId, syncObject, $firebaseArray,gamesRef, lobbyRef, $state, lobbyId) {
 
     const game = syncObject;
     const playerRef = $firebaseObject(gameFactory.ref().child('users').child(userId));
     const baseState = gameFactory.ref().child('baseState');
     const thisLobbyRef = gameFactory.ref().child('lobbies').child(lobbyId);
+    const usersRef = gameFactory.ref().child('users');
+
+
 
     $scope.obj = {};
 
@@ -16,8 +19,20 @@ app.controller('lobbyCtrl', function(DashboardFactory,$stateParams, $scope, game
             playerName = obj.email.slice(0,indexSlice);
         });
 
+        //Checks if game is new, then sends player to game
+        var newItems = false;
+        var userGamesRef = usersRef.child(userId).child('games');
+        userGamesRef.on('child_added', function(games){
+            var games = games.val();
+            if(!newItems) return;
+            $state.go('game', {gameId:games.gameID});
+        });
+        userGamesRef.once('value', function(message){
+                newItems = true;
+        });
+
         $scope.isHost = function () {
-            return $scope.data.players[0].userID === playerRef.$id;
+            return lobbyUserObj.isHost;
         };
 
         $scope.sendMessage = function () {
@@ -28,7 +43,6 @@ app.controller('lobbyCtrl', function(DashboardFactory,$stateParams, $scope, game
                 content: $scope.obj.msg
             });
             console.log($scope.data.messages[0].sent);
-            //console.log($scope.data.messages.$watch())
             $scope.obj.msg = "";
         };
 
@@ -40,34 +54,29 @@ app.controller('lobbyCtrl', function(DashboardFactory,$stateParams, $scope, game
                 var lobby = lobby.val();
                 lobbyLength = Object.keys(lobby.players).length;
 
+                if(lobby.messages) baseState.messages = lobby.messages;
+
                 var counter = 0;
                 for(var player in lobby.players){
-                    console.log(lobby.players[player]);
+                    console.log(baseState.players);
                     baseState.players[counter].userID = lobby.players[player].userID;
                     baseState.players[counter].userName = lobby.players[player].userName;
                     counter ++;
                 }
-                if(lobby.messages) baseState.messages = lobby.messages;
-                DashboardFactory.shuffleDecks(baseState, lobby.players);
-                newGame = gamesRef.push(baseState);
+                console.log(baseState);
 
+                //prepare new game state object
+                DashboardFactory.shuffleDecks(baseState, lobby.players);
+                baseState.players.splice(lobbyLength);
+                newGame = gamesRef.push(baseState);
                 fireNewGame = $firebaseObject(gameFactory.ref().child('games').child(newGame.key()));
+
                 fireNewGame.$loaded()
-                .then(function() {
-                    fireNewGame.players.splice(lobbyLength);
-                    return fireNewGame.$save()
-                })
-                .then(function(){
-                    var thePlayer = gameFactory.ref().child('users').child(userId).child('games');
-                    thePlayer.push({
-                        gameID: fireNewGame.$id,
-                        timestamp: Firebase.ServerValue.TIMESTAMP
-                    });
+                .then(function(fireNewGame){
+                    fireNewGame.players.forEach(function(player){
+                        DashboardFactory.addGameToUsers(player.userID, fireNewGame.$id);
+                    })
                     return thisLobbyRef.remove();
-                })
-                .then(function() {
-                    console.log('fireNewGameID', fireNewGame.$id);
-                    $state.go('game',{ gameId: fireNewGame.$id })
                 });
             });
         }
