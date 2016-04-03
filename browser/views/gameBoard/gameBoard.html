@@ -16,7 +16,7 @@
       <div class='container' id="carousel">
         <div class="panel-body well" id="slides_control">
           <uib-carousel data="data" userObj='userObj'>
-            <uib-slide class="item">
+            <uib-slide ng-if="data.players.length>1" class="item">
                 <kings-favors favors="data.kingsFavors" game="data"></kings-favors>
             </uib-slide>
             <uib-slide class="item">
@@ -28,7 +28,6 @@
           </uib-carousel>
         </div>  
       </div>
-      <messages data="data" userId="userId"></messages>
     </div>
   </div>
 </div>
