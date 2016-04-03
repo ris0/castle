@@ -1,80 +1,84 @@
-app.factory('LobbyFactory', function() {
 
-    var lobby = {};
-    lobby.ref = [];
-
-    lobby.registerInfo = function (data) { lobby.ref = data };
-
-    return lobby;
-
-});
-
-app.controller('lobbyCtrl', function($stateParams, $scope, LobbyFactory, gameFactory, $firebaseObject, usersRef, userId, syncObject, $firebaseArray,gamesRef, lobbyRef) {
-
-    var lobbyId = LobbyFactory.ref, playerId = userId;
-    console.log($stateParams);
+app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams, $scope, gameFactory, $firebaseObject, userId, syncObject, $firebaseArray,gamesRef, lobbyRef, $state, lobbyId) {
 
     const game = syncObject;
+    const playerRef = $firebaseObject(gameFactory.ref().child('users').child(userId));
+    const baseState = gameFactory.ref().child('baseState');
+    const thisLobbyRef = gameFactory.ref().child('lobbies').child(lobbyId);
+    const usersRef = gameFactory.ref().child('users');
 
-    const playerRef = $firebaseObject(gameFactory.ref().child('users').child(playerId));
+
 
     $scope.obj = {};
 
     lobbyRef.$bindTo($scope, "data").then(function() {
-        console.log($scope.data);
         var playerName;
 
         playerRef.$loaded().then(function(obj) {
-            console.log(userId);
-            console.log(obj)
             var indexSlice = obj.email.indexOf('@');
             playerName = obj.email.slice(0,indexSlice);
         });
 
-        $scope.isHost = function () { return $scope.data.players[0] === playerRef.$id };
+        //Checks if game is new, then sends player to game
+        var newItems = false;
+        var userGamesRef = usersRef.child(userId).child('games');
+        userGamesRef.on('child_added', function(games){
+            var games = games.val();
+            if(!newItems) return;
+            $state.go('game', {gameId:games.gameID});
+        });
+        userGamesRef.once('value', function(message){
+                newItems = true;
+        });
+
+        $scope.isHost = function () {
+            return lobbyUserObj.isHost;
+        };
 
         $scope.sendMessage = function () {
             if (!$scope.data.messages) { $scope.data.messages = [] }
             $scope.data.messages.push({
                 from: playerName,
-                sent: Firebase.ServerValue.TIMESTAMP,
+                sent: Date.now(),
                 content: $scope.obj.msg
             });
+            console.log($scope.data.messages[0].sent);
             $scope.obj.msg = "";
         };
 
         $scope.startGame = function () {
-
             var baseState = _.clone(game.baseState),
-                newGame = gamesRef.push(baseState),
-                gameId = newGame.key(),
-                fireNewGame = $firebaseObject(newGame),
-                lobbyLength, fireUsers;
+                newGame, fireNewGame, lobbyLength;
 
-            // find the amount of players in lobby, then load up the newGame object
-            // then reassign the userID and userName to the correct information as found in the lobby
-            lobbyRef.$loaded()
-                .then(function(lobbyData){
-                    return lobbyLength = lobbyData.players.length;
-                })
-                .then(function() {
-                    return fireNewGame.$loaded()
-                })
-                .then(function(){
-                   for (var i = 0; i < lobbyLength; i++) {
-                       fireNewGame.players[i].userID = lobbyRef.players[i].userID;
-                       fireNewGame.players[i].userName = lobbyRef.players[i].userName;
-                   }
-                })
-                .then(function(){
-                    fireUsers = $firebaseObject(usersRef);
-                    return fireUsers.$loaded()
-                })
-                .then(function(users) {
-                    // can I do a query search and look for a particular key?
-                    // if not let's iterate through these object keys and assign the gameID to it
+            thisLobbyRef.once('value', function(lobby){
+                var lobby = lobby.val();
+                lobbyLength = Object.keys(lobby.players).length;
+
+                if(lobby.messages) baseState.messages = lobby.messages;
+
+                var counter = 0;
+                for(var player in lobby.players){
+                    console.log(baseState.players);
+                    baseState.players[counter].userID = lobby.players[player].userID;
+                    baseState.players[counter].userName = lobby.players[player].userName;
+                    counter ++;
+                }
+                console.log(baseState);
+
+                //prepare new game state object
+                DashboardFactory.shuffleDecks(baseState, lobby.players);
+                baseState.players.splice(lobbyLength);
+                newGame = gamesRef.push(baseState);
+                fireNewGame = $firebaseObject(gameFactory.ref().child('games').child(newGame.key()));
+
+                fireNewGame.$loaded()
+                .then(function(fireNewGame){
+                    fireNewGame.players.forEach(function(player){
+                        DashboardFactory.addGameToUsers(player.userID, fireNewGame.$id);
+                    })
+                    return thisLobbyRef.remove();
                 });
-
+            });
         }
 
     });
