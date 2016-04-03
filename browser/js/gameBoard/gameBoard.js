@@ -32,8 +32,6 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                     var castle = scope.game.players[currentUserIndex].castle;
 
                     var castleRef = gameFactory.ref().child('games').child(agame).child('players').child(currentUserIndex).child('castle');
-                    console.log("castleref", castleRef.child(0));
-                    console.log("currentuserindex", currentUserIndex);
 
                     // -------------------------------------------------------------------------------------------
                     // -------------------------------------------------------------------------------------------
@@ -59,43 +57,64 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                         .append("svg")
                         .attr("width", width)
                         .attr("height", height)
-                        .attr("preserveAspectRatio", "xMinYMin meet")
+                        // .attr("preserveAspectRatio", "xMinYMin meet")
                         .call(zoom)
                         .on("dblclick.zoom", null);
 
-                    var gameGrid = svg.append("g");
+                    var gameGrid = svg.append("g")
+                        .attr("width", 100)
+                        .attr("height", 100)
+                    for (var i = -200; i < height * 1.1; i += 100) {
+                        gameGrid
+                        // .append("defs")
+                            .append("g")
+                            // .attr("id", "grass")
+                            .selectAll("image")
+                            .data(d3.range(-2, width / 100))
+                            .enter()
+                            .append("image")
+                            .attr("xlink:href", "/images/anothergrass.png")
+                            // .attr("xlink:href", "/images/dark_grass.jpg")
+                            // .attr("xlink:href", "/images/othergrass.png")
+                            .attr("width", 100)
+                            .attr("height", 100)
+                            .attr("x", function(d) {
+                                return d * 100;
+                            })
+                            .attr("y", i);
+                    }
 
-                    gameGrid.append("g")
-                        .selectAll("line")
-                        .data(d3.range(0, 2500))
-                        .enter()
-                        .append("line")
-                        .attr("x1", function(d) {
-                            return d * 10;
-                        })
-                        .attr("x2", function(d) {
-                            return d * 10;
-                        })
-                        .attr("y1", -10)
-                        .attr("y2", height + 10)
-                        .style("stroke", "white")
-                        .style("stroke-width", "0.5");
+                    // gameGrid.append("g")
+                    //     .selectAll("line")
+                    //     .data(d3.range(0, 100))
+                    //     .enter()
+                    //     .append("line")
+                    //     .attr("x1", function(d) {
+                    //         return d * 10;
+                    //     })
+                    //     .attr("x2", function(d) {
+                    //         return d * 10;
+                    //     })
+                    //     .attr("y1", -10)
+                    //     .attr("y2", height + 10)
+                    //     // .style("stroke", "white")
+                    //     // .style("stroke-width", "0.5");
 
-                    gameGrid.append("g")
-                        .selectAll("line")
-                        .data(d3.range(0, 2500))
-                        .enter()
-                        .append("line")
-                        .attr("x1", -10)
-                        .attr("x2", width + 10)
-                        .attr("y1", function(d) {
-                            return d * 10;
-                        })
-                        .attr("y2", function(d) {
-                            return d * 10;
-                        })
-                        .style("stroke", "white")
-                        .style("stroke-width", "0.5");
+                    // gameGrid.append("g")
+                    //     .selectAll("line")
+                    //     .data(d3.range(0, 100))
+                    //     .enter()
+                    //     .append("line")
+                    //     .attr("x1", -10)
+                    //     .attr("x2", width + 10)
+                    //     .attr("y1", function(d) {
+                    //         return d * 10;
+                    //     })
+                    //     .attr("y2", function(d) {
+                    //         return d * 10;
+                    //     })
+                    //     // .style("stroke", "white")
+                    //     // .style("stroke-width", "0.5");
 
                     // -------------------------------------------------------------------------------------------
                     // -------------------------------------------------------------------------------------------
@@ -301,7 +320,7 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
                     }
 
                     function zooming() {
-                        gameGrid.attr("transform", "translate(" + d3.event.translate[0] % (10 * d3.event.scale) + "," + d3.event.translate[1] % (10 * d3.event.scale) + ")scale(" + d3.event.scale + ")");
+                        gameGrid.attr("transform", "translate(" + d3.event.translate[0] % (100 * d3.event.scale) + "," + d3.event.translate[1] % (100 * d3.event.scale) + ")scale(" + d3.event.scale + ")");
                         currentCastle.attr("transform", "translate(" + (d3.event.translate[0] + ((width / 2) * d3.event.scale)) + ", " + (d3.event.translate[1] + ((height / 2) * d3.event.scale)) + ")scale(" + d3.event.scale + ")");
                         gridAndCastleScale = d3.event.scale;
                         castleTranslate = [d3.event.translate[0] + (width / 2 * d3.event.scale), d3.event.translate[1] + (height / 2 * d3.event.scale)];
