@@ -57,7 +57,7 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
 
                 var counter = 0;
                 for(var player in lobby.players){
-                    console.log(baseState.players);
+
                     baseState.players[counter].userID = lobby.players[player].userID;
                     baseState.players[counter].userName = lobby.players[player].userName;
                     counter ++;

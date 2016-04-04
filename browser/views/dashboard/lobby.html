@@ -1,98 +1,28 @@
-
-
-<!--<div class="container">-->
-
-<!--<div class="header">-->
-    <!--<h1>{{ data.name }}</h1>-->
-<!--</div>-->
-
-<!--<div class="message-wrap" ng-repeat="message in data.messages">-->
-    <!--{{ message.sent | date: 'short' }}-->
-    <!--<div class="ng-cloak">-->
-        <!--{{ message.from }}: {{ message.content }}-->
-    <!--</div>-->
-
-<!--</div>-->
-
-<!--<form class="message-form" ng-submit="sendMessage()">-->
-
-    <!--<div class="input-group">-->
-        <!--<input type="text" class="form-control" ng-model="obj.msg" placeholder="Type a message...">-->
-    <!--<span class="input-group-btn">-->
-        <!--<button class="btn btn-primary" type="submit">Send</button>-->
-    <!--</span>-->
-        <!--<button class="btn btn-primary" type="submit" ng-show="isHost()" ng-click="startGame()">Start</button>-->
-    <!--</div>-->
-
-<!--</form>-->
-
-<!--</div>-->
-
-<!--
-TODO: Chat box will share the grid with a side panel that will be fixed;
-TODO: <listPLayers></listPLayers>
-TODO: Authenticate with FB or Google and join the display your avatar photo;
-TODO: Users should sign up with a username, email, and password; Form validation needed;
-
-
--->
-
-
 <div class="container">
     <div class="row">
 
         <!-- grid tag-->
-        <div class="col-md-12">
-
+        <div class="col-md-9 messageDiv">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-12">
 
                     <!--misc buttons-->
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-
-                            <!--<span class="glyphicon glyphicon-user"></span>-->
                             <h6 class="panel-title" style="display:inline;">{{ data.name }}</h6>
-
-                            <!--<div class="btn-group btn-group-xs pull-right">-->
-                                <!--<button type="button" class="btn btn-primary">-->
-                                    <!--<span class="glyphicon glyphicon-lock"></span>-->
-                                <!--</button>-->
-
-                                <!--<button type="button" class="btn btn-primary">-->
-                                    <!--<span class="glyphicon glyphicon-cog"></span>-->
-                                <!--</button>-->
-
-                                <!--<button type="button" class="btn btn-primary">-->
-                                    <!--<span class="glyphicon glyphicon-remove"></span>-->
-                                <!--</button>-->
-                            <!--</div>-->
-
-                            <div class="clearfix"></div>
                         </div>
 
                         <!--messages themselves-->
-                        <div class="panel-body" style="padding:0 4px;">
+                        <div class="panel-body">
                             <div class="row">
-
-                                <div class="col-md-6 messagePanel">
-
-                                    <table class="table table-hover table-condensed">
-
-                                        <tr class='messages' ng-repeat="message in data.messages">
-                                            <!--avatar associated to user's FB-->
-                                            <!--<td><img src="{{chat.icon}}" alt="" style="margin-top:8px;"/></td>-->
-                                            <td> <h6>{{message.from}}</h6> </td>
-                                        <td>
-                                            <p class="message"> {{message.content}} </p>
-                                        </td>
-                                        </tr>
-                                    </table>
-
+                                <div class="col-md-6 messagePanel" scroll-glue>
+                                    <div class='messages' ng-repeat="message in data.messages">
+                                        <h4 class="usernameMsg">{{message.from}}</h4>
+                                        <div class="message">{{message.content}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                         <!--input field for message and send button-->
                         <div class="panel-footer">
                             <form>
@@ -100,22 +30,35 @@ TODO: Users should sign up with a username, email, and password; Form validation
                                 <input type="text" class="form-control" ng-model="obj.msg" placeholder="..."/>
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" type="submit" ng-click="sendMessage()">Send</button>
+                                    <button class="btn btn-primary" type="submit" ng-show="isHost()" ng-click="startGame()">Start</button>
                                 </span>
-
-                                </span>
-                                <button class="btn btn-primary" type="submit" ng-show="isHost()" ng-click="startGame()">Start</button>
-                                </div>
-
                                 </div>
                             </form>
                         </div>
-
                     </div>
-
 
                 </div>
             </div>
         </div>
+
+        <!--<div class="col-md-3 listPlayers">-->
+
+            <!--<div class="panel panel-primary playerPanel">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h6 class="panel-title" style="display:inline;">Players</h6>-->
+                <!--</div>-->
+
+                <!--<div ng-repeat="player in data.players">-->
+                    <!--<div class="userName">{{ player.userName }}</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+
+        <!--</div>-->
+
+
+
+
 
     </div>
 </div>

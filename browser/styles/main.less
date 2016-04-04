@@ -14,12 +14,101 @@
 @import "transitions/all.less";
 @import "transitions/animations.less";
 
-.messages{
-  border-style: hidden;
-  word-wrap: break-word;
-  vertical-align: bottom;
-  width: 100vw;
+.messagedir {
+  display: block;
+  height: 500px;
+
+}
+
+.panel-heading {
+  border-width: thin;
+  border-style: solid;
+  border-color: white !important;
+}
+
+.panel {
+  margin-top: 10px
+}
+
+.playerPanel {
+  background-color: transparent !important;
+  border-style: solid !important;
+  border-width: thin;
+  border-color: white !important;
+}
+
+.messageDirPanel{
+  display: inline;
+  float: left;
+  height:20vh;
+  width:100%;
   text-align: left;
+  position: relative;
+  overflow: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  background-color: transparent;
+}
+
+.messagePanel {
+  display: inline;
+  float: left;
+  height:80vh;
+  width:100%;
+  text-align: left;
+  position: relative;
+  overflow: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.messagesDir{
+  vertical-align: bottom;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-align: left;
+
+  border-style: hidden;
+  color: black;
+  width: 100%;
+  max-height: 400px;
+  overflow: auto;
+  position: relative;
+  bottom: 0;
+}
+
+.messages{
+  vertical-align: bottom;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-align: left;
+
+  border-style: hidden;
+  color: black;
+  width: 100%;
+  max-height: 400px;
+  overflow: auto;
+  position: relative;
+  bottom: 0;
+}
+
+.usernameDirMsg {
+  width: 100px;
+  margin: 0;
+}
+
+.usernameMsg {
+  width: 100px;
+  margin: 0;
+}
+
+.messageDir {
+  word-wrap: break-word;
+  word-break: break-all;
+  vertical-align: bottom;
+  text-align: left;
+  margin: 0;
+  width: 100%;
 }
 
 .message {
@@ -27,27 +116,8 @@
   word-break: break-all;
   vertical-align: bottom;
   text-align: left;
+  margin: 0;
   width: 100%;
-}
-
-.messagePanel {
-  height:80vh;
-  width:90%;
-  overflow-y:auto;
-  text-align: left;
-}
-
-td {
-  vertical-align: bottom;
-  color: black;
-  text-align: left;
-}
-
-table {
-  height:100%;
-  width: 90%;
-  overflow: auto;
-  text-align: left;
 }
 
 a {
@@ -228,6 +298,7 @@ html,body {
 #gameboardContainer{
   padding: 25px;
   height: 80%;
+  background-image: url('../images/vintagemap.png');
   background-color: #334857;
 }
 
@@ -241,7 +312,8 @@ html,body {
 }
 
 #playerlist {
-    padding: 0 16px;
+  margin-top: 30px;
+  padding: 0 16px;
     width: 100%;
     .list-group{
       max-width: 325px;

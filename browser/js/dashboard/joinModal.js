@@ -13,26 +13,6 @@ app.factory('JoinModalFactory', function($uibModal) {
     return joinModal;
 });
 
-/*
-Refactoring goals:
-joinModal and createModal needs to be refactored as this code is getting repetitive. For starters, we could extract
-the userId, lobbiesRef, playerRef, and anything else that is asynchronous. It might be ideal for us to resolve these
-async events in our state. Anything that has $loaded, $firebaseArray, and $firebaseObject can be taken out.
-
-Challenges: Correctly identify the current state's userId, lobbyId, etc. Revisit this after we finish our MVP
-
-Error handling / 404 goals:
-Unfortunately, I didn't spend enough time thinking about the authorization issues at hand.
-We have several issues with our current application as users can create lobbies that have the same name.
-In addition, if the user decides to hit refresh, they are forced to log back in as their credentials did not persist.
-We need to either cache their login credentials, use cookies, or perhaps even use local storage.
-We also don't have any error / event handling in situations where a user gets a 404 status code. We haven't set up
-any redirects nor do we have a 404 HTML template.
-
-Challenges:
-I have not yet dealt with authentication/persistence with Firebase and it will take me some time to get a full grasp
-on it. Again, this is not incredibly important for the MVP but it should get done in the near future.
- */
 
 app.controller('joinModalCtrl', function($scope, $uibModalInstance, $state, gameFactory, $firebaseObject, $firebaseArray) {
 

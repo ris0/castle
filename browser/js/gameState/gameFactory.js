@@ -1,6 +1,5 @@
 app.factory('gameFactory', function($firebaseAuth){
 	var gameState = {};
-
 	var ref = new Firebase("https://castle-john.firebaseio.com/");
 
     gameState.ref = ()=>{
