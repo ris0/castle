@@ -30,3 +30,6 @@
 * Sleep Room: Draw 0, 1, or 2 room tiles from any one size of room tile to add to the top of room card draw pile. If the room card pile is empty, players do not play another round.
 * Downstairs Room: For every two downstairs rooms completed, players may choose another bonus to redeem.
 * Utility Room: Draw two bonus cards and discard one
+
+## King's Favors
+* King's Favors scores are totaled at the end of the game, but a tally of current standings is kept in the carousel below players' scorecards.

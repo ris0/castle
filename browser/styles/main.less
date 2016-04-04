@@ -213,9 +213,9 @@ html,body {
 
 #gameBoard {
     overflow: hidden;
-    border: 1vh;
+    /*border-image: url("/images/stoneborder.png");*/
     width: 100%;
-    background-color: #BFD8A0;
+    border: 1vh;
     border-radius: 25px;
     height: ~"calc(100vh - 206.797px)";
 }
@@ -239,6 +239,13 @@ svg {
   font: 10px sans-serif;
 }
 
+#playerlist {
+    padding: 0 16px;
+    width: 100%;
+    .list-group{
+      max-width: 325px;
+    }
+}
 
 #kingsFavors {
   margin-left: 20px;

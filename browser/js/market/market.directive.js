@@ -49,7 +49,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.untry = function(room) {
-                        console.log('scope room', room);
                         scope.data.players[scope.userIndex].trying = false;
                         room.trying = false;
                         marketFactory.untry(scope.data, room.room);
