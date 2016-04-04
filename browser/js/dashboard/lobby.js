@@ -40,7 +40,6 @@ app.controller('lobbyCtrl', function(DashboardFactory,$stateParams, $scope, game
 
                 var counter = 0;
                 for(var player in lobby.players){
-                    console.log(lobby.players[player]);
                     baseState.players[counter].userID = lobby.players[player].userID;
                     baseState.players[counter].userName = lobby.players[player].userName;
                     counter ++;

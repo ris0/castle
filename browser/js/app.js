@@ -6,7 +6,8 @@ window.app = angular
         'ngAnimate',
         'firebase',
         'snap',
-        'ngDragDrop'
+        'ngDragDrop',
+        'luegg.directives'
     ])
     .constant('_', window._)
   // use in views, ng-repeat="x in _.range(3)"
