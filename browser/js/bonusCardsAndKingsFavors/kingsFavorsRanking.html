@@ -7,7 +7,7 @@
     <div id="inner1">
       <span ng-show="showInfo" id="smallFont">{{favor.attributeToCheck}}</span>
       <ol ng-hide="showInfo" id="smallFont">
-        <li ng-repeat="ranking in favor.rankings">{{ranking.player.userName}}</li>
+        <li ng-repeat="ranking in favor.rankings"><b>{{ranking.player.userName}}</b></li>
       </ol>
     </div>
   </div>

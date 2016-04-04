@@ -17,7 +17,7 @@
 .messagedir {
   display: block;
   height: 500px;
-
+  color: white;
 }
 
 .panel-heading {
@@ -109,6 +109,7 @@
   text-align: left;
   margin: 0;
   width: 100%;
+  color: white;
 }
 
 .message {
@@ -181,7 +182,7 @@ html,body {
 .sk-cube-grid .sk-cube {
   width: 33%;
   height: 33%;
-  background-color: white;
+  background-color : transparent;
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
   animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
@@ -239,34 +240,32 @@ html,body {
   color:red;
 }
 
-.price{
-  color:white;
-
-}
-
 #market-nav {
   height: 156.797px;
   padding-bottom: 25px;
   padding-left: 10px;
   margin:0;
-  background-color: #334857;
+  background-color : transparent;
   .container{
     width: 100%;
   }
   ul{
-    background-color:#334857;
+    background-color : transparent;
   }
   li{
-  height:100%;
+    height:100%;
+    .price{
+      color: white;
+    }
   }
   .market-room {
       width: 8vw;
       padding: 5px;
       vertical-align: middle;
-      background-color:#334857;
+      background-color : transparent;
   }
   .active{
-    background-color:#6F9CEB;
+    background-color : transparent;
   }
 }
 
@@ -276,7 +275,7 @@ html,body {
 
 #grid-market {
   padding:0!important;
-  background-color:334857;
+  background-color : transparent;
 }
 
 #grid-testing {
@@ -285,21 +284,21 @@ html,body {
 
 #gameBoard {
     overflow: hidden;
-    border-image-source: url("/images/stoneborder.png");
-    border-image-width: 15px;
-    border-image-outset: 5px;
-    border-image-slice: 25;
-    border-image-repeat: repeat;
     width: 100%;
-    border-radius: 10px;
+    border: 1px solid white;
+    border-radius: 25px;
     height: ~"calc(100vh - 206.797px)";
 }
 
 #gameboardContainer{
   padding: 25px;
   height: 80%;
+/*<<<<<<< HEAD*/
+  background-color : transparent;
+/*=======
   background-image: url('../images/vintagemap.png');
   background-color: #334857;
+>>>>>>> master*/
 }
 
 /*#game {
@@ -309,6 +308,10 @@ html,body {
 #main {
     margin: 0;
     padding: 0;
+}
+
+svg {
+  font: 10px sans-serif;
 }
 
 #playerlist {
@@ -360,13 +363,17 @@ html,body {
 }
 
 #carousel{
-  color:white;
+  color: white;
   float:left;
   border-radius: 5px;
   width: 100%;
   .well {
-   background-color: #334857;
+   background-color : #515966;
    border-color: gray;
+   .well-sm{
+      background-color : transparent;
+      color:inherit;
+    }
   }
 }
 
@@ -410,13 +417,41 @@ html,body {
 }
 
 #sidebar {
-  background-color: #334857;
+  background-color : transparent;
   height: 100vh;
   overflow: auto;
+  .panel-heading{
+    background-color : transparent;
+    border-color: #334857;
+    color: white;
+  } 
+  #playerlist {
+    padding: 0 16px;
+    color: white;
+    width: 100%;
+      .list-group{
+          max-width: 325px;
+          background-color : transparent;
+        .list-group-item{
+            background-color : transparent;
+          .well {
+             background-color : transparent;
+             border-color: gray;
+           .well-sm{
+              background-color : transparent;
+              color: inherit;
+            }
+          }
+        }
+      }
+      .playerTurn{
+        background-color : transparent;
+      }
+  }   
 }
 
 .playerTurn{
-  background-color: #C3E4ED;
+  /*background-color: #C3E4ED;*/
 }
 
 ul#scoreCard {
@@ -430,4 +465,28 @@ ul#scoreCard {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+}
+
+.messages{
+  color: white;
+  .panel{
+    border-radius: 5px;
+    border-color: gray;
+    .panel-body{
+      color: white;
+      background-color : #515966;
+    }
+    .panel-footer{
+      background-color : #515966;
+    }
+  }
+}
+
+#gameboard{
+  font-family: 'Nova Flat', sans-serif;
+  background: url("/images/mountainbackground.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }

@@ -23,6 +23,7 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
         var newItems = false;
         var userGamesRef = usersRef.child(userId).child('games');
         userGamesRef.on('child_added', function(games){
+            console.log(games.val());
             var games = games.val();
             if(!newItems) return;
             $state.go('game', {gameId:games.gameID});
@@ -51,6 +52,8 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
 
             thisLobbyRef.once('value', function(lobby){
                 var lobby = lobby.val();
+                console.log(lobby);
+                baseState.name = lobby.name;
                 lobbyLength = Object.keys(lobby.players).length;
 
                 if(lobby.messages) baseState.messages = lobby.messages;
@@ -60,7 +63,12 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
 
                     baseState.players[counter].userID = lobby.players[player].userID;
                     baseState.players[counter].userName = lobby.players[player].userName;
-                    counter ++;
+                    var bonusCards = [];
+                    for (var i = 0; i < 3; i++) {
+                        bonusCards.push(baseState.bonusCards.pop());
+                    }
+                    baseState.players[counter].bonusCardsInitial = bonusCards;
+                    counter++;
                 }
                 console.log(baseState);
 
