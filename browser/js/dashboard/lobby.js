@@ -76,12 +76,9 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
                         DashboardFactory.addGameToUsers(player.userID, fireNewGame.$id);
                     })
                     return thisLobbyRef.remove();
-<<<<<<< HEAD
                 })
                 .then(function() {
                     $state.go('game',{ gameId: fireNewGame.$id })
-=======
->>>>>>> 6860285aaaa2c6c461317c1b67bb2f38decbdac8
                 });
             });
         }
