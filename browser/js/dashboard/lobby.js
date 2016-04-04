@@ -43,7 +43,6 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
                 sent: Date.now(),
                 content: $scope.obj.msg
             });
-            console.log($scope.data.messages[0].sent);
             $scope.obj.msg = "";
         };
 
@@ -61,7 +60,7 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
 
                 var counter = 0;
                 for(var player in lobby.players){
-                    console.log(baseState.players);
+
                     baseState.players[counter].userID = lobby.players[player].userID;
                     baseState.players[counter].userName = lobby.players[player].userName;
                     var bonusCards = [];
@@ -85,6 +84,9 @@ app.controller('lobbyCtrl', function(lobbyUserObj, DashboardFactory,$stateParams
                         DashboardFactory.addGameToUsers(player.userID, fireNewGame.$id);
                     })
                     return thisLobbyRef.remove();
+                })
+                .then(function() {
+                    $state.go('game',{ gameId: fireNewGame.$id })
                 });
             });
         }

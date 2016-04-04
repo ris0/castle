@@ -39,7 +39,6 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
 
   $scope.signup = function() {
-      console.log('sign up clicked')
     $scope.message = null;
     $scope.error = null;
 

@@ -22,6 +22,7 @@
     "angular-ui-bootstrap": "^0.14.3",
     "angular-ui-grid": "^3.1.1",
     "angular-ui-router": "^0.2.15",
+    "angularjs-scroll-glue": "^2.0.4",
     "babel": "^5.0.12",
     "bluebird": "^2.9.34",
     "body-parser": "^1.12.0",

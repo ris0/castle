@@ -1,44 +1,35 @@
-<div class="container" id="kingsFavors">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="row">
-                      <div class="col-md-9">
-                          <div class="panel panel-primary">
-                              <div class="panel-heading">
-                                  <!-- <h6 class="panel-title" style="display:inline;">{{ data.name }}</h6> -->
-                                  <div class="clearfix"></div>
-                              </div>
-                              <!--messages themselves-->
-                              <div class="panel-body" style="padding:0 4px;">
-                                  <div class="row">
-                                      <div class="col-md-6 messagePanel">
-                                          <table class="table table-hover table-condensed">
-                                              <tr class='messages' ng-repeat="message in data.messages">
-                                                  <!--avatar associated to user's FB-->
-                                                  <!--<td><img src="{{chat.icon}}" alt="" style="margin-top:8px;"/></td>-->
-                                                  <td> <h6>{{message.from}}</h6> </td>
-                                              <td>
-                                                  <p class="message"> {{message.content}} </p>
-                                              </td>
-                                              </tr>
-                                          </table>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!--input field for message and send button-->
-                              <div class="panel-footer">
-                                  <form name="messagesForm">
-                                      <div class="input-group input-group-lg">
-                                        <input type="text" class="form-control" ng-model="obj.msg" placeholder="..."/>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit" ng-click="sendMessage()">Send</button>
-                                        </span>
-                                      </div>
-                                  </form>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+<div class="col-sm-12 messagedir" class="messages">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <!--misc buttons-->
+            <div class="panel panel-primary">
+
+                <!--messages themselves-->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12 messageDirPanel" scroll-glue>
+                            <div class='messagesDir' ng-repeat="message in data.messages">
+                                <!--<h6 class="usernameDirMsg">{{message.from}}</h6>-->
+                                <div class="messageDir">{{ message.from }} : {{message.content}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--input field for message and send button-->
+                <div class="panel-footer">
+                    <form>
+                        <div class="input-group input-group-xs">
+                            <input type="text" class="form-control" ng-model="obj.msg" placeholder="..."/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit" ng-click="sendMessage()">Send</button>
+                                </span>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
