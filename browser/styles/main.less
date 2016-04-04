@@ -215,10 +215,13 @@ html,body {
 
 #gameBoard {
     overflow: hidden;
-    border-image: url("/images/stoneborder.png");
+    border-image-source: url("/images/stoneborder.png");
+    border-image-width: 15px;
+    border-image-outset: 5px;
+    border-image-slice: 25;
+    border-image-repeat: repeat;
     width: 100%;
     border-radius: 10px;
-    border: 15px solid transparent;
     height: ~"calc(100vh - 206.797px)";
 }
 
