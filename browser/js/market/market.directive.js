@@ -49,7 +49,6 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.untry = function(room) {
-                        console.log('scope room', room);
                         scope.data.players[scope.userIndex].trying = false;
                         room.trying = false;
                         marketFactory.untry(scope.data, room.room);
@@ -63,7 +62,7 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.evalCorridorTry = function(type) {
-                        if (scope.data.currentPlayer === scope.userIndex && scope.data.masterBuilder !== scope.userIndex) {
+                        if (scope.data.currentPlayer === scope.userIndex && scope.data.players[scope.data.currentPlayer].canBuy) {
                             if (!scope.data.players[scope.userIndex].trying) scope.tryCorridor(type);
                             else if (scope.data.players[scope.userIndex].trying && scope.data[type]) scope.untryCorridor(type);
                         }
