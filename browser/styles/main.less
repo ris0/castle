@@ -170,7 +170,9 @@ ul[dnd-list], ul[dnd-list] > li {
 }
 
 html,body {
-	overflow: auto;
+	overflow: hidden;
+  max-height: 100vh;
+  max-width: 100vw;
 }
 
 .sk-cube-grid {
@@ -242,7 +244,7 @@ html,body {
 
 #market-nav {
   height: 156.797px;
-  padding-bottom: 25px;
+  padding-bottom: 50px;
   padding-left: 10px;
   margin:0;
   background-color : transparent;
@@ -287,12 +289,12 @@ html,body {
     width: 100%;
     border: 1px solid white;
     border-radius: 25px;
-    height: ~"calc(100vh - 206.797px)";
+    height: ~"calc(100vh - 256.797px)";
 }
 
 #gameboardContainer{
   padding: 25px;
-  height: 80%;
+  height: 70%;
 /*<<<<<<< HEAD*/
   background-color : transparent;
 /*=======
@@ -463,20 +465,23 @@ ul#scoreCard {
   }
 }
 
-.messages{
-  color: white;
-  .panel{
-    border-radius: 5px;
-    border-color: white;
-    .panel-body{
-      color: white;
-      background-color : #515966;
-    }
-    .panel-footer{
-      background-color : #515966;
+#messagesContainer{
+  max-width: 356px;
+}
+  .messages{
+    color: white;
+    .panel{
+      border-radius: 5px;
+      border-color: white;
+      .panel-body{
+        color: white;
+        background-color : #515966;
+      }
+      .panel-footer{
+        background-color : #515966;
+      }
     }
   }
-}
 
 #gameboard{
   font-family: 'Nova Flat', sans-serif;
