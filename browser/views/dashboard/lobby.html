@@ -16,8 +16,8 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6 messagePanel" scroll-glue>
-                                    <div class='messages' ng-repeat="message in data.messages">
-                                        <h4 class="usernameMsg">{{message.from}}</h4>
+                                    <div class='lobbyMessages' ng-repeat="message in data.messages">
+                                        <h4 class="usernameMsg">{{message.from}}:</h4>
                                         <div class="message">{{message.content}}</div>
                                     </div>
                                 </div>
