@@ -63,14 +63,15 @@ app.directive('gameBoard', function($firebaseObject, gameFactory, gameStateFacto
 
                     var gameGrid = svg.append("g")
                         .attr("width", 100)
-                        .attr("height", 100)
+                        .attr("height", 100);
+
                     for (var i = -200; i < height * 1.1; i += 100) {
                         gameGrid
                         // .append("defs")
                             .append("g")
                             // .attr("id", "grass")
                             .selectAll("image")
-                            .data(d3.range(-2, width / 100))
+                            .data(d3.range(-2, width / 100 + 5))
                             .enter()
                             .append("image")
                             // .attr("xlink:href", "/images/anothergrass.png")
