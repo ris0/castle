@@ -15,11 +15,9 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
   };
 
   market.untry = function(game, room) {
-    console.log('factory room', room);
     room.price = null;
     _.remove(getCurrentPlayer(game).castle, function(castleRoom) {
-      console.log(castleRoom.roomName === room.roomName);
-      return castleRoom.roomName === room.roomName;
+      return castleRoom.roomName === room.roomName && !castleRoom.final;
     });
   };
 
@@ -39,7 +37,7 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
         var newRoom = newRooms[0];
         var truePrice = +newRoom.price - (+newRoom.discount);
         if(getCurrentPlayer(game).cashMoney < truePrice) res.message = "Not enough $$$";
-        else if(newRoom.roomName.slice(0,-1) === "Stairs" || newRoom.roomName.slice(0,-1) === "Hallway"){
+        else if(newRoom.roomName === "Stairs" || newRoom.roomName === "Hallway"){
           scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
 
           cashFlow(game, newRoom.price, truePrice);
@@ -49,8 +47,8 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
           bonusCardsFactory.getBonusPoints(getCurrentPlayer(game));
           getCurrentPlayer(game).canBuy = false;
           completionFactory.assessCompletion(game);
-          res.message = "Buying the " + newRoom.roomName.slice(0,-1);
-          res.roomName = newRoom.roomName.slice(0,-1);
+          res.message = "Buying the " + newRoom.roomName;
+          res.roomName = newRoom.roomName;
         } else{
           scoringFactory.scoreRoom(game, getCurrentPlayer(game), newRoom);
 
@@ -100,7 +98,6 @@ app.factory('marketFactory', function(bonusCardsFactory, gameStateFactory, scori
 
   //send room from deck to player castle
   function roomToPlayer(game, room, price) {
-    console.log("price", price);
     room.discount = 0;
     room.final = true;
     getCurrentPlayer(game).castle.push(room);

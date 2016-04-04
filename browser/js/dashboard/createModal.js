@@ -25,7 +25,7 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, ga
     $scope.ok = function() {
 
         var playerName;
-
+        var userUniqueID;
 
         playerRef.$loaded()
             .then(function (obj) {
@@ -36,17 +36,21 @@ app.controller('createModalCtrl', function($scope, $uibModalInstance, $state, ga
                 return lobbiesRef.push({
                     name: $scope.lobby.name,
                     password: $scope.lobby.password,
-                    messages: [],
-                    players: [{
-                        userID: userId,
-                        userName: playerName
-                    }]
-                })
+                    messages: []
+                });
             })
             .then(function (lobby) {
                 var lobbyId = lobby.key();
+                var lobbyPlayers = gameFactory.ref().child('lobbies').child(lobbyId).child('players');
+                var newPlayer = lobbyPlayers.push({
+                        userID: userId,
+                        userName: playerName,
+                        isHost: true
+                    });
+                userUniqueID = newPlayer.key();
+                console.log(userUniqueID);
                 $uibModalInstance.close();
-                $state.go('lobby',{lobbyId: lobbyId});
+                $state.go('lobby',{lobbyId: lobbyId, userUniqueID: userUniqueID});
             });
     };
 

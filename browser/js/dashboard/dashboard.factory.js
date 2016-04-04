@@ -24,6 +24,11 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
                     console.log('how many players?', players);
                     baseState.players[counter].userID = players[key].userId;
                     baseState.players[counter].userName = players[key].email;
+                    var bonusCards = [];
+                    for (var i = 0; i < 3; i++) {
+                        bonusCards.push(baseState.bonusCards.pop());
+                    }
+                    baseState.players[counter].bonusCardsInitial = bonusCards;
                     counter++;
                 }
                 playersRef.remove();
