@@ -14,13 +14,9 @@ app.controller('gameStats', function($stateParams, marketFactory, kingsFavorsFac
             $scope.userObj = gameStateFactory.getUserObj($scope.data);
             $scope.players = $scope.data.players;
             return $scope.userIndex;
-        }).then(function(index) {
+        }).then(function(index) {                      
             if ($scope.data.turnCount === 0 && !$scope.data.players[index].bonusCards) {
-                var bonusCards = [];
-                for (var i = 0; i < 3; i++) {
-                    bonusCards.push($scope.data.bonusCards.pop());
-                }
-                BonusModalFactory.open(bonusCards, index, $scope.gameId);
+                BonusModalFactory.open($scope.userObj.bonusCardsInitial, index, $scope.gameId);
             }
         });
 });

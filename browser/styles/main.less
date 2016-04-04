@@ -215,10 +215,13 @@ html,body {
 
 #gameBoard {
     overflow: hidden;
-    border: 0.5vh solid black;
+    border-image-source: url("/images/stoneborder.png");
+    border-image-width: 15px;
+    border-image-outset: 5px;
+    border-image-slice: 25;
+    border-image-repeat: repeat;
     width: 100%;
-    background-color: #6F9CEB;
-    border-radius: 25px;
+    border-radius: 10px;
     height: ~"calc(100vh - 206.797px)";
 }
 
@@ -235,10 +238,6 @@ html,body {
 #main {
     margin: 0;
     padding: 0;
-}
-
-svg {
-  font: 10px sans-serif;
 }
 
 #playerlist {
