@@ -111,7 +111,7 @@ html,body {
 .sk-cube-grid .sk-cube {
   width: 33%;
   height: 33%;
-  background-color: white;
+  background-color : transparent;
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
   animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
@@ -174,27 +174,27 @@ html,body {
   padding-bottom: 25px;
   padding-left: 10px;
   margin:0;
-  background-color: #835347;
+  background-color : transparent;
   .container{
     width: 100%;
   }
   ul{
-    background-color: inherit;
+    background-color : transparent;
   }
   li{
     height:100%;
     .price{
-      color: #BFD8A0;
+      color: white;
     }
   }
   .market-room {
       width: 8vw;
       padding: 5px;
       vertical-align: middle;
-      background-color: inherit;
+      background-color : transparent;
   }
   .active{
-    background-color:#6F9CEB;
+    background-color : transparent;
   }
 }
 
@@ -204,7 +204,7 @@ html,body {
 
 #grid-market {
   padding:0!important;
-  background-color: #758B59;
+  background-color : transparent;
 }
 
 #grid-testing {
@@ -223,7 +223,7 @@ html,body {
 #gameboardContainer{
   padding: 25px;
   height: 80%;
-  background-color: inherit;
+  background-color : transparent;
 }
 
 /*#game {
@@ -287,15 +287,15 @@ svg {
 }
 
 #carousel{
-  color: #4E5B83;
+  color: white;
   float:left;
   border-radius: 5px;
   width: 100%;
   .well {
-   background-color: #BFD8A0;
+   background-color : #515966;
    border-color: gray;
    .well-sm{
-      background-color: inherit;
+      background-color : transparent;
       color:inherit;
     }
   }
@@ -341,41 +341,41 @@ svg {
 }
 
 #sidebar {
-  background-color: #835347;
+  background-color : transparent;
   height: 100vh;
   overflow: auto;
   .panel-heading{
-    background-color: inherit;
-    border-color: #835347;
-    color: #BFD8A0;
+    background-color : transparent;
+    border-color: #334857;
+    color: white;
   } 
   #playerlist {
     padding: 0 16px;
-    color: #4E5B83;
+    color: white;
     width: 100%;
       .list-group{
           max-width: 325px;
-          background-color: #BFD8A0;
+          background-color : transparent;
         .list-group-item{
-            background-color: inherit;
+            background-color : transparent;
           .well {
-             background-color: inherit;
+             background-color : transparent;
              border-color: gray;
            .well-sm{
-              background-color: inherit;
-              color:inherit;
+              background-color : transparent;
+              color: inherit;
             }
           }
         }
       }
       .playerTurn{
-        background-color: #C3E4ED !important;
+        background-color : transparent;
       }
   }   
 }
 
 .playerTurn{
-  background-color: #C3E4ED;
+  /*background-color: #C3E4ED;*/
 }
 
 ul#scoreCard {
@@ -393,4 +393,9 @@ ul#scoreCard {
 
 #gameboard{
   font-family: 'Nova Flat', sans-serif;
+  background: url("/images/mountainbackground.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
