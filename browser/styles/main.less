@@ -169,31 +169,29 @@ html,body {
   color:red;
 }
 
-.price{
-  color:white;
-
-}
-
 #market-nav {
   height: 156.797px;
   padding-bottom: 25px;
   padding-left: 10px;
   margin:0;
-  background-color: #334857;
+  background-color: #835347;
   .container{
     width: 100%;
   }
   ul{
-    background-color:#334857;
+    background-color: inherit;
   }
   li{
-  height:100%;
+    height:100%;
+    .price{
+      color: #BFD8A0;
+    }
   }
   .market-room {
       width: 8vw;
       padding: 5px;
       vertical-align: middle;
-      background-color:#334857;
+      background-color: inherit;
   }
   .active{
     background-color:#6F9CEB;
@@ -206,7 +204,7 @@ html,body {
 
 #grid-market {
   padding:0!important;
-  background-color:334857;
+  background-color: #758B59;
 }
 
 #grid-testing {
@@ -215,9 +213,9 @@ html,body {
 
 #gameBoard {
     overflow: hidden;
-    border: 0.5vh solid black;
+    border: 1vh;
     width: 100%;
-    background-color: #6F9CEB;
+    background-color: #BFD8A0;
     border-radius: 25px;
     height: ~"calc(100vh - 206.797px)";
 }
@@ -225,7 +223,7 @@ html,body {
 #gameboardContainer{
   padding: 25px;
   height: 80%;
-  background-color: #334857;
+  background-color: inherit;
 }
 
 /*#game {
@@ -241,13 +239,6 @@ svg {
   font: 10px sans-serif;
 }
 
-#playerlist {
-    padding: 0 16px;
-    width: 100%;
-    .list-group{
-      max-width: 325px;
-    }
-}
 
 #kingsFavors {
   margin-left: 20px;
@@ -289,13 +280,17 @@ svg {
 }
 
 #carousel{
-  color:white;
+  color: #4E5B83;
   float:left;
   border-radius: 5px;
   width: 100%;
   .well {
-   background-color: #334857;
+   background-color: #BFD8A0;
    border-color: gray;
+   .well-sm{
+      background-color: inherit;
+      color:inherit;
+    }
   }
 }
 
@@ -339,9 +334,37 @@ svg {
 }
 
 #sidebar {
-  background-color: #334857;
+  background-color: #835347;
   height: 100vh;
   overflow: auto;
+  .panel-heading{
+    background-color: inherit;
+    border-color: #835347;
+    color: #BFD8A0;
+  } 
+  #playerlist {
+    padding: 0 16px;
+    color: #4E5B83;
+    width: 100%;
+      .list-group{
+          max-width: 325px;
+          background-color: #BFD8A0;
+        .list-group-item{
+            background-color: inherit;
+          .well {
+             background-color: inherit;
+             border-color: gray;
+           .well-sm{
+              background-color: inherit;
+              color:inherit;
+            }
+          }
+        }
+      }
+      .playerTurn{
+        background-color: #C3E4ED !important;
+      }
+  }   
 }
 
 .playerTurn{
@@ -359,4 +382,8 @@ ul#scoreCard {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+}
+
+#gameboard{
+  font-family: 'Nova Flat', sans-serif;
 }

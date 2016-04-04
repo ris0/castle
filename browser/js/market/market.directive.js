@@ -56,14 +56,14 @@ app.directive('market', function($rootScope, $firebaseObject, gameFactory, gameS
                     };
 
                     scope.evalTry = function(room, price) {
-                        if (scope.data.currentPlayer === scope.userIndex && scope.data.masterBuilder !== scope.userIndex) {
+                        if (scope.data.currentPlayer === scope.userIndex && scope.data.players[scope.data.currentPlayer].canBuy) {
                             if (!scope.data.players[scope.userIndex].trying) scope.try(room, price);
                             else if (scope.data.players[scope.userIndex].trying && room.trying) scope.untry(room);
                         }
                     };
 
                     scope.evalCorridorTry = function(type) {
-                        if (scope.data.currentPlayer === scope.userIndex && scope.data.masterBuilder !== scope.userIndex) {
+                        if (scope.data.currentPlayer === scope.userIndex && scope.data.players[scope.data.currentPlayer].canBuy) {
                             if (!scope.data.players[scope.userIndex].trying) scope.tryCorridor(type);
                             else if (scope.data.players[scope.userIndex].trying && scope.data[type]) scope.untryCorridor(type);
                         }
