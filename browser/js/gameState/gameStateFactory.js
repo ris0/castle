@@ -48,8 +48,8 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
   gameState.drawToMarket = function(game) {
     for (var price in game.market) {
       var currentPrice = game.market[price];
-      if(game.players.length === 1) currentPrice.room = 'empty';
-      if (currentPrice.room !== 'empty') currentPrice.room.discount += 1000;
+      // if(game.players.length === 1) currentPrice.room = 'empty';
+      if (currentPrice.room !== 'empty' && game.players.length !== 1) currentPrice.room.discount += 1000;
       while (currentPrice.room === 'empty') {
         var nextCard;
         if (game.roomCards) nextCard = game.roomCards.pop();

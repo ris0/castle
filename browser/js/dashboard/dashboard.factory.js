@@ -92,6 +92,7 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
     };
 
     dashboard.singlePlayerGame = function(game, user){
+        console.log('single');
         game.playersQueue = [{userId: user.$id, email: user.email}];
         dashboard.createRandomGame(game);
     };
@@ -108,8 +109,8 @@ app.factory('DashboardFactory', function($state, gameFactory, $firebaseObject, $
             numTileMult = (numberPlayers - 4);
             game.kingsFavors = _.shuffle(game.kingsFavors).slice(0, numFavors);
         } else {
-            numRoomCards = 33;
-            numTileMult = -1;
+            numRoomCards = 44;
+            numTileMult = 0;
             game.kingsFavors = null;
             game.masterBuilder = null;
             game.players[0].canBuy = true;
