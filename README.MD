@@ -1,7 +1,7 @@
 Team members:
-Chris de Villiers
-Cindy Li
-John Quiwa
+Chris de Villiers,
+Cindy Li,
+John Quiwa,
 Richard Song
 
 Technologies:
