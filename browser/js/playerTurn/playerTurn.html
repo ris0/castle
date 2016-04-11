@@ -1,6 +1,12 @@
 <ul class="list-group">	
-	<li id="players" ng-class="{'playerTurn': currentPlayer === players.indexOf(player) }" ng-repeat="player in players" class="list-group-item" ng-click="isCollapsed = !isCollapsed">
-		<i class="fa fa-fort-awesome" ng-show="masterBuilder === players.indexOf(player)"></i> <span>{{player.userName}}</span> | <span>Public Score: {{_.sum(_.values(player.publicScore)) - player.publicScore.kingsFavorPts}}</span> | <span>${{player.cashMoney}}</span>
+	<li id="players" ng-class="{'playerTurn': currentPlayer === players.indexOf(player) }"
+        ng-repeat="player in players" class="list-group-item"
+        ng-click="isCollapsed = !isCollapsed">
+
+		<i class="fa fa-fort-awesome" ng-show="masterBuilder === players.indexOf(player)"></i>
+
+		<span>{{player.userName}}</span> | <span>Public Score: {{_.sum(_.values(player.publicScore)) - player.publicScore.kingsFavorPts}}</span> | <span>${{player.cashMoney}}</span>
+
 		<div uib-collapse="!isCollapsed">
 			<div class="well well-sm">
 				<ul id="scoreCard">

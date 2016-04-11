@@ -57,7 +57,6 @@ app.factory('gameStateFactory', function(gameFactory, $rootScope, kingsFavorsFac
           game.discardRooms = _.shuffle(game.discardRooms);
           nextCard = game.discardRoom.pop();
         }
-        //********************draw from discard. how to verify?
 
         if (typeof nextCard === 'number') { //if the next card in the pile is a room card
           if (game.roomTiles[nextCard]) currentPrice.room = game.roomTiles[nextCard].pop();

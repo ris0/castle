@@ -45,21 +45,6 @@ app.factory('scoringFactory', function() {
       }
     });
 
-    //checking detriment points of current room to adjacent rooms and vice versa
-    /*adjArray.forEach(function(adjRoom) {
-      if (room.roomType === "Activity") {
-        room.affectedBy.forEach(function(type) {
-          if (adjRoom.roomType === type) player.publicScore.roomPts += room.effectPts;
-        });
-      }
-      if (adjRoom.roomType === "Activity") {
-        adjRoom.affectedBy.forEach(function(type) {
-          //add score to room
-          if (type === room.roomType) player.publicScore.roomPts += adjRoom.effectPts;
-        });
-      }
-    });*/
-
     //scoring global effects
     if (player.globalEffects) {
       player.globalEffects.forEach(function(effect) {

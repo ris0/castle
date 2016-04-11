@@ -9,11 +9,9 @@
                 jqyoui-droppable
                 ng-class="{active:room.trying&&data.currentPlayer===userIndex}"
                 >
-                <center>
                 <span   class="price">${{price}}</span>
                 <span   class = "discount" 
                         ng-if="room.room.discount"> -${{room.room.discount}}</span>
-                </center>
                 <div
                     data-drag="data.masterBuilder === userIndex" 
                     data-jqyoui-options="{revert: 'invalid'}"
@@ -27,29 +25,17 @@
                 </div>
             </li>
             <li class = "market-room"
-                ng-class="{active:(data.Hallway||data.Stairs)&&data.currentPlayer===userIndex}"
-            >
-                <center>
+                ng-class="{active:(data.Hallway||data.Stairs)&&data.currentPlayer===userIndex}">
                     <span class = "price">$3000</span><br>
-<!--                     <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)">
-                        <a  ng-show="!data.Hallway" 
-                            ng-click="tryCorridor('Hallway')">+ </a>
-                            <a ng-show="data.Hallway" ng-click="untryCorridor('Hallway')">-</a>
-                    </span> -->
+
                     <img src = "images/150-hallway.png" class = "img-responsive" id="market-img" ng-dblclick="evalCorridorTry('Hallway')">
                 <br>
-<!--                     <span ng-show="data.players[userIndex].canBuy && (!trying || Hallway)">
-                        <a ng-show="!data.Stairs" ng-click="tryCorridor('Stairs')">+ </a>
-                        <a ng-show="data.Stairs" ng-click="untryCorridor('Stairs')">-</a>
-                    </span> -->
                     <img src = "images/75-stairs.png" class="img-responsive" id="market-img" ng-dblclick="evalCorridorTry('Stairs')"></a>
-                </center>
             </li>
             <li class = "market-room">
-                <center><br>
+                <br>
                 <button class = "btn btn-block btn-sm" ng-disabled="!data.players[userIndex].canBuy" ng-click="buy()">Buy/Pass</button><br>
                 <button class = "btn btn-block btn-sm" ng-disabled="data.masterBuilder !== userIndex || data.players[userIndex].canBuy || data.currentPlayer !== userIndex" ng-click="done()">MB done</button>
-                </center>
             </li>
         </ul>
     </div>
