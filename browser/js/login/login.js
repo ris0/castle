@@ -39,28 +39,28 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
 
   $scope.signup = function() {
-    $scope.message = null;
-    $scope.error = null;
+      $scope.message = null;
+      $scope.error = null;
+      // disable
 
-    $scope.auth.$createUser({
-        email: $scope.signup.email,
-        password: $scope.signup.password
-    })
-    .then(function(user) {
-        console.log(user);
-        $scope.auth.$authWithPassword({
-            email: user.email,
-            password: user.password
-        })
-    })
-    .then(function() {
-        $state.go('dashboard');
-    })
-    .catch(function(error) {
-        $scope.error = error;
-    });
+      $scope.auth.$createUser({
+          email: $scope.signup.email,
+          password: $scope.signup.password
+      })
+      .then(function(user) {
+          console.log(user);
+          $scope.auth.$authWithPassword({
+              email: user.email,
+              password: user.password
+          })
+      })
+      .then(function() {
+          $state.go('dashboard');
+      })
+      .catch(function(error) {
+          $scope.error = error;
+      });
   };
-
 });
 
 
