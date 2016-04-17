@@ -82,7 +82,14 @@ window.app = angular
     })
     .run(function($rootScope, _) {
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-            if (error) console.log(error);
+            if (error) {
+                console.log(error);
+                //console.log(event);
+                //console.log(toState);
+                //console.log(toParams);
+                //console.log(fromState);
+                //console.log(fromParams);
+            }
         });
         $rootScope._ = window._;
     });
