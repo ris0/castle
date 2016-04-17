@@ -47,6 +47,7 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
           password: $scope.signup.password
       })
       .then(function(user) {
+          console.log("Checking to see if Ubuntu server is corr")
           console.log('user has been created', user);
           return $scope.auth.$authWithPassword({
               email: $scope.signup.email,
