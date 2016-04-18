@@ -3,7 +3,7 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
   $scope.auth = gameFactory.auth();
   $scope.ref = gameFactory.ref();
   $scope.usersRef = gameFactory.ref().child("users");
-
+  $scope.isLoading = null;
   $scope.ref.onAuth(function(authData){
 
     if (authData) {
@@ -20,16 +20,16 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
 
 
   $scope.login = function() {
-    console.log('login clicked');
     $scope.message = null;
     $scope.error = null;
+    $scope.isLoading = true;
 
     $scope.auth.$authWithPassword({
         email: $scope.signup.email,
         password: $scope.signup.password
     })
     .then(function(user) {
-        console.log('Logging in as, ', user);
+        $scope.isLoading = null;
         $state.go('dashboard');
     })
     .catch(function(error) {
@@ -41,21 +41,20 @@ app.controller('LoginCtrl', function ($scope, $state, gameFactory) {
   $scope.signup = function() {
       $scope.message = null;
       $scope.error = null;
+      $scope.isLoading = true;
 
       $scope.auth.$createUser({
           email: $scope.signup.email,
           password: $scope.signup.password
       })
       .then(function(user) {
-          console.log("Checking to see if Ubuntu server is corr")
-          console.log('user has been created', user);
           return $scope.auth.$authWithPassword({
               email: $scope.signup.email,
               password: $scope.signup.password
           })
       })
       .then(function(authData) {
-          console.log('authentication successful', authData);
+          $scope.isLoading = null;
           $state.go('dashboard');
       })
       .catch(function(error) {
